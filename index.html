@@ -1949,6 +1949,7 @@ function finalizarMision(){
     erroresCrit: S.critErrors||0,
     primerFallo: S.primerFallo || 'Ninguno',
     tiempoSeg: tiempoSeg,
+    tiempoMin: Math.round(tiempoSeg/60*10)/10,
     nivelMaxSesion: nivelMax,
     sesionTotalMin: S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
     misionesAbandonadas: S.abandonadas||0,
@@ -2318,7 +2319,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbxXN6xAQT6ND48lqap6m1WOala4NudtlOK9CZsYrQHCsxQykSWcAggyEHu9kdwiKbeu/exec',
+  url: 'https://script.google.com/macros/s/AKfycbwyGkR2hDblrF3cNCGmuZvgtIho18RA-Olu5HQd2bhDdiWUU37x1rR0n07fhwf-X4aQ/exec',
   enabled: true
 };
 
@@ -2358,7 +2359,7 @@ async function enviarASheets(record){
         precision:           record.precision           !== undefined ? record.precision : 0,
         erroresCrit:         record.erroresCrit         || 0,
         primerFallo:         record.primerFallo         || 'Ninguno',
-        tiempoSeg:           record.tiempoSeg           || 0,
+        tiempoMin:           record.tiempoMin || 0,
         nivelMaxSesion:      record.nivelMaxSesion      || '',
         sesionTotalMin:      record.sesionTotalMin      || 0,
         misionesAbandonadas: record.misionesAbandonadas || 0,
