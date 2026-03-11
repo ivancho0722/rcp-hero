@@ -7,6 +7,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{--red:#FF1E2D;--red2:#FF4D57;--rdark:#9B0010;--rglow:rgba(255,30,45,.5);--bg:#050508;--bg2:#0C0C14;--bg3:#12121E;--panel:rgba(18,18,30,.97);--panel2:rgba(26,26,46,.95);--border:rgba(255,30,45,.2);--border2:rgba(255,30,45,.45);--text:#F0F0F8;--muted:#7070A0;--muted2:#A0A0C8;--gold:#FFD700;--gglow:rgba(255,215,0,.45);--green:#00FF88;--greglow:rgba(0,255,136,.35);--cyan:#00D4FF;--cglow:rgba(0,212,255,.35);--orange:#FF6B00;--purple:#A855F7;}
+/* ══ BRIEFING ABR ══ */
+#sbriefing{align-items:center;justify-content:center;padding:20px;}
+.brief-wrap{max-width:520px;width:100%;display:flex;flex-direction:column;gap:14px;}
+.brief-challenge{background:rgba(255,215,0,.08);border:2px solid rgba(255,215,0,.4);border-radius:14px;padding:18px;text-align:center;}
+.brief-challenge-label{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.brief-challenge-q{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--gold);line-height:1.4;}
+.brief-case{background:var(--panel);border:1px solid var(--border2);border-radius:14px;padding:18px;}
+.brief-case-label{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;color:var(--red2);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.brief-case-icon{font-size:28px;margin-bottom:6px;}
+.brief-case-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
+.brief-case-desc{font-size:13px;color:var(--muted2);line-height:1.6;}
+.brief-objective{background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.25);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;}
+.brief-obj-icon{font-size:22px;flex-shrink:0;}
+.brief-obj-text{font-size:12px;color:var(--muted2);line-height:1.5;}
+.brief-obj-text strong{color:var(--green);}
+.brief-tip{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:11px 14px;font-size:11px;color:var(--cyan);line-height:1.5;}
+.brief-start-btn{background:linear-gradient(135deg,var(--rdark),var(--red));color:#fff;border:none;border-radius:12px;padding:16px;font-family:'Orbitron',monospace;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s;box-shadow:0 0 24px var(--rglow);width:100%;}
+.brief-start-btn:hover{transform:translateY(-2px);box-shadow:0 0 40px var(--rglow);}
+/* ══ COUNTDOWN TIMER ══ */
+.cdw-wrap{display:none;position:fixed;top:70px;right:16px;z-index:50;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border2);border-radius:12px;padding:8px 14px;}
+.cdw-wrap.show{display:flex;}
+.cdw-label{font-size:9px;color:var(--muted);letter-spacing:2px;font-family:'Share Tech Mono',monospace;}
+.cdw-time{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--green);min-width:52px;text-align:center;}
+.cdw-time.warn{color:var(--gold);}
+.cdw-time.danger{color:var(--red2);animation:cdwPulse .5s ease-in-out infinite;}
+@keyframes cdwPulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* ══ BADGES SYSTEM ══ */
+.badge-modal-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);overflow-y:auto;padding:16px;}
+.badge-modal-overlay.show{display:flex;align-items:flex-start;justify-content:center;}
+.badge-modal{max-width:560px;width:100%;background:var(--panel2);border:1px solid var(--border2);border-radius:18px;padding:24px;margin:auto;}
+.badge-modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.badge-modal-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:2px;}
+.badge-close-btn{background:rgba(255,30,45,.15);border:1px solid var(--border2);color:var(--red2);padding:7px 13px;border-radius:8px;cursor:pointer;font-size:14px;}
+.badge-section-title{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.badge-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.badges-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;background:var(--panel);border-radius:10px;border:1px solid var(--border);transition:all .3s;}
+.badge-item.earned{border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.06);}
+.badge-item.locked{opacity:.35;filter:grayscale(1);}
+.badge-icon{font-size:26px;line-height:1;}
+.badge-name{font-size:8px;color:var(--muted2);text-align:center;letter-spacing:.5px;line-height:1.3;}
+.badge-item.earned .badge-name{color:var(--gold);}
+/* Diplomas */
+.diplomas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.diploma-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .3s;}
+.diploma-card.earned{border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.06);box-shadow:0 0 16px rgba(255,215,0,.12);}
+.diploma-card.locked{opacity:.4;filter:grayscale(.8);}
+.diploma-icon{font-size:32px;margin-bottom:6px;}
+.diploma-name{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;margin-bottom:4px;}
+.diploma-desc{font-size:10px;color:var(--muted2);}
+/* Visit badges */
+.visit-badges-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.vbadge{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--panel);min-width:80px;transition:all .3s;}
+.vbadge.earned{border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.07);box-shadow:0 0 14px rgba(255,215,0,.15);}
+.vbadge.locked{opacity:.35;filter:grayscale(1);}
+.vbadge-icon{font-size:30px;}
+.vbadge-name{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;color:var(--muted2);letter-spacing:1px;}
+.vbadge.earned .vbadge-name{color:var(--gold);}
+.vbadge-req{font-size:9px;color:var(--muted);}
+/* Badge unlock popup */
+.badge-unlock-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.5);z-index:700;background:linear-gradient(135deg,#1A1A2E,#2A1A3E);border:2px solid var(--gold);border-radius:20px;padding:28px 36px;text-align:center;opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+.badge-unlock-pop.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
+.bup-emoji{font-size:54px;margin-bottom:10px;}
+.bup-label{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.bup-name{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:#fff;letter-spacing:1px;}
+.bup-sub{font-size:12px;color:var(--muted2);margin-top:6px;}
+/* Hub badge counter */
+.hub-badges-row{display:flex;gap:6px;padding:10px 18px;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.hub-badge-mini{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--panel);border:1px solid var(--border);cursor:pointer;transition:all .2s;}
+.hub-badge-mini.earned{border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.08);}
+.hub-badge-mini.locked{opacity:.25;filter:grayscale(1);}
+/* Countdown extra missions tab */
+.dot-cdw{background:#FF6B00;box-shadow:0 0 6px rgba(255,107,0,.5);animation:dotPulse 1s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;}
@@ -356,6 +430,27 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
     <button class="sbtn" onclick="goMissions()">INICIAR MISIÓN ▶</button>
   </div>
 </div>
+<!-- BRIEFING ABR -->
+<div class="screen" id="sbriefing">
+  <div class="brief-wrap">
+    <div class="brief-challenge">
+      <div class="brief-challenge-label">⚡ RETO ABR — Aprendizaje Basado en Retos</div>
+      <div class="brief-challenge-q" id="brief-reto">¿Puedes salvar una vida hoy?</div>
+    </div>
+    <div class="brief-case">
+      <div class="brief-case-label">📋 CASO CLÍNICO</div>
+      <div class="brief-case-icon" id="brief-icon">🏫</div>
+      <div class="brief-case-title" id="brief-title">—</div>
+      <div class="brief-case-desc" id="brief-desc">—</div>
+    </div>
+    <div class="brief-objective">
+      <div class="brief-obj-icon">🎯</div>
+      <div class="brief-obj-text"><strong>OBJETIVO MEDIBLE:</strong> Completa la misión con <strong>precisión ≥75%</strong> y <strong>0 errores críticos</strong> para demostrar dominio del protocolo BLS.</div>
+    </div>
+    <div class="brief-tip" id="brief-tip">💡 Consejo táctico...</div>
+    <button class="brief-start-btn" id="brief-start-btn">⚡ ACEPTAR EL RETO</button>
+  </div>
+</div>
 <!-- MISSIONS HUB -->
 <div class="screen" id="sm">
   <div class="mhdr">
@@ -368,6 +463,7 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
       <div class="gs"><div class="gsv cyan" id="mdone">0/20</div><div class="gsl">Misiones</div></div>
       <button id="testbtn" onclick="testSheets()" style="background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🔌 TEST</button>
       <button onclick="showTracking()" style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">📊</button>
+      <button onclick="showBadges()" style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🏅 INSIGNIAS</button>
     </div>
   </div>
   <div class="mbody">
@@ -379,6 +475,7 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
     <div class="mode-nav">
       <div class="mbtn" onclick="startEpic()"><div class="mi">🔥</div><div class="mn">MODO ÉPICO</div><div class="md">8 misiones · colecciona fragmentos · certificado maestro</div></div>
       <div class="mbtn" onclick="startTrivia()"><div class="mi">🧠</div><div class="mn">APRENDE EN ACCIÓN</div><div class="md">10 retos visuales · 20 seg · combo x3</div></div>
+      <div class="mbtn" id="cdw-mode-btn" onclick="showCdwMissions()" style="display:none;"><div class="mi">⏱</div><div class="mn">MODO CONTRARRELOJ</div><div class="md">Misiones extra · tiempo límite · desbloqueable</div></div>
     </div>
   </div>
 </div>
@@ -458,6 +555,10 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 </div>
 <!-- SIMULATOR -->
 <div class="screen" id="sc">
+  <div class="cdw-wrap" id="cdwrap">
+    <div class="cdw-label">⏱ TIEMPO</div>
+    <div class="cdw-time" id="cdwtime">5:00</div>
+  </div>
   <div class="simtop">
     <button class="backbtn" onclick="endMission()">← SALIR</button>
     <div class="siminfo"><div class="simname" id="simname">MISIÓN</div><div class="simphase" id="simphase">FASE: EVALUACIÓN</div></div>
@@ -670,7 +771,7 @@ function createParticles(){
 }
 function showScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const m={splash:'ss',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr'};
+  const m={splash:'ss',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
   document.getElementById(m[n]||n).classList.add('active');
   if(n==='missions')renderHub();
 }
@@ -680,6 +781,8 @@ function goMissions(){
   S.course=(document.getElementById('pcourse').value.trim()||'—').toUpperCase();
   S.inst=(document.getElementById('pinst').value.trim()||'—').toUpperCase();
   if(!S.sessionStart) S.sessionStart = Date.now();
+  registerVisit();
+  if(BS._cdwUnlocked){ const b=document.getElementById('cdw-mode-btn'); if(b)b.style.display=''; }
   showScreen('missions');
 }
 
@@ -704,7 +807,7 @@ function renderHub(){
     const done=S.done.includes(m.id);
     const c=document.createElement('div');
     c.className='mcard'+(done?' done':'');
-    c.onclick=()=>startMission(m);
+    c.onclick=()=>showBriefing(m);
     c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">${m.icon}</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><div class="mtip">${m.tip}</div><div class="mfoot"><span class="mpts">★ ${m.pts} pts</span><span class="mtime">⏱ ${m.time}</span><div class="msi ${done?'si-done':'si-open'}">${done?'✓':'▶'}</div></div>`;
     grid.appendChild(c);
   });
@@ -1949,7 +2052,6 @@ function finalizarMision(){
     erroresCrit: S.critErrors||0,
     primerFallo: S.primerFallo || 'Ninguno',
     tiempoSeg: tiempoSeg,
-    tiempoMin: Math.round(tiempoSeg/60*10)/10,
     nivelMaxSesion: nivelMax,
     sesionTotalMin: S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
     misionesAbandonadas: S.abandonadas||0,
@@ -1963,6 +2065,8 @@ function finalizarMision(){
     if(!S.done.includes(S.currentMission.id)) S.done.push(S.currentMission.id);
     S.totalPts += currentPts;
     actualizarRangoGlobal();
+    awardMissionBadge(S.currentMission.id);
+    if(S.currentMission._cdwMode) stopCdwTimer();
     if(S.isEpic){
       handleEpicComplete(currentPts);
     } else {
@@ -2045,6 +2149,8 @@ function finishMission(){
   if(!S.done.includes(S.currentMission.id))S.done.push(S.currentMission.id);
   S.totalPts+=pts;
   actualizarRangoGlobal();
+  awardMissionBadge(S.currentMission.id);
+  if(S.currentMission._cdwMode) stopCdwTimer();
   const chatInput=document.querySelector('.chatinput');
   if(chatInput)chatInput.style.display='';
   if(S.isEpic){handleEpicComplete(pts);return;}
@@ -2054,6 +2160,7 @@ function endMission(){
   // Salir sin completar: NO otorga fragmento épico ni puntos
   // Registrar como misión abandonada
   if(S.currentMission && currentPaso < 8){
+    if(S.currentMission._cdwMode) stopCdwTimer();
     S.abandonadas = (S.abandonadas||0) + 1;
     const recAban = {
       nombre:              S.name,
@@ -2319,7 +2426,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbwyGkR2hDblrF3cNCGmuZvgtIho18RA-Olu5HQd2bhDdiWUU37x1rR0n07fhwf-X4aQ/exec',
+  url: 'https://script.google.com/macros/s/AKfycbw_kj8BHtKx3XgggblYtNVbutvGHaaH31YH_h9mw0W56M8pE0y3uQGS6uXz8hOxUcnT/exec',
   enabled: true
 };
 
@@ -2359,7 +2466,7 @@ async function enviarASheets(record){
         precision:           record.precision           !== undefined ? record.precision : 0,
         erroresCrit:         record.erroresCrit         || 0,
         primerFallo:         record.primerFallo         || 'Ninguno',
-        tiempoMin:           record.tiempoMin || 0,
+        tiempoSeg:           record.tiempoSeg           || 0,
         nivelMaxSesion:      record.nivelMaxSesion      || '',
         sesionTotalMin:      record.sesionTotalMin      || 0,
         misionesAbandonadas: record.misionesAbandonadas || 0,
@@ -2553,6 +2660,298 @@ function exportCSV(){
   URL.revokeObjectURL(url);
 }
 
+// ══════════════════════════════════════════════════════════
+// SISTEMA DE INSIGNIAS, DIPLOMAS Y VISITAS — RCP HERO v3
+// ══════════════════════════════════════════════════════════
+
+// ── Definición de insignias por misión ──
+const MISSION_BADGES = {
+  E1:{icon:'🚶',name:'Primer Respondedor',desc:'Pasillo Solitario'},
+  E2:{icon:'📚',name:'Guardián del Aula',desc:'Clase Silenciosa'},
+  E3:{icon:'🍽️',name:'Héroe de la Cafetería',desc:'Cafetería'},
+  E4:{icon:'📖',name:'Custodio del Saber',desc:'Biblioteca'},
+  E5:{icon:'🌳',name:'Ángel del Parque',desc:'Parque'},
+  M1:{icon:'🎭',name:'Héroe del Escenario',desc:'Acto Cultural'},
+  M2:{icon:'🏃',name:'Campeón de Cancha',desc:'Ed. Física'},
+  M3:{icon:'🚻',name:'Rescate Silencioso',desc:'Emergencia Baño'},
+  M4:{icon:'🚌',name:'Guardián del Bus',desc:'Bus Escolar'},
+  M5:{icon:'🚪',name:'Héroe de la Entrada',desc:'Entrada Colegio'},
+  H1:{icon:'👩‍🏫',name:'Alumno que Salva',desc:'El Docente Cae'},
+  H2:{icon:'🏠',name:'Guardián del Hogar',desc:'El Abuelo'},
+  H3:{icon:'🏪',name:'Héroe de la Tienda',desc:'Tienda Escolar'},
+  H4:{icon:'🏬',name:'Líder en el Caos',desc:'Centro Comercial'},
+  H5:{icon:'☀️',name:'Resistente al Calor',desc:'Golpe de Calor'},
+  X1:{icon:'🎪',name:'Héroe del Estadio',desc:'Evento Deportivo'},
+  X2:{icon:'🌙',name:'Guardián Nocturno',desc:'Salida Nocturna'},
+  X3:{icon:'👥',name:'Decisor Maestro',desc:'Dos Víctimas'},
+  X4:{icon:'🌧️',name:'Imparable',desc:'Bajo la Lluvia'},
+  X5:{icon:'🏔️',name:'Héroe en la Cima',desc:'Excursión Remota'},
+};
+
+// ── Diplomas por nivel ──
+const DIPLOMAS = [
+  {id:'easy',  icon:'🥉',name:'RESCATADOR BÁSICO',   desc:'Completaste los 5 escenarios Fácil',     missions:['E1','E2','E3','E4','E5'],  color:'var(--green)'},
+  {id:'mid',   icon:'🥈',name:'RESCATADOR ACTIVO',   desc:'Completaste los 5 escenarios Intermedio', missions:['M1','M2','M3','M4','M5'],  color:'var(--gold)'},
+  {id:'hard',  icon:'🥇',name:'RESCATADOR EXPERTO',  desc:'Completaste los 5 escenarios Difícil',   missions:['H1','H2','H3','H4','H5'],  color:'var(--red2)'},
+  {id:'exp',   icon:'👑',name:'HÉROE MÁXIMO',        desc:'Completaste los 5 escenarios Experto',   missions:['X1','X2','X3','X4','X5'],  color:'var(--purple)'},
+];
+
+// ── Insignias de visita ──
+const VISIT_BADGES = [
+  {visits:1,  icon:'🥉',name:'BRONCE',   sub:'Primera visita — ¡Bienvenido, Héroe!'},
+  {visits:3,  icon:'🥈',name:'PLATA',    sub:'3 visitas — Comprometido con salvar vidas'},
+  {visits:5,  icon:'🥇',name:'MÁSTER',   sub:'5 visitas — Constancia de Héroe'},
+  {visits:10, icon:'👑',name:'GOLDEN',   sub:'10 visitas — Leyenda del simulador'},
+];
+
+// ── Misiones contrarreloj extra (desbloqueables) ──
+const CDW_MISSIONS = [
+  {id:'CDW1',icon:'⏱',title:'RELOJ DE ARENA',   desc:'Clásico E1 — 3 minutos para completarlo',  ref:'E1', timeLimit:180},
+  {id:'CDW2',icon:'⚡',title:'VELOCIDAD MÁXIMA', desc:'Escenario M2 — coordinación en 4 minutos', ref:'M2', timeLimit:240},
+  {id:'CDW3',icon:'🔥',title:'PRESIÓN EXTREMA',  desc:'Escenario H4 — 5 minutos, sin errores',    ref:'H4', timeLimit:300},
+  {id:'CDW4',icon:'💀',title:'MODO ÉLITE',        desc:'Escenario X5 — 6 minutos, nivel máximo',   ref:'X5', timeLimit:360},
+];
+
+// ── Estado de insignias (en memoria de sesión) ──
+// Se usa localStorage para persistencia entre visitas
+function loadBadgeState(){
+  try{
+    const raw = localStorage.getItem('rcphero_badges');
+    return raw ? JSON.parse(raw) : {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[]};
+  }catch(e){ return {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[]}; }
+}
+function saveBadgeState(bs){
+  try{ localStorage.setItem('rcphero_badges', JSON.stringify(bs)); }catch(e){}
+}
+let BS = loadBadgeState();
+
+// ── Registrar visita ──
+function registerVisit(){
+  BS.visitCount = (BS.visitCount||0) + 1;
+  const prev = BS.visitBadges.length;
+  VISIT_BADGES.forEach(vb => {
+    if(BS.visitCount >= vb.visits && !BS.visitBadges.includes(vb.name)){
+      BS.visitBadges.push(vb.name);
+      setTimeout(()=>showBadgeUnlock(vb.icon, vb.name+' '+vb.icon, vb.sub), 1200);
+    }
+  });
+  saveBadgeState(BS);
+}
+
+// ── Otorgar insignia de misión ──
+function awardMissionBadge(missionId){
+  if(!BS.missionBadges.includes(missionId)){
+    BS.missionBadges.push(missionId);
+    const bd = MISSION_BADGES[missionId];
+    if(bd) showBadgeUnlock(bd.icon, bd.name, 'Misión completada: '+bd.desc);
+    checkDiplomas();
+    saveBadgeState(BS);
+  }
+}
+
+// ── Verificar diplomas ──
+function checkDiplomas(){
+  DIPLOMAS.forEach(dip => {
+    if(!BS.diplomasEarned.includes(dip.id)){
+      const allDone = dip.missions.every(mid => BS.missionBadges.includes(mid));
+      if(allDone){
+        BS.diplomasEarned.push(dip.id);
+        setTimeout(()=>showBadgeUnlock('📜', 'DIPLOMA: '+dip.name, dip.desc), 2800);
+        // Si completa experto → desbloquear contrarreloj
+        if(dip.id === 'exp') unlockCdwMode();
+        saveBadgeState(BS);
+      }
+    }
+  });
+}
+
+// ── Desbloquear modo contrarreloj ──
+function unlockCdwMode(){
+  const btn = document.getElementById('cdw-mode-btn');
+  if(btn) btn.style.display='';
+  if(!BS._cdwUnlocked){
+    BS._cdwUnlocked = true;
+    saveBadgeState(BS);
+    setTimeout(()=>showBadgeUnlock('⏱','MODO CONTRARRELOJ','¡Misiones extra desbloqueadas!'), 4000);
+  }
+}
+
+// ── Popup de insignia ──
+function showBadgeUnlock(emoji, name, sub){
+  const pop = document.getElementById('badgeUnlockPop');
+  document.getElementById('bupEmoji').textContent = emoji;
+  document.getElementById('bupName').textContent = name;
+  document.getElementById('bupSub').textContent = sub;
+  pop.classList.add('show');
+  setTimeout(()=>pop.classList.remove('show'), 3000);
+}
+
+// ── Mostrar modal de insignias ──
+function showBadges(){
+  renderBadgeModal();
+  document.getElementById('badgeModal').classList.add('show');
+}
+function closeBadges(){
+  document.getElementById('badgeModal').classList.remove('show');
+}
+function renderBadgeModal(){
+  // Visit badges
+  const vrow = document.getElementById('visitBadgesRow');
+  vrow.innerHTML = '';
+  VISIT_BADGES.forEach(vb => {
+    const earned = BS.visitBadges.includes(vb.name);
+    const el = document.createElement('div');
+    el.className = 'vbadge' + (earned?' earned':' locked');
+    el.innerHTML = `<div class="vbadge-icon">${vb.icon}</div><div class="vbadge-name">${vb.name}</div><div class="vbadge-req">${vb.visits} visita${vb.visits>1?'s':''}</div>`;
+    if(earned) el.title = vb.sub;
+    vrow.appendChild(el);
+  });
+  // Visit count display
+  const vc = document.createElement('div');
+  vc.style.cssText = 'font-size:11px;color:var(--muted);text-align:center;width:100%;margin-top:6px;';
+  vc.textContent = `Visitas totales: ${BS.visitCount||0}`;
+  vrow.appendChild(vc);
+
+  // Mission badges
+  const mgrid = document.getElementById('missionBadgesGrid');
+  mgrid.innerHTML = '';
+  Object.entries(MISSION_BADGES).forEach(([id, bd]) => {
+    const earned = BS.missionBadges.includes(id);
+    const el = document.createElement('div');
+    el.className = 'badge-item' + (earned?' earned':' locked');
+    el.innerHTML = `<div class="badge-icon">${bd.icon}</div><div class="badge-name">${bd.name}</div>`;
+    el.title = bd.desc + (earned?' ✓':'');
+    mgrid.appendChild(el);
+  });
+
+  // Diplomas
+  const dgrid = document.getElementById('diplomasGrid');
+  dgrid.innerHTML = '';
+  DIPLOMAS.forEach(dip => {
+    const earned = BS.diplomasEarned.includes(dip.id);
+    const el = document.createElement('div');
+    el.className = 'diploma-card' + (earned?' earned':' locked');
+    const progress = dip.missions.filter(m=>BS.missionBadges.includes(m)).length;
+    el.innerHTML = `<div class="diploma-icon">${dip.icon}</div><div class="diploma-name">${dip.name}</div><div class="diploma-desc">${dip.desc}</div><div style="font-size:10px;color:var(--muted);margin-top:6px;">${progress}/5 misiones</div>`;
+    dgrid.appendChild(el);
+  });
+}
+
+// ── Briefing ABR ──
+let _briefingMission = null;
+let _briefingIsEpic = false;
+function showBriefing(m, isEpic=false){
+  _briefingMission = m;
+  _briefingIsEpic = isEpic;
+  // Reto personalizado
+  const retos = {
+    E1:`¿Puedes salvar a tu compañero en el pasillo antes de que sea tarde?`,
+    E2:`¿Actúas sin crear pánico? Tu compañero necesita que seas el primero en moverse.`,
+    E3:`El efecto espectador paraliza a todos. ¿Serás tú quien rompa el silencio?`,
+    E4:`Una adulta depende de ti. ¿Tienes el valor de actuar ante alguien mayor?`,
+    E5:`Un desconocido cae frente a ti. ¿La distancia emocional te frena o actúas?`,
+    M1:`300 pares de ojos te miran. ¿Puedes liderar en el escenario más visible?`,
+    M2:`El DEA está a 40 metros. ¿Sabes coordinar el equipo sin perder tiempo?`,
+    M3:`Espacio reducido, protocolo completo. ¿El entorno te desconcentra?`,
+    M4:`El bus se mueve. ¿Puedes mantener la calma y dirigir al conductor?`,
+    M5:`El vigilante está en shock. ¿Puedes asumir el liderazgo frente a un adulto?`,
+    H1:`Tu profesor cae. El salón enloquece. ¿Eres capaz de tomar el control?`,
+    H2:`Estás solo con tu abuelo. La carga emocional es máxima. ¿Mantienes el protocolo?`,
+    H3:`Espacio estrecho, equipo pequeño. ¿Puedes coordinar con solo dos personas?`,
+    H4:`Los guardias no saben qué hacer. ¿Tienes la confianza de liderar frente a adultos?`,
+    H5:`36°C. El calor desconcentra. ¿El protocolo cambia? ¡Demuéstralo!`,
+    X1:`100 personas en caos. ¿Puedes ser el único que mantiene la cabeza fría?`,
+    X2:`Oscuridad y confusión. ¿Tus manos recuerdan el protocolo aunque los ojos no vean?`,
+    X3:`Dos víctimas, una sola decisión. ¿Puedes priorizar sin dudar?`,
+    X4:`La lluvia no para la RCP. ¿Puedes demostrar que tampoco te para a ti?`,
+    X5:`Sin señal, sin DEA, a 2km. Solo tus manos. ¿Eres el héroe que esta persona necesita?`,
+  };
+  const reto = retos[m.id] || `¿Puedes completar la misión ${m.id} con 0 errores críticos?`;
+  document.getElementById('brief-reto').textContent = reto;
+  document.getElementById('brief-icon').textContent = m.icon;
+  document.getElementById('brief-title').textContent = m.id + ': ' + m.title;
+  document.getElementById('brief-desc').textContent = m.desc;
+  document.getElementById('brief-tip').textContent = m.tip;
+  document.getElementById('brief-start-btn').onclick = () => {
+    showScreen('simulator');
+    startMission(_briefingMission, _briefingIsEpic);
+  };
+  showScreen('briefing');
+}
+
+// ── Modo contrarreloj ──
+let _cdwInterval = null;
+let _cdwTimeLeft = 0;
+let _cdwMissionRef = null;
+
+function showCdwMissions(){
+  const list = document.getElementById('cdwMissionsList');
+  list.innerHTML = '';
+  CDW_MISSIONS.forEach(cm => {
+    const done = BS.cdwDone && BS.cdwDone.includes(cm.id);
+    const el = document.createElement('div');
+    el.style.cssText = `background:var(--panel);border:1px solid ${done?'rgba(0,255,136,.4)':'rgba(255,107,0,.3)'};border-radius:12px;padding:14px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .3s;`;
+    el.innerHTML = `<div style="font-size:28px;">${cm.icon}</div><div style="flex:1;"><div style="font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:${done?'var(--green)':'var(--orange)'};letter-spacing:1px;margin-bottom:3px;">${cm.title}${done?' ✓':''}</div><div style="font-size:11px;color:var(--muted2);">${cm.desc}</div></div><div style="font-family:'Orbitron',monospace;font-size:13px;color:var(--orange);">${Math.floor(cm.timeLimit/60)}:00</div>`;
+    el.onclick = () => {
+      document.getElementById('cdwModal').style.display = 'none';
+      startCdwMission(cm);
+    };
+    list.appendChild(el);
+  });
+  document.getElementById('cdwModal').style.display = 'flex';
+}
+
+function startCdwMission(cm){
+  _cdwMissionRef = cm;
+  _cdwTimeLeft = cm.timeLimit;
+  const missionData = getMissionByRef(cm.ref);
+  if(!missionData) return;
+  // Show briefing with countdown context
+  const cdwM = {...missionData, _cdwMode:true, _cdwLimit:cm.timeLimit, _cdwId:cm.id};
+  showScreen('simulator');
+  startMission(cdwM, false);
+  startCdwTimer(cm.timeLimit, cm.id);
+}
+
+function startCdwTimer(seconds, cdwId){
+  clearInterval(_cdwInterval);
+  _cdwTimeLeft = seconds;
+  const wrap = document.getElementById('cdwrap');
+  const display = document.getElementById('cdwtime');
+  if(wrap) wrap.classList.add('show');
+  function updateDisplay(){
+    const m = Math.floor(_cdwTimeLeft/60);
+    const s = _cdwTimeLeft % 60;
+    display.textContent = m+':'+(s<10?'0':'')+s;
+    display.className = 'cdw-time' + (_cdwTimeLeft<=30?' danger':_cdwTimeLeft<=60?' warn':'');
+  }
+  updateDisplay();
+  _cdwInterval = setInterval(()=>{
+    _cdwTimeLeft--;
+    updateDisplay();
+    if(_cdwTimeLeft <= 0){
+      clearInterval(_cdwInterval);
+      if(wrap) wrap.classList.remove('show');
+      // Time's up — fail
+      mostrarMensajeIA('⏰ **¡TIEMPO AGOTADO!**\n\n¡El tiempo límite expiró! En la vida real cada segundo cuenta. ¡Vuelve a intentarlo!');
+      setTimeout(()=>{ pasosBloqueados=true; showScreen('missions'); }, 2500);
+    }
+  }, 1000);
+}
+
+function stopCdwTimer(){
+  clearInterval(_cdwInterval);
+  const wrap = document.getElementById('cdwrap');
+  if(wrap) wrap.classList.remove('show');
+  // Award CDW badge
+  if(_cdwMissionRef && !BS.cdwDone.includes(_cdwMissionRef.id)){
+    BS.cdwDone.push(_cdwMissionRef.id);
+    saveBadgeState(BS);
+    showBadgeUnlock('⏱', 'CONTRARRELOJ: '+_cdwMissionRef.title, '¡Completado en tiempo!');
+  }
+  _cdwMissionRef = null;
+}
+
 init();
 
 </script>
@@ -2574,6 +2973,39 @@ init();
       <button onclick="copyCode()" style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:10px;letter-spacing:1px;">📋 COPIAR CÓDIGO</button>
       <button onclick="if(confirm('¿Borrar datos de esta sesión?')){clearTracking()}" style="background:rgba(255,30,45,.08);border:1px solid var(--border);color:var(--muted);padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:10px;letter-spacing:1px;">🗑️ LIMPIAR</button>
     </div>
+  </div>
+</div>
+<!-- BADGE UNLOCK POPUP -->
+<div class="badge-unlock-pop" id="badgeUnlockPop">
+  <div class="bup-emoji" id="bupEmoji">🏅</div>
+  <div class="bup-label">¡INSIGNIA DESBLOQUEADA!</div>
+  <div class="bup-name" id="bupName">—</div>
+  <div class="bup-sub" id="bupSub">—</div>
+</div>
+<!-- BADGE MODAL -->
+<div class="badge-modal-overlay" id="badgeModal">
+  <div class="badge-modal">
+    <div class="badge-modal-hdr">
+      <div class="badge-modal-title">🏅 MIS INSIGNIAS Y DIPLOMAS</div>
+      <button class="badge-close-btn" onclick="closeBadges()">✕</button>
+    </div>
+    <div class="badge-section-title">INSIGNIAS DE VISITA</div>
+    <div class="visit-badges-row" id="visitBadgesRow"></div>
+    <div class="badge-section-title">INSIGNIAS DE MISIÓN (1 por misión completada)</div>
+    <div class="badges-grid" id="missionBadgesGrid"></div>
+    <div class="badge-section-title">DIPLOMAS DE NIVEL</div>
+    <div class="diplomas-grid" id="diplomasGrid"></div>
+  </div>
+</div>
+<!-- COUNTDOWN MISSIONS MODAL -->
+<div id="cdwModal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);overflow-y:auto;padding:16px;">
+  <div style="max-width:520px;margin:0 auto;background:var(--panel2);border:1px solid rgba(255,107,0,.4);border-radius:18px;padding:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--orange);letter-spacing:2px;">⏱ MISIONES CONTRARRELOJ</div>
+      <button onclick="document.getElementById('cdwModal').style.display='none'" style="background:rgba(255,30,45,.15);border:1px solid var(--border2);color:var(--red2);padding:7px 13px;border-radius:8px;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--muted2);margin-bottom:16px;line-height:1.6;">Misiones extra desbloqueadas al completar el nivel Experto. El reloj corre — ¿puedes hacerlo a tiempo?</div>
+    <div id="cdwMissionsList" style="display:flex;flex-direction:column;gap:10px;"></div>
   </div>
 </div>
 </body>
