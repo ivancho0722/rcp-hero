@@ -2426,7 +2426,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbxi7uiHCFhG-oORcnhVsSEwBLf48dgGHGoFTxQKR1ypUrxCexJLgnA1oq4jNzwwSF_W/exec',
+  url: 'https://script.google.com/macros/s/AKfycbyBXkszAT1VPIKDoT4yU09cCQ7KztpBDahiwDkjRFsrIWMkVCdQ1wOusPaqDZ5C1FxM/exec',
   enabled: true
 };
 
@@ -2725,17 +2725,29 @@ function saveBadgeState(bs){
 }
 let BS = loadBadgeState();
 
-// ── Registrar visita ──
-function registerVisit(){
-  BS.visitCount = (BS.visitCount||0) + 1;
-  const prev = BS.visitBadges.length;
-  VISIT_BADGES.forEach(vb => {
-    if(BS.visitCount >= vb.visits && !BS.visitBadges.includes(vb.name)){
-      BS.visitBadges.push(vb.name);
-      setTimeout(()=>showBadgeUnlock(vb.icon, vb.name+' '+vb.icon, vb.sub), 1200);
-    }
-  });
-  saveBadgeState(BS);
+// ── Consultar visitas reales desde Google Sheets ──
+async function registerVisit(){
+  const nombre = S.name || '';
+  if(!nombre || nombre === 'HÉROE') return;
+  try {
+    const url = SHEETS_CONFIG.url + '?nombre=' + encodeURIComponent(nombre);
+    const res = await fetch(url);
+    const data = await res.json();
+    const visitas = data.visitas || 0;
+    // Guardar en BS para mostrar en el panel
+    BS.visitCount = visitas;
+    // Otorgar insignias según visitas reales
+    VISIT_BADGES.forEach(vb => {
+      if(visitas >= vb.visits && !BS.visitBadges.includes(vb.name)){
+        BS.visitBadges.push(vb.name);
+        setTimeout(()=>showBadgeUnlock(vb.icon, vb.name+' '+vb.icon, vb.sub), 1500);
+      }
+    });
+    saveBadgeState(BS);
+  } catch(e) {
+    // Si no hay conexión, no mostrar insignias de visita — silencioso
+    console.log('No se pudo consultar visitas:', e);
+  }
 }
 
 // ── Otorgar insignia de misión ──
