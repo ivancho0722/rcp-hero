@@ -2426,7 +2426,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbyGZtyIkKb72fWI-HnpRHqSIRVdzeiQw8Zl5fcREOeU6AHTr1BjyPt3fbIRT3TZM_i4/exec',
+  url: 'https://script.google.com/macros/s/AKfycbwKiXc76pKVTAJhxVEgeoOSI_Wm-k-jdpOpoNlSaVc07I6dbdv0e7P53I6oC5WF-Hc8/exec',
   enabled: true
 };
 
@@ -2449,11 +2449,7 @@ async function testSheets(){
 async function enviarASheets(record){
   if(!SHEETS_CONFIG.enabled || !SHEETS_CONFIG.url) return;
   try {
-    await fetch(SHEETS_CONFIG.url, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
+    const payload = JSON.stringify({
         timestamp:           new Date().toISOString(),
         nombre:              record.nombre              || '',
         mision:              record.mision              || '',
@@ -2473,7 +2469,12 @@ async function enviarASheets(record){
         pasoAlCancelar:      record.pasoAlCancelar      || 0,
         fecha:               record.fecha               || '',
         hora:                record.hora                || ''
-      })
+    });
+    await fetch(SHEETS_CONFIG.url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: payload
     });
     console.log('✅ Enviado a Sheets:', record.estado, record.mision);
   } catch(e) {
