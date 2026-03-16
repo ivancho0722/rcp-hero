@@ -149,8 +149,42 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .sec-title{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
 .lvl-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.lvltab{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:9px 16px;cursor:pointer;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:6px;}
-.lvltab:hover,.lvltab.active{border-color:var(--border2);color:var(--text);background:rgba(255,30,45,.08);}
+.lvltab{ display:none; }
+/* ── Tarjetas de nivel ── */
+.nivel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+@media(max-width:480px){.nivel-grid{grid-template-columns:repeat(2,1fr);gap:8px;}}
+.nivel-card{
+  border-radius:14px;padding:12px 8px 10px;cursor:pointer;
+  border:2px solid transparent;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:all .25s cubic-bezier(.34,1.2,.64,1);
+  position:relative;overflow:hidden;
+  background:var(--panel);
+}
+.nivel-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;}
+.nivel-card:active{transform:scale(.96);}
+.nivel-card.active{border-color:currentColor;transform:scale(1.04);}
+.nivel-card.active::before{opacity:1;}
+.nc-emoji{font-size:28px;line-height:1;transition:all .25s;}
+.nivel-card.active .nc-emoji{font-size:34px;}
+.nc-label{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;}
+.nc-pts{font-size:9px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;text-align:center;}
+.nc-bar{width:100%;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:2px;}
+.nc-fill{height:100%;border-radius:3px;transition:width .5s ease;}
+.nc-prog{font-size:8px;font-family:'Share Tech Mono',monospace;letter-spacing:.5px;text-align:center;margin-top:1px;}
+/* Colores por nivel */
+.nc-easy{color:#00C853;}
+.nc-easy::before{background:rgba(0,200,83,.07);}
+.nc-easy.active{box-shadow:0 0 20px rgba(0,200,83,.3);}
+.nc-mid{color:#FFD700;}
+.nc-mid::before{background:rgba(255,215,0,.07);}
+.nc-mid.active{box-shadow:0 0 20px rgba(255,215,0,.3);}
+.nc-hard{color:#FF4D57;}
+.nc-hard::before{background:rgba(255,30,45,.07);}
+.nc-hard.active{box-shadow:0 0 20px rgba(255,30,45,.3);}
+.nc-exp{color:#A855F7;}
+.nc-exp::before{background:rgba(168,85,247,.07);}
+.nc-exp.active{box-shadow:0 0 20px rgba(168,85,247,.3);}
 .dot{width:8px;height:8px;border-radius:50%;}
 .dot-easy{background:var(--green);box-shadow:0 0 6px var(--greglow);}
 .dot-mid{background:var(--gold);box-shadow:0 0 6px var(--gglow);}
@@ -698,8 +732,7 @@ body.fs-extra .mcard      { padding: 16px !important; }
     </div>
   </div>
   <div class="mbody">
-    <div class="sec-title">ELIGE TU NIVEL</div>
-    <div class="lvl-tabs" id="lvltabs"></div>
+    <div class="nivel-grid" id="nivel-grid"></div>
     <div class="lvl-desc" id="lvldesc"></div>
     <div class="mgrid" id="mgrid"></div>
     <div class="sec-title" style="margin-top:22px;">MODOS ESPECIALES</div>
@@ -1006,6 +1039,7 @@ function createParticles(){
   }
 }
 function showScreen(n){
+  window.scrollTo(0,0);
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const m={splash:'ss',welcome:'swelcome',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
   document.getElementById(m[n]||n).classList.add('active');
@@ -1129,40 +1163,38 @@ function renderHub(){
     av.style.background = rc.bg;
     av.style.boxShadow = '0 0 14px ' + rc.glow;
   }
-  const tabs=document.getElementById('lvltabs'); tabs.innerHTML='';
+  // Tarjetas de nivel
+  const ncColors = {easy:'nc-easy',mid:'nc-mid',hard:'nc-hard',exp:'nc-exp'};
+  const ncBarColors = {easy:'#00C853',mid:'#FFD700',hard:'#FF4D57',exp:'#A855F7'};
+  const ncPts = {easy:'80 pts',mid:'120 pts',hard:'160 pts',exp:'200 pts'};
+  const grid = document.getElementById('nivel-grid'); grid.innerHTML='';
   LEVELS.forEach(lv=>{
-    const t=document.createElement('div');
-    t.className='lvltab'+(S.currentLevel===lv.id?' active':'');
-    t.innerHTML=`<span class="dot ${lv.dot}"></span>${lv.emoji} ${lv.label}`;
-    t.onclick=()=>{S.currentLevel=lv.id;renderHub();};
-    tabs.appendChild(t);
+    const lvMs = lv.missions||[];
+    const lvD = lvMs.filter(m=>S.done.includes(m.id)).length;
+    const lvT = lvMs.length;
+    const pct = lvT>0 ? Math.round(lvD/lvT*100) : 0;
+    const isActive = S.currentLevel===lv.id;
+    const card = document.createElement('div');
+    card.className='nivel-card '+ncColors[lv.id]+(isActive?' active':'');
+    card.innerHTML='<div class="nc-emoji">'+lv.emoji+'</div>'
+      +'<div class="nc-label">'+lv.label+'</div>'
+      +'<div class="nc-pts">'+ncPts[lv.id]+'</div>'
+      +'<div class="nc-bar"><div class="nc-fill" style="width:'+pct+'%;background:'+ncBarColors[lv.id]+';"></div></div>'
+      +'<div class="nc-prog">'+lvD+'/'+lvT+'</div>';
+    card.onclick=()=>{S.currentLevel=lv.id;renderHub();};
+    grid.appendChild(card);
   });
   const lv=LEVELS.find(l=>l.id===S.currentLevel);
   document.getElementById('lvldesc').textContent=lv.desc;
-  // Barra de progreso del nivel activo
-  const lvMissions = lv.missions || [];
-  const lvDone = lvMissions.filter(m=>S.done.includes(m.id)).length;
-  const lvTotal = lvMissions.length;
-  const lvPct = lvTotal > 0 ? Math.round(lvDone/lvTotal*100) : 0;
-  const lvColorMap = {easy:'#00C853',med:'#FFD700',hard:'#FF1E2D',epic:'#A855F7'};
-  const lvColor = lvColorMap[lv.id]||'var(--cyan)';
-  let progressWrap = document.getElementById('lvl-progress-wrap');
-  if(!progressWrap){
-    progressWrap = document.createElement('div');
-    progressWrap.id = 'lvl-progress-wrap';
-    progressWrap.className = 'lvl-progress-wrap';
-    const descEl = document.getElementById('lvldesc');
-    descEl.parentNode.insertBefore(progressWrap, descEl.nextSibling);
-  }
-  progressWrap.innerHTML = '<div class="lvl-progress-bar"><div class="lvl-progress-fill" style="width:'+lvPct+'%;background:'+lvColor+';box-shadow:0 0 8px '+lvColor+'40;"></div></div><div class="lvl-progress-lbl"><span>'+lvDone+' de '+lvTotal+' misiones</span><span>'+lvPct+'%</span></div>';
-  const grid=document.getElementById('mgrid'); grid.innerHTML='';
+
+  const mgrid=document.getElementById('mgrid'); mgrid.innerHTML='';
   lv.missions.forEach(m=>{
     const done=S.done.includes(m.id);
     const c=document.createElement('div');
     c.className='mcard'+(done?' done':'');
     c.onclick=()=>showBriefing(m);
     c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">${m.icon}</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><div class="mtip">${m.tip}</div><div class="mfoot"><span class="mpts">★ ${m.pts} pts</span><span class="mtime">⏱ ${m.time}</span><div class="msi ${done?'si-done':'si-open'}">${done?'✓':'▶'}</div></div>`;
-    grid.appendChild(c);
+    mgrid.appendChild(c);
   });
 }
 
