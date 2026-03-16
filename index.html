@@ -131,7 +131,9 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .sbtn:hover{transform:translateY(-3px);box-shadow:0 0 50px var(--rglow),0 8px 30px rgba(0,0,0,.6);}
 /* HUB */
 #sm{padding:0;}
-.mhdr{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10;}
+.mhdr{padding:10px 14px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10;}
+.mhdr-row1{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.mhdr-row2{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px;}
 .pinfo{display:flex;align-items:center;gap:12px;}
 .pav{width:40px;height:40px;background:linear-gradient(135deg,var(--rdark),var(--red));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;font-family:'Orbitron',monospace;letter-spacing:0;box-shadow:0 0 12px var(--rglow);color:#fff;transition:background .4s,box-shadow .4s;}
 .pname-d{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:1px;}
@@ -702,16 +704,20 @@ body.fs-extra .mcard      { padding: 16px !important; }
 <!-- MISSIONS HUB -->
 <div class="screen" id="sm">
   <div class="mhdr">
-    <div class="pinfo">
-      <div class="pav" id="hub-avatar">?</div>
-      <div>
-        <div class="pname-d" id="dname">HÉROE</div>
-        <div class="prank-d" id="drank">RANGO: NOVATO<span id="hub-streak"></span></div>
+    <div class="mhdr-row1">
+      <div class="pinfo">
+        <div class="pav" id="hub-avatar">?</div>
+        <div>
+          <div class="pname-d" id="dname">HÉROE</div>
+          <div class="prank-d" id="drank">RANGO: NOVATO<span id="hub-streak"></span></div>
+        </div>
+      </div>
+      <div class="gstats">
+        <div class="gs"><div class="gsv gold" id="tpts">0</div><div class="gsl">Puntos</div></div>
+        <div class="gs"><div class="gsv cyan" id="mdone">0/20</div><div class="gsl">Misiones</div></div>
       </div>
     </div>
-    <div class="gstats">
-      <div class="gs"><div class="gsv gold" id="tpts">0</div><div class="gsl">Puntos</div></div>
-      <div class="gs"><div class="gsv cyan" id="mdone">0/20</div><div class="gsl">Misiones</div></div>
+    <div class="mhdr-row2">
       <div class="gs" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
         <div class="hub-fs-selector">
           <div class="hub-fs-btn hub-fs-btn-n" id="hub-fs0" onclick="setFS(0)">
@@ -726,9 +732,9 @@ body.fs-extra .mcard      { padding: 16px !important; }
         </div>
         <div class="gsl">Tamaño de texto</div>
       </div>
-      <button id="testbtn" onclick="testSheets()" style="display:none;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🔌 TEST</button>
-      <button id="trackbtn" onclick="showTracking()" style="display:none;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">📊</button>
-      <button onclick="showBadges()" style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🏅 INSIGNIAS</button>
+      <button onclick="showBadges()" style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:8px 16px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;">🏅 INSIGNIAS</button>
+      <button id="testbtn" onclick="testSheets()" style="display:none;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">🔌 TEST</button>
+      <button id="trackbtn" onclick="showTracking()" style="display:none;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">📊</button>
     </div>
   </div>
   <div class="mbody">
