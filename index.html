@@ -220,7 +220,10 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .mnum-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}
 .mtitle{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:5px;}
 .mdesc{font-size:12px;color:var(--muted2);line-height:1.5;margin-bottom:6px;}
-.mtip{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:10px;}
+.mtip{display:none;font-size:11px;color:var(--muted);font-style:italic;margin:6px 0 8px;padding:6px 10px;background:rgba(0,212,255,.06);border-radius:8px;border-left:2px solid var(--cyan);}
+.mtip.open{display:block;}
+.mtip-toggle{font-size:16px;cursor:pointer;padding:2px 6px;border-radius:6px;border:none;background:rgba(0,212,255,.1);line-height:1;margin-bottom:6px;transition:all .2s;}
+.mtip-toggle:active{transform:scale(.9);}
 .mfoot{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);}
 .mpts{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);}
 .mtime{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
@@ -614,13 +617,10 @@ body.fs-extra .mcard      { padding: 16px !important; }
       <span class="badge b-urg">💓 1 VIDA CADA 2 MIN</span>
       <span class="badge b-cyan">🎯 ¿ESTÁS LISTO?</span>
     </div>
-    <div class="swarn">
-      <div class="swarn-t">⚠️ AVISO IMPORTANTE</div>
-      <ul>
-        <li>Simulación <strong>exclusivamente educativa</strong> para reanimadores legos.</li>
-        <li>No reemplaza práctica presencial con maniquí y docente.</li>
-        <li>Emergencia real → <strong style="color:var(--red)">llama al 123 de inmediato</strong>.</li>
-      </ul>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">
+      <span style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">⚠️ Educativo</span>
+      <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">🧑‍⚕️ No reemplaza práctica</span>
+      <span style="background:rgba(255,30,45,.1);border:1px solid rgba(255,30,45,.3);color:var(--red2);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">🚨 Emergencia → 123</span>
     </div>
     <div class="nsec">
       <label>Nombre y apellido</label>
@@ -693,10 +693,7 @@ body.fs-extra .mcard      { padding: 16px !important; }
       <div class="brief-case-title" id="brief-title">—</div>
       <div class="brief-case-desc" id="brief-desc">—</div>
     </div>
-    <div class="brief-objective">
-      <div class="brief-obj-icon">🎯</div>
-      <div class="brief-obj-text"><strong>OBJETIVO MEDIBLE:</strong> Completa la misión con <strong>precisión ≥75%</strong> y <strong>0 errores críticos</strong> para demostrar dominio del protocolo BLS.</div>
-    </div>
+
     <div class="brief-tip" id="brief-tip">💡 Consejo táctico...</div>
     <button class="brief-start-btn" id="brief-start-btn">⚡ ACEPTAR EL RETO</button>
   </div>
@@ -1201,7 +1198,7 @@ function renderHub(){
     const c=document.createElement('div');
     c.className='mcard'+(done?' done':'');
     c.onclick=()=>showBriefing(m);
-    c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">${m.icon}</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><div class="mtip">${m.tip}</div><div class="mfoot"><span class="mpts">★ ${m.pts} pts</span><span class="mtime">⏱ ${m.time}</span><div class="msi ${done?'si-done':'si-open'}">${done?'✓':'▶'}</div></div>`;
+    c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">${m.icon}</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><button class="mtip-toggle" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('open')">💡</button><div class="mtip">${m.tip}</div><div class="mfoot"><span class="mpts">★ ${m.pts} pts</span><span class="mtime">⏱ ${m.time}</span><div class="msi ${done?'si-done':'si-open'}">${done?'✓':'▶'}</div></div>`;
     mgrid.appendChild(c);
   });
 }
@@ -2261,7 +2258,7 @@ function startMission(m, isEpic=false){
   // Mostrar intro de misión
   const esc = ESCENARIOS[m.id];
   if(esc){
-    mostrarMensajeIA(`🎮 **${m.title}**\n\n${m.desc}\n\n💡 ${m.tip}\n\n¡Toma decisiones sabiamente! Cada elección suma o resta puntos.`);
+    mostrarMensajeIA(`🎮 **${m.title}**\n\n${m.desc}\n\n¡Toma decisiones sabiamente! Cada elección suma o resta puntos.`);
     setTimeout(() => mostrarPaso(1), 1200);
   } else {
     mostrarMensajeIA(`⚠️ Esta misión usa el modo de texto libre. Tipo: ${m.id}\n\nEscribe tus decisiones en el campo de texto.`);
