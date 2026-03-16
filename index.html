@@ -142,6 +142,9 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .gsv.gold{color:var(--gold);text-shadow:0 0 10px var(--gglow);}
 .gsv.cyan{color:var(--cyan);}
 .gsl{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.gsv.fs-color-0{color:#888888;}
+.gsv.fs-color-1{color:var(--gold);text-shadow:0 0 10px var(--gglow);}
+.gsv.fs-color-2{color:var(--cyan);text-shadow:0 0 10px rgba(0,212,255,.5);}
 .mbody{flex:1;padding:18px;overflow-y:auto;}
 .sec-title{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -432,77 +435,9 @@ body.fs-extra .brief-challenge-q { font-size: 20px !important; }
 body.fs-extra .mcard      { padding: 16px !important; }
 
 /* Botón flotante accesibilidad */
-/* ── Accesibilidad: escritorio (panel fijo) ── */
-#a11y-panel {
-  position: fixed; bottom: 18px; right: 14px; z-index: 800;
-  background: var(--panel2);
-  border: 2px solid var(--border2);
-  border-radius: 16px;
-  padding: 10px 12px;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.55);
-  user-select: none; min-width: 68px;
-}
-#a11y-toggle { display: none; }
-#a11y-panel-title {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px; letter-spacing: 2px; color: var(--muted);
-  text-transform: uppercase; text-align: center;
-}
-#a11y-pills { display: flex; flex-direction: column; gap: 5px; width: 100%; }
-.a11y-pill {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 8px 10px; border-radius: 10px; cursor: pointer;
-  border: 1.5px solid var(--border); background: var(--panel);
-  transition: all .18s; font-family: 'Exo 2', sans-serif; white-space: nowrap;
-}
-.a11y-pill:hover { border-color: var(--cyan); background: rgba(0,212,255,.08); }
-.a11y-pill.active { border-color: var(--cyan); background: rgba(0,212,255,.14); box-shadow: 0 0 10px rgba(0,212,255,.2); }
-.a11y-pill.active.pill-extra { border-color: var(--gold); background: rgba(255,215,0,.12); box-shadow: 0 0 10px rgba(255,215,0,.2); }
-.pill-letter { font-weight: 900; line-height: 1; color: var(--muted2); }
-.a11y-pill.active .pill-letter { color: var(--cyan); }
-.a11y-pill.active.pill-extra .pill-letter { color: var(--gold); }
-.pill-normal .pill-letter { font-size: 13px; }
-.pill-grande .pill-letter { font-size: 17px; }
-.pill-extra  .pill-letter { font-size: 22px; }
-.pill-lbl {
-  font-size: 10px; letter-spacing: 1px; color: var(--muted2);
-  text-transform: uppercase; font-family: 'Share Tech Mono', monospace;
-}
-.a11y-pill.active .pill-lbl { color: var(--text); }
 
-/* ── Accesibilidad: móvil — botón mínimo esquina superior izquierda ── */
-@media(max-width:640px){
-  #a11y-panel {
-    bottom: auto; top: 8px; right: auto; left: 8px;
-    padding: 5px 8px; min-width: unset; gap: 0;
-    border-radius: 50px; flex-direction: row;
-    border-color: rgba(255,255,255,.12);
-    background: rgba(20,20,40,.85);
-    box-shadow: none;
-  }
-  #a11y-panel-title { display: none; }
-  #a11y-pills { display: none; flex-direction: column; gap: 5px; width: 100%; }
-  #a11y-toggle {
-    display: flex; align-items: center; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 3px 4px;
-  }
-  #a11y-toggle-icon { font-size: 16px; line-height: 1; }
-  #a11y-toggle-letter {
-    font-size: 15px; font-weight: 900;
-    font-family: 'Exo 2', sans-serif; line-height: 1;
-  }
-  /* Menú emergente hacia abajo cuando está abierto */
-  #a11y-panel.open {
-    border-radius: 14px; padding: 8px 10px;
-    gap: 8px; flex-direction: column;
-    border-color: var(--border2);
-    background: var(--panel2);
-    box-shadow: 0 6px 24px rgba(0,0,0,.6);
-  }
-  #a11y-panel.open #a11y-panel-title { display: block; }
-  #a11y-panel.open #a11y-pills { display: flex; }
-}
+
+
 
 /* ── Pantalla bienvenida de regreso ── */
 #swelcome { align-items:center; justify-content:center; padding:24px; }
@@ -550,31 +485,67 @@ body.fs-extra .mcard      { padding: 16px !important; }
   color:#FF6B00; font-family:'Share Tech Mono',monospace; letter-spacing:1px;
   margin-left:8px; vertical-align:middle; }
 .streak-badge.racha1 { background:rgba(255,215,0,.10); border-color:rgba(255,215,0,.4); color:var(--gold); }
+
+/* ── Tamaño de texto: selector en splash y hub ── */
+.fs-selector {
+  display: flex; gap: 8px; justify-content: center;
+  margin: 10px 0 4px;
+}
+.fs-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 10px 14px; border-radius: 12px; cursor: pointer;
+  border: 2px solid var(--border); background: var(--panel);
+  transition: all .2s; min-width: 64px;
+  font-family: 'Exo 2', sans-serif;
+}
+.fs-btn:active { transform: scale(.95); }
+.fs-btn .fs-a { font-weight: 900; color: var(--muted2); line-height: 1; }
+.fs-btn .fs-lbl { font-size: 9px; letter-spacing: 1px; color: var(--muted);
+  text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+.fs-btn-n .fs-a { font-size: 16px; }
+.fs-btn-g .fs-a { font-size: 22px; }
+.fs-btn-x .fs-a { font-size: 28px; }
+/* Activo: cada tamaño tiene su propio color */
+.fs-btn-n.active { border-color: #00C853; background: rgba(0,200,83,.12); box-shadow: 0 0 12px rgba(0,200,83,.3); }
+.fs-btn-n.active .fs-a  { color: #00C853; }
+.fs-btn-n.active .fs-lbl{ color: #00C853; }
+.fs-btn-g.active { border-color: var(--gold); background: rgba(255,215,0,.12); box-shadow: 0 0 12px rgba(255,215,0,.3); }
+.fs-btn-g.active .fs-a  { color: var(--gold); }
+.fs-btn-g.active .fs-lbl{ color: var(--gold); }
+.fs-btn-x.active { border-color: var(--cyan); background: rgba(0,212,255,.12); box-shadow: 0 0 12px rgba(0,212,255,.3); }
+.fs-btn-x.active .fs-a  { color: var(--cyan); }
+.fs-btn-x.active .fs-lbl{ color: var(--cyan); }
+/* Hub: botones con texto completo */
+.hub-fs-selector {
+  display: flex; gap: 5px; align-items: center;
+}
+.hub-fs-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 5px 8px; border-radius: 8px; cursor: pointer;
+  border: 2px solid var(--border); background: var(--panel);
+  transition: all .2s; font-family: 'Exo 2', sans-serif; min-width: 44px;
+}
+.hub-fs-btn:active { transform: scale(.93); }
+.hub-fs-btn .hfs-a   { font-weight: 900; color: var(--muted2); line-height: 1; }
+.hub-fs-btn .hfs-lbl { font-size: 8px; letter-spacing: .5px; color: var(--muted);
+  text-transform: uppercase; font-family: 'Share Tech Mono', monospace; white-space: nowrap; }
+.hub-fs-btn-n .hfs-a { font-size: 12px; }
+.hub-fs-btn-g .hfs-a { font-size: 16px; }
+.hub-fs-btn-x .hfs-a { font-size: 20px; }
+.hub-fs-btn-n.active { border-color: #00C853; background: rgba(0,200,83,.12); box-shadow: 0 0 8px rgba(0,200,83,.3); }
+.hub-fs-btn-n.active .hfs-a  { color: #00C853; }
+.hub-fs-btn-n.active .hfs-lbl{ color: #00C853; }
+.hub-fs-btn-g.active { border-color: var(--gold); background: rgba(255,215,0,.12); box-shadow: 0 0 8px rgba(255,215,0,.3); }
+.hub-fs-btn-g.active .hfs-a  { color: var(--gold); }
+.hub-fs-btn-g.active .hfs-lbl{ color: var(--gold); }
+.hub-fs-btn-x.active { border-color: var(--cyan); background: rgba(0,212,255,.12); box-shadow: 0 0 8px rgba(0,212,255,.3); }
+.hub-fs-btn-x.active .hfs-a  { color: var(--cyan); }
+.hub-fs-btn-x.active .hfs-lbl{ color: var(--cyan); }
 </style>
 </head>
 <body>
 <!-- Botón de accesibilidad: tamaño de fuente -->
-<div id="a11y-panel">
-  <button id="a11y-toggle" onclick="toggleA11y()" title="Tamaño de texto">
-    <span id="a11y-toggle-icon">👁</span>
-    <span id="a11y-toggle-letter">A</span>
-  </button>
-  <div id="a11y-panel-title">👁 Texto</div>
-  <div id="a11y-pills">
-    <div class="a11y-pill pill-normal active" onclick="setFS(0)" title="Tamaño normal">
-      <span class="pill-letter">A</span>
-      <span class="pill-lbl">Normal</span>
-    </div>
-    <div class="a11y-pill pill-grande" onclick="setFS(1)" title="Texto grande">
-      <span class="pill-letter">A</span>
-      <span class="pill-lbl">Grande</span>
-    </div>
-    <div class="a11y-pill pill-extra" onclick="setFS(2)" title="Texto extra grande">
-      <span class="pill-letter">A</span>
-      <span class="pill-lbl">Extra</span>
-    </div>
-  </div>
-</div>
+
 <div class="bgc"><div class="bgg"></div><div class="bgr"></div><div id="ptc"></div><div class="scan"></div></div>
 <div class="flash-ov" id="flashov"></div>
 <div class="combo-fx" id="combofx"></div>
@@ -608,6 +579,20 @@ body.fs-extra .mcard      { padding: 16px !important; }
       <input type="hidden" id="papellido" value="">
       <input type="hidden" id="pcourse" value="—">
       <input type="hidden" id="pinst" value="—">
+    </div>
+    <div style="margin-bottom:4px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-family:'Share Tech Mono',monospace;text-align:center;margin-bottom:8px;">🔡 Tamaño de texto</div>
+      <div class="fs-selector">
+        <div class="fs-btn fs-btn-n active" id="fsb0" onclick="setFS(0)">
+          <span class="fs-a">A</span><span class="fs-lbl">Normal</span>
+        </div>
+        <div class="fs-btn fs-btn-g" id="fsb1" onclick="setFS(1)">
+          <span class="fs-a">A</span><span class="fs-lbl">Grande</span>
+        </div>
+        <div class="fs-btn fs-btn-x" id="fsb2" onclick="setFS(2)">
+          <span class="fs-a">A</span><span class="fs-lbl">Extra</span>
+        </div>
+      </div>
     </div>
     <button class="sbtn" onclick="goMissions()">INICIAR MISIÓN ▶</button>
   </div>
@@ -679,6 +664,20 @@ body.fs-extra .mcard      { padding: 16px !important; }
     <div class="gstats">
       <div class="gs"><div class="gsv gold" id="tpts">0</div><div class="gsl">Puntos</div></div>
       <div class="gs"><div class="gsv cyan" id="mdone">0/20</div><div class="gsl">Misiones</div></div>
+      <div class="gs" style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="hub-fs-selector">
+          <div class="hub-fs-btn hub-fs-btn-n" id="hub-fs0" onclick="setFS(0)">
+            <span class="hfs-a">A</span><span class="hfs-lbl">Normal</span>
+          </div>
+          <div class="hub-fs-btn hub-fs-btn-g" id="hub-fs1" onclick="setFS(1)">
+            <span class="hfs-a">A</span><span class="hfs-lbl">Grande</span>
+          </div>
+          <div class="hub-fs-btn hub-fs-btn-x" id="hub-fs2" onclick="setFS(2)">
+            <span class="hfs-a">A</span><span class="hfs-lbl">Extra</span>
+          </div>
+        </div>
+        <div class="gsl">Tamaño de texto</div>
+      </div>
       <button id="testbtn" onclick="testSheets()" style="background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🔌 TEST</button>
       <button onclick="showTracking()" style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">📊</button>
       <button onclick="showBadges()" style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;align-self:center;">🏅 INSIGNIAS</button>
@@ -1091,6 +1090,7 @@ function renderHub(){
   document.getElementById('drank').textContent='RANGO: '+S.rank.toUpperCase();
   document.getElementById('tpts').textContent=S.totalPts;
   document.getElementById('mdone').textContent=S.done.length+'/20';
+  applyFSMode(false);
   const tabs=document.getElementById('lvltabs'); tabs.innerHTML='';
   LEVELS.forEach(lv=>{
     const t=document.createElement('div');
@@ -2996,46 +2996,31 @@ function applyFSMode(save){
   const m = FS_MODES[fsModeIdx];
   document.body.classList.remove('fs-grande','fs-extra');
   if(m.cls) document.body.classList.add(m.cls);
-  document.querySelectorAll('.a11y-pill').forEach((pill,i)=>{
-    pill.classList.toggle('active', i === fsModeIdx);
+  // Actualizar botones fs (splash + modal insignias)
+  [0,1,2].forEach(i=>{
+    ['fsb'+i, 'fsb'+i+'m'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('active', i === fsModeIdx);
+    });
   });
-  // Actualizar letra del toggle móvil
-  const tl = document.getElementById('a11y-toggle-letter');
-  if(tl){
-    const sizes = ['A','A','A'];
-    const colors = ['var(--muted2)','var(--gold)','var(--cyan)'];
-    const fontSizes = ['15px','19px','23px'];
-    tl.textContent = sizes[fsModeIdx];
-    tl.style.color = colors[fsModeIdx];
-    tl.style.fontSize = fontSizes[fsModeIdx];
-  }
+  // Actualizar botones splash
+  [0,1,2].forEach(i=>{
+    const el = document.getElementById('fsb'+i);
+    if(el) el.classList.toggle('active', i === fsModeIdx);
+  });
+  // Actualizar botones hub
+  [0,1,2].forEach(i=>{
+    const el = document.getElementById('hub-fs'+i);
+    if(el) el.classList.toggle('active', i === fsModeIdx);
+  });
   if(save) saveFSMode();
 }
 function setFS(idx){
   fsModeIdx = idx;
   applyFSMode(true);
-  // En móvil cerrar panel tras elegir
-  if(window.innerWidth <= 640){
-    setTimeout(()=>{
-      const p = document.getElementById('a11y-panel');
-      if(p) p.classList.remove('open');
-    }, 600);
-  }
+
 }
 function cycleFS(){ setFS((fsModeIdx+1) % FS_MODES.length); }
-let a11yOpen = false;
-function toggleA11y(){
-  const p = document.getElementById('a11y-panel');
-  if(!p) return;
-  a11yOpen = !a11yOpen;
-  p.classList.toggle('open', a11yOpen);
-  // Auto-cerrar tras 4 segundos sin tocar
-  clearTimeout(window._a11yTimer);
-  if(a11yOpen) window._a11yTimer = setTimeout(()=>{
-    a11yOpen = false;
-    p.classList.remove('open');
-  }, 4000);
-}
 // Cargar tamaño guardado al inicio
 loadFSMode();
 
