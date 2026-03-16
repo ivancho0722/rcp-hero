@@ -3290,6 +3290,7 @@ function renderBadgeModal(){
 
   // Mission badges
   const mgrid = document.getElementById('missionBadgesGrid');
+  if(!mgrid) return;
   mgrid.innerHTML = '';
   Object.entries(MISSION_BADGES).forEach(([id, bd]) => {
     const earned = BS.missionBadges.includes(id);
@@ -3302,6 +3303,7 @@ function renderBadgeModal(){
 
   // Diplomas
   const dgrid = document.getElementById('diplomasGrid');
+  if(!dgrid) return;
   dgrid.innerHTML = '';
   DIPLOMAS.forEach(dip => {
     const earned = BS.diplomasEarned.includes(dip.id);
