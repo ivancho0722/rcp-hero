@@ -898,6 +898,10 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
       <div class="schip"><div class="schipv gold" id="simpts">0</div><div class="schipl">Pts</div></div>
       <div class="schip"><div class="schipv green" id="simrank">Novato</div><div class="schipl">Rango</div></div>
     </div>
+    <button id="tts-btn-sim" onclick="toggleTTS()" title="Audio"
+      style="background:var(--panel);border:2px solid var(--border);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s;flex-shrink:0;">
+      <span id="tts-icon-sim">🔇</span>
+    </button>
   </div>
   <div class="mctxbar" id="mctxbar">
     <div class="ctx-icon" id="ctx-icon">🏫</div>
@@ -1153,12 +1157,15 @@ async function mostrarBienvenida(){
       document.getElementById('wlc-avatar').textContent = '🚀';
       document.getElementById('wlc-title').textContent = '¡HOLA, ' + nombre + '!';
       document.getElementById('wlc-sub').textContent = 'Primera sesión — ¡bienvenido al simulador! Empieza desde el nivel Fácil.';
+      speakTTS('¡Hola ' + nombre + '! Primera sesión. ¡Bienvenido al simulador RCP HERO! Empieza desde el nivel Fácil.');
       setTimeout(()=> showScreen('missions'), 2000);
       return;
     }
     // Tiene historial
     document.getElementById('wlc-avatar').textContent = '🦸';
     document.getElementById('wlc-title').textContent = '¡BIENVENIDO DE NUEVO, ' + nombre + '!';
+    const subTxt = sesiones === 1 ? 'Es tu segunda visita. ¡Sigue adelante!' : 'Llevas ' + sesiones + ' sesiones en el simulador.';
+    speakTTS('¡Bienvenido de nuevo, ' + nombre + '! ' + subTxt);
     document.getElementById('wlc-sub').textContent = sesiones === 1
       ? 'Es tu segunda visita — ¡sigue adelante!'
       : 'Llevas ' + sesiones + ' sesiones en el simulador.';
@@ -2435,6 +2442,24 @@ function procesarDecision(op, container){
       cb.classList.add('show');
       setTimeout(() => cb.classList.remove('show'), 1500);
     }
+    // Retroalimentación positiva corta por fase
+    const fbPos = [
+      ['✅ Correcto. Escena segura — puedes actuar.','✅ Bien. Víctima identificada.','✅ Exacto. Sin respuesta ni respiración.','✅ Correcto. Evaluación completada.'],
+      ['✅ Correcto. Ayuda activada.','✅ Bien. Sistema de emergencias alertado.','✅ Exacto. 123 activado.','✅ Correcto. Alguien más llama mientras actúas.'],
+      ['✅ Correcto. Compresiones iniciadas.','✅ Bien. Posición correcta.','✅ Exacto. Ritmo adecuado.','✅ Correcto. Profundidad correcta.'],
+      ['✅ Correcto. DEA en camino.','✅ Bien. Desfibrilación lista.','✅ Exacto. Protocolo DEA correcto.','✅ Correcto. Sin interrupciones.'],
+    ];
+    const fase = Math.min(S.phase, 3);
+    const opts = fbPos[fase];
+    const fb = opts[Math.floor(Math.random()*opts.length)];
+    const c2 = document.getElementById('chatmsgs');
+    const fbEl = document.createElement('div');
+    fbEl.className = 'qexp show';
+    fbEl.style.cssText = 'margin:0 0 6px 0;border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06);';
+    fbEl.innerHTML = '<div class="qexp-t" style="color:var(--green);">✅ CORRECTO</div><div>'+fb.replace('✅ Correcto. ','').replace('✅ Bien. ','').replace('✅ Exacto. ','')+'</div>';
+    c2.appendChild(fbEl);
+    fbEl.scrollIntoView({behavior:'smooth',block:'nearest'});
+    speakTTS(fb);
     setTimeout(() => {
       pasosBloqueados = false;
       if(op.next){
@@ -2442,7 +2467,7 @@ function procesarDecision(op, container){
       } else {
         finalizarMision();
       }
-    }, 900);
+    }, 1200);
   } else {
     const penalidad = op.crit ? -25 : op.pts;
     currentPts += penalidad;
@@ -2671,6 +2696,13 @@ function showResults(pts){
   const rc=S.rank==='Héroe Escolar'?'heroe':S.rank==='Rescatista'?'rescatista':S.rank==='Aprendiz'?'rescatista':'novato';
   const tr=S.rank==='Héroe Escolar'?'🏆':S.rank==='Rescatista'||S.rank==='Aprendiz'?'🥈':'🎖️';
   if(!document.getElementById('rtrophy')) return;
+  // Leer resumen de resultados
+  const precR = S.decisions>0?Math.round(S.correctDec/S.decisions*100):0;
+  const critR = S.critErrors||0;
+  const resMsg = (critR===0 && precR>=75)
+    ? 'Misión completada. Precisión ' + precR + ' por ciento. Sin errores críticos. ¡Excelente trabajo, ' + S.name.split(' ')[0] + '!'
+    : 'Misión finalizada. Precisión ' + precR + ' por ciento. Errores críticos: ' + critR + '. ¡Sigue practicando!';
+  setTimeout(()=>speakTTS(resMsg), 500);
   document.getElementById('rtrophy').textContent=tr;
   document.getElementById('rrank').textContent=S.rank.toUpperCase();
   document.getElementById('rrank').className='rrank '+rc;
@@ -3254,6 +3286,11 @@ function updateTTSBtn(){
   const hubIco = document.getElementById('tts-icon-hub');
   if(hubBtn){ hubBtn.style.borderColor = ttsEnabled ? 'var(--green)' : 'var(--border)'; hubBtn.style.background = ttsEnabled ? 'rgba(0,255,136,.1)' : 'var(--panel)'; }
   if(hubIco) hubIco.textContent = ttsEnabled ? '🔊' : '🔇';
+  // Sincronizar botón del simulador
+  const simBtn = document.getElementById('tts-btn-sim');
+  const simIco = document.getElementById('tts-icon-sim');
+  if(simBtn){ simBtn.style.borderColor = ttsEnabled ? 'var(--green)' : 'var(--border)'; simBtn.style.background = ttsEnabled ? 'rgba(0,255,136,.1)' : 'var(--panel)'; }
+  if(simIco) simIco.textContent = ttsEnabled ? '🔊' : '🔇';
 }
 
 // Cola TTS para no cortar la lectura anterior
