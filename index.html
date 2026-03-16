@@ -83,7 +83,7 @@
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;}
 .bgc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .bgg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,30,45,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,30,45,.04) 1px,transparent 1px);background-size:48px 48px;animation:gdrift 18s linear infinite;}
 @keyframes gdrift{from{transform:translateY(0)}to{transform:translateY(48px)}}
