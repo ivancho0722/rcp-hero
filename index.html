@@ -443,6 +443,40 @@ body.fs-extra .mcard      { padding: 16px !important; }
   box-shadow: 0 6px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
   user-select: none;
   min-width: 68px;
+  transition: all .25s;
+}
+/* En móvil: colapsado por defecto */
+@media(max-width:640px){
+  #a11y-panel {
+    padding: 8px 10px;
+    min-width: unset;
+    gap: 0;
+    border-radius: 50px;
+  }
+  #a11y-panel-title { display: none; }
+  #a11y-pills { display: none; gap: 6px; flex-direction: row; }
+  #a11y-panel.open {
+    border-radius: 16px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  #a11y-panel.open #a11y-panel-title { display: block; }
+  #a11y-panel.open #a11y-pills { display: flex; flex-direction: column; }
+  #a11y-toggle { display: flex; }
+}
+@media(min-width:641px){
+  #a11y-toggle { display: none; }
+}
+#a11y-toggle {
+  align-items: center; gap: 6px; cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  background: none; border: none; color: var(--muted2);
+  padding: 2px 4px;
+}
+#a11y-toggle-icon { font-size: 20px; line-height: 1; }
+#a11y-toggle-letter {
+  font-size: 15px; font-weight: 900; color: var(--cyan);
+  font-family: 'Exo 2', sans-serif;
 }
 #a11y-panel-title {
   font-family: 'Share Tech Mono', monospace;
@@ -462,10 +496,7 @@ body.fs-extra .mcard      { padding: 16px !important; }
 .a11y-pill:hover { border-color: var(--cyan); background: rgba(0,212,255,.08); }
 .a11y-pill.active { border-color: var(--cyan); background: rgba(0,212,255,.14); box-shadow: 0 0 10px rgba(0,212,255,.2); }
 .a11y-pill.active.pill-extra { border-color: var(--gold); background: rgba(255,215,0,.12); box-shadow: 0 0 10px rgba(255,215,0,.2); }
-.pill-letter {
-  font-weight: 900; line-height: 1;
-  color: var(--muted2);
-}
+.pill-letter { font-weight: 900; line-height: 1; color: var(--muted2); }
 .a11y-pill.active .pill-letter { color: var(--cyan); }
 .a11y-pill.active.pill-extra .pill-letter { color: var(--gold); }
 .pill-normal .pill-letter  { font-size: 13px; }
@@ -528,6 +559,10 @@ body.fs-extra .mcard      { padding: 16px !important; }
 <body>
 <!-- Botón de accesibilidad: tamaño de fuente -->
 <div id="a11y-panel">
+  <button id="a11y-toggle" onclick="toggleA11y()" title="Tamaño de texto">
+    <span id="a11y-toggle-icon">👁</span>
+    <span id="a11y-toggle-letter">A</span>
+  </button>
   <div id="a11y-panel-title">👁 Texto</div>
   <div id="a11y-pills">
     <div class="a11y-pill pill-normal active" onclick="setFS(0)" title="Tamaño normal">
@@ -2965,17 +3000,46 @@ function applyFSMode(save){
   const m = FS_MODES[fsModeIdx];
   document.body.classList.remove('fs-grande','fs-extra');
   if(m.cls) document.body.classList.add(m.cls);
-  // Actualizar píldoras activas
   document.querySelectorAll('.a11y-pill').forEach((pill,i)=>{
     pill.classList.toggle('active', i === fsModeIdx);
   });
+  // Actualizar letra del toggle móvil
+  const tl = document.getElementById('a11y-toggle-letter');
+  if(tl){
+    const sizes = ['A','A','A'];
+    const colors = ['var(--muted2)','var(--gold)','var(--cyan)'];
+    const fontSizes = ['15px','19px','23px'];
+    tl.textContent = sizes[fsModeIdx];
+    tl.style.color = colors[fsModeIdx];
+    tl.style.fontSize = fontSizes[fsModeIdx];
+  }
   if(save) saveFSMode();
 }
 function setFS(idx){
   fsModeIdx = idx;
   applyFSMode(true);
+  // En móvil cerrar panel tras elegir
+  if(window.innerWidth <= 640){
+    setTimeout(()=>{
+      const p = document.getElementById('a11y-panel');
+      if(p) p.classList.remove('open');
+    }, 600);
+  }
 }
 function cycleFS(){ setFS((fsModeIdx+1) % FS_MODES.length); }
+let a11yOpen = false;
+function toggleA11y(){
+  const p = document.getElementById('a11y-panel');
+  if(!p) return;
+  a11yOpen = !a11yOpen;
+  p.classList.toggle('open', a11yOpen);
+  // Auto-cerrar tras 4 segundos sin tocar
+  clearTimeout(window._a11yTimer);
+  if(a11yOpen) window._a11yTimer = setTimeout(()=>{
+    a11yOpen = false;
+    p.classList.remove('open');
+  }, 4000);
+}
 // Cargar tamaño guardado al inicio
 loadFSMode();
 
