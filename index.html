@@ -391,9 +391,159 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 }
 @media(max-width:580px){.qopts{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.simchips{display:none}.mode-nav{flex-direction:column}}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── ACCESIBILIDAD: TAMAÑOS DE FUENTE ── */
+:root { --fs-base: 1; }
+
+body.fs-grande { font-size: 112% !important; }
+body.fs-extra  { font-size: 128% !important; }
+
+body.fs-grande .mbub,
+body.fs-grande .qopt,
+body.fs-grande .qexp      { font-size: 15px !important; line-height: 1.7 !important; }
+body.fs-grande .brief-case-desc,
+body.fs-grande .brief-obj-text,
+body.fs-grande .brief-tip { font-size: 15px !important; line-height: 1.7 !important; }
+body.fs-grande .mtitle    { font-size: 14px !important; }
+body.fs-grande .mdesc     { font-size: 14px !important; }
+body.fs-grande .mtip      { font-size: 13px !important; }
+body.fs-grande .lvl-desc  { font-size: 14px !important; }
+body.fs-grande .ctx-desc  { font-size: 13px !important; }
+body.fs-grande #cinput    { font-size: 16px !important; }
+body.fs-grande .qopt      { padding: 14px 16px !important; }
+body.fs-grande .swarn li  { font-size: 15px !important; }
+body.fs-grande .brief-challenge-q { font-size: 17px !important; }
+
+body.fs-extra .mbub,
+body.fs-extra .qopt,
+body.fs-extra .qexp       { font-size: 18px !important; line-height: 1.8 !important; }
+body.fs-extra .brief-case-desc,
+body.fs-extra .brief-obj-text,
+body.fs-extra .brief-tip  { font-size: 18px !important; line-height: 1.8 !important; }
+body.fs-extra .mtitle     { font-size: 17px !important; }
+body.fs-extra .mdesc      { font-size: 16px !important; }
+body.fs-extra .mtip       { font-size: 15px !important; }
+body.fs-extra .lvl-desc   { font-size: 16px !important; }
+body.fs-extra .ctx-desc   { font-size: 15px !important; }
+body.fs-extra #cinput     { font-size: 18px !important; }
+body.fs-extra .qopt       { padding: 16px 18px !important; min-height: 56px !important; }
+body.fs-extra .swarn li   { font-size: 17px !important; }
+body.fs-extra .brief-challenge-q { font-size: 20px !important; }
+body.fs-extra .mcard      { padding: 16px !important; }
+
+/* Botón flotante accesibilidad */
+/* ── Botón accesibilidad rediseñado ── */
+#a11y-panel {
+  position: fixed; bottom: 18px; right: 14px; z-index: 800;
+  background: var(--panel2);
+  border: 2px solid var(--border2);
+  border-radius: 16px;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
+  user-select: none;
+  min-width: 68px;
+}
+#a11y-panel-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; letter-spacing: 2px; color: var(--muted);
+  text-transform: uppercase; text-align: center;
+}
+#a11y-pills { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+.a11y-pill {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 10px; border-radius: 10px; cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--panel);
+  transition: all .18s;
+  font-family: 'Exo 2', sans-serif;
+  white-space: nowrap;
+}
+.a11y-pill:hover { border-color: var(--cyan); background: rgba(0,212,255,.08); }
+.a11y-pill.active { border-color: var(--cyan); background: rgba(0,212,255,.14); box-shadow: 0 0 10px rgba(0,212,255,.2); }
+.a11y-pill.active.pill-extra { border-color: var(--gold); background: rgba(255,215,0,.12); box-shadow: 0 0 10px rgba(255,215,0,.2); }
+.pill-letter {
+  font-weight: 900; line-height: 1;
+  color: var(--muted2);
+}
+.a11y-pill.active .pill-letter { color: var(--cyan); }
+.a11y-pill.active.pill-extra .pill-letter { color: var(--gold); }
+.pill-normal .pill-letter  { font-size: 13px; }
+.pill-grande .pill-letter  { font-size: 17px; }
+.pill-extra  .pill-letter  { font-size: 22px; }
+.pill-lbl {
+  font-size: 10px; letter-spacing: 1px; color: var(--muted2);
+  text-transform: uppercase; font-family: 'Share Tech Mono', monospace;
+}
+.a11y-pill.active .pill-lbl { color: var(--text); }
+
+/* ── Pantalla bienvenida de regreso ── */
+#swelcome { align-items:center; justify-content:center; padding:24px; }
+.wlc-wrap { max-width:480px; width:100%; display:flex; flex-direction:column; gap:16px; }
+.wlc-avatar { font-size:54px; text-align:center; animation: hbcore 2s ease-in-out infinite; }
+.wlc-title { font-family:'Orbitron',monospace; font-size:22px; font-weight:900;
+  color:var(--gold); text-align:center; letter-spacing:2px; line-height:1.3; }
+.wlc-sub { font-size:14px; color:var(--muted2); text-align:center; line-height:1.6; }
+.wlc-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.wlc-stat { background:var(--panel); border:1px solid var(--border2);
+  border-radius:12px; padding:14px 10px; text-align:center; }
+.wlc-stat-val { font-family:'Orbitron',monospace; font-size:22px; font-weight:700;
+  color:var(--cyan); line-height:1; margin-bottom:4px; }
+.wlc-stat-val.gold { color:var(--gold); }
+.wlc-stat-val.green { color:var(--green); }
+.wlc-stat-lbl { font-size:9px; color:var(--muted); letter-spacing:1.5px;
+  text-transform:uppercase; font-family:'Share Tech Mono',monospace; }
+.wlc-best { background:rgba(255,215,0,.07); border:1px solid rgba(255,215,0,.3);
+  border-radius:12px; padding:14px 18px; }
+.wlc-best-title { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:2px;
+  color:var(--gold); margin-bottom:8px; }
+.wlc-best-row { display:flex; justify-content:space-between; align-items:center;
+  font-size:13px; color:var(--muted2); padding:4px 0; border-bottom:1px solid rgba(255,255,255,.05); }
+.wlc-best-row:last-child { border-bottom:none; }
+.wlc-best-row span { color:var(--text); font-weight:700; }
+.wlc-streak { background:rgba(255,107,0,.08); border:1.5px solid rgba(255,107,0,.4);
+  border-radius:12px; padding:12px 18px; display:flex; align-items:center; gap:12px; }
+.wlc-streak-icon { font-size:32px; }
+.wlc-streak-txt { font-size:13px; color:var(--muted2); line-height:1.5; }
+.wlc-streak-txt strong { color:#FF6B00; font-size:15px; }
+.wlc-btn { background:linear-gradient(135deg,var(--rdark),var(--red)); color:#fff;
+  border:none; border-radius:12px; padding:16px; font-family:'Orbitron',monospace;
+  font-size:15px; font-weight:700; letter-spacing:2px; cursor:pointer;
+  box-shadow:0 0 24px var(--rglow); transition:all .3s; width:100%; }
+.wlc-btn:hover { transform:translateY(-2px); box-shadow:0 0 40px var(--rglow); }
+.wlc-new-btn { background:transparent; color:var(--muted2); border:1px solid var(--border);
+  border-radius:10px; padding:10px; font-family:'Share Tech Mono',monospace;
+  font-size:11px; letter-spacing:1px; cursor:pointer; transition:all .2s; width:100%; }
+.wlc-new-btn:hover { color:var(--text); border-color:var(--border2); }
+
+/* ── Racha en el hub ── */
+.streak-badge { display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,107,0,.12); border:1px solid rgba(255,107,0,.4);
+  border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700;
+  color:#FF6B00; font-family:'Share Tech Mono',monospace; letter-spacing:1px;
+  margin-left:8px; vertical-align:middle; }
+.streak-badge.racha1 { background:rgba(255,215,0,.10); border-color:rgba(255,215,0,.4); color:var(--gold); }
 </style>
 </head>
 <body>
+<!-- Botón de accesibilidad: tamaño de fuente -->
+<div id="a11y-panel">
+  <div id="a11y-panel-title">👁 Texto</div>
+  <div id="a11y-pills">
+    <div class="a11y-pill pill-normal active" onclick="setFS(0)" title="Tamaño normal">
+      <span class="pill-letter">A</span>
+      <span class="pill-lbl">Normal</span>
+    </div>
+    <div class="a11y-pill pill-grande" onclick="setFS(1)" title="Texto grande">
+      <span class="pill-letter">A</span>
+      <span class="pill-lbl">Grande</span>
+    </div>
+    <div class="a11y-pill pill-extra" onclick="setFS(2)" title="Texto extra grande">
+      <span class="pill-letter">A</span>
+      <span class="pill-lbl">Extra</span>
+    </div>
+  </div>
+</div>
 <div class="bgc"><div class="bgg"></div><div class="bgr"></div><div id="ptc"></div><div class="scan"></div></div>
 <div class="flash-ov" id="flashov"></div>
 <div class="combo-fx" id="combofx"></div>
@@ -421,15 +571,49 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
       </ul>
     </div>
     <div class="nsec">
-      <label>Tu nombre o código de estudiante</label>
-      <input type="text" id="pname" placeholder="Nombre / Código..." maxlength="40" autocomplete="off">
-      <!-- hidden fields for future use -->
+      <label>Nombre y apellido</label>
+      <input type="text" id="pname" placeholder="Ej: CARLOS RAMÍREZ" maxlength="50" autocomplete="off"
+        oninput="this.value=this.value.toUpperCase()">
+      <input type="hidden" id="papellido" value="">
       <input type="hidden" id="pcourse" value="—">
       <input type="hidden" id="pinst" value="—">
     </div>
     <button class="sbtn" onclick="goMissions()">INICIAR MISIÓN ▶</button>
   </div>
 </div>
+<!-- PANTALLA BIENVENIDA DE REGRESO -->
+<div class="screen" id="swelcome">
+  <div class="wlc-wrap">
+    <div class="wlc-avatar" id="wlc-avatar">🦸</div>
+    <div class="wlc-title" id="wlc-title">¡BIENVENIDO DE NUEVO!</div>
+    <div class="wlc-sub" id="wlc-sub">Cargando tu historial...</div>
+    <div class="wlc-stats" id="wlc-stats" style="display:none">
+      <div class="wlc-stat">
+        <div class="wlc-stat-val gold" id="wlc-sesiones">—</div>
+        <div class="wlc-stat-lbl">Sesiones</div>
+      </div>
+      <div class="wlc-stat">
+        <div class="wlc-stat-val green" id="wlc-misiones">—</div>
+        <div class="wlc-stat-lbl">Misiones</div>
+      </div>
+      <div class="wlc-stat">
+        <div class="wlc-stat-val" id="wlc-precision">—</div>
+        <div class="wlc-stat-lbl">Mejor %</div>
+      </div>
+    </div>
+    <div class="wlc-streak" id="wlc-streak" style="display:none">
+      <div class="wlc-streak-icon">🔥</div>
+      <div class="wlc-streak-txt" id="wlc-streak-txt"></div>
+    </div>
+    <div class="wlc-best" id="wlc-best" style="display:none">
+      <div class="wlc-best-title">⭐ TU MEJOR DESEMPEÑO</div>
+      <div id="wlc-best-rows"></div>
+    </div>
+    <button class="wlc-btn" onclick="continuarDesdeWelcome()">¡CONTINUAR MISIÓN! ▶</button>
+    <button class="wlc-new-btn" onclick="volverSplash()">← No soy yo, cambiar nombre</button>
+  </div>
+</div>
+
 <!-- BRIEFING ABR -->
 <div class="screen" id="sbriefing">
   <div class="brief-wrap">
@@ -456,7 +640,10 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
   <div class="mhdr">
     <div class="pinfo">
       <div class="pav">🧑‍🎓</div>
-      <div><div class="pname-d" id="dname">HÉROE</div><div class="prank-d" id="drank">RANGO: NOVATO</div></div>
+      <div>
+        <div class="pname-d" id="dname">HÉROE</div>
+        <div class="prank-d" id="drank">RANGO: NOVATO<span id="hub-streak"></span></div>
+      </div>
     </div>
     <div class="gstats">
       <div class="gs"><div class="gsv gold" id="tpts">0</div><div class="gsl">Puntos</div></div>
@@ -771,19 +958,100 @@ function createParticles(){
 }
 function showScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const m={splash:'ss',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
+  const m={splash:'ss',welcome:'swelcome',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
   document.getElementById(m[n]||n).classList.add('active');
   if(n==='missions')renderHub();
 }
 function goMissions(){
-  const n=document.getElementById('pname').value.trim().toUpperCase();
-  S.name=n||'HÉROE';
-  S.course=(document.getElementById('pcourse').value.trim()||'—').toUpperCase();
-  S.inst=(document.getElementById('pinst').value.trim()||'—').toUpperCase();
+  const fullName = document.getElementById('pname').value.trim().toUpperCase();
+  S.name = fullName || 'HÉROE';
+  S.course = (document.getElementById('pcourse').value.trim()||'—').toUpperCase();
+  S.inst   = (document.getElementById('pinst').value.trim()||'—').toUpperCase();
   if(!S.sessionStart) S.sessionStart = Date.now();
+  BS = loadBadgeState(S.name);
+  loadFSMode();
   registerVisit();
   if(BS._cdwUnlocked){ const b=document.getElementById('cdw-mode-btn'); if(b)b.style.display=''; }
+  // Mostrar bienvenida de regreso si tiene historial en Sheets
+  mostrarBienvenida();
+}
+
+function volverSplash(){
+  showScreen('splash');
+}
+
+function continuarDesdeWelcome(){
   showScreen('missions');
+}
+
+async function mostrarBienvenida(){
+  showScreen('welcome');
+  const nombre = S.name;
+  document.getElementById('wlc-title').textContent = '¡BIENVENIDO, ' + nombre + '!';
+  document.getElementById('wlc-sub').textContent = 'Consultando tu historial...';
+  try {
+    const url = SHEETS_CONFIG.url + '?nombre=' + encodeURIComponent(nombre) + '&stats=1';
+    const res = await fetch(url);
+    const data = await res.json();
+    const sesiones = data.visitas || 0;
+    if(sesiones === 0){
+      // Primera vez — saltar directo a misiones
+      document.getElementById('wlc-avatar').textContent = '🚀';
+      document.getElementById('wlc-title').textContent = '¡HOLA, ' + nombre + '!';
+      document.getElementById('wlc-sub').textContent = 'Primera sesión — ¡bienvenido al simulador! Empieza desde el nivel Fácil.';
+      setTimeout(()=> showScreen('missions'), 2000);
+      return;
+    }
+    // Tiene historial
+    document.getElementById('wlc-avatar').textContent = '🦸';
+    document.getElementById('wlc-title').textContent = '¡BIENVENIDO DE NUEVO, ' + nombre + '!';
+    document.getElementById('wlc-sub').textContent = sesiones === 1
+      ? 'Es tu segunda visita — ¡sigue adelante!'
+      : 'Llevas ' + sesiones + ' sesiones en el simulador.';
+    // Stats
+    const stats = document.getElementById('wlc-stats');
+    stats.style.display = 'grid';
+    document.getElementById('wlc-sesiones').textContent = sesiones;
+    if(data.misiones != null) document.getElementById('wlc-misiones').textContent = data.misiones;
+    if(data.mejorPrecision != null) document.getElementById('wlc-precision').textContent = data.mejorPrecision + '%';
+    // Racha
+    if(data.racha && data.racha > 0){
+      const strEl = document.getElementById('wlc-streak');
+      strEl.style.display = 'flex';
+      const msg = data.racha === 1
+        ? 'Llevas <strong>1 día seguido</strong> practicando. ¡Vuelve mañana para empezar tu racha!'
+        : 'Llevas <strong>' + data.racha + ' días seguidos</strong> practicando. ¡No rompas la racha!';
+      document.getElementById('wlc-streak-txt').innerHTML = msg;
+    }
+    // Mejor misión
+    if(data.mejorMision){
+      const best = document.getElementById('wlc-best');
+      best.style.display = 'block';
+      const rows = document.getElementById('wlc-best-rows');
+      rows.innerHTML =
+        '<div class="wlc-best-row">Mejor misión <span>' + data.mejorMision + '</span></div>' +
+        '<div class="wlc-best-row">Precisión máxima <span>' + (data.mejorPrecision||'—') + '%</span></div>' +
+        '<div class="wlc-best-row">Misiones completadas <span>' + (data.misiones||'—') + '</span></div>';
+    }
+    // Racha en hub
+    actualizarRachaHub(data.racha||0);
+  } catch(e){
+    // Sin conexión — ir directo a misiones
+    document.getElementById('wlc-sub').textContent = 'Sin conexión — entrando sin historial...';
+    setTimeout(()=> showScreen('missions'), 1500);
+  }
+}
+
+function actualizarRachaHub(racha){
+  const el = document.getElementById('hub-streak');
+  if(!el) return;
+  if(racha >= 2){
+    el.innerHTML = ' <span class="streak-badge">🔥 ' + racha + ' días</span>';
+  } else if(racha === 1){
+    el.innerHTML = ' <span class="streak-badge racha1">⭐ 1 día</span>';
+  } else {
+    el.innerHTML = '';
+  }
 }
 
 // ══ HUB ══
@@ -2042,11 +2310,13 @@ function finalizarMision(){
     const nr = (r.nivel||'').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     if((nivelOrder[nr]||0) > (nivelOrder[nivelMax]||0)) nivelMax = nr;
   });
+  // Umbral de aprobacion: precision >= 60% Y errores criticos <= 2
+  const misionAprobada = precision >= 60 && (S.critErrors||0) <= 2;
   const record = {
     nombre: S.name, curso: S.course, inst: S.inst,
     mision: S.currentMission.id, titulo: S.currentMission.title, nivel: S.currentMission.diff,
     intento: S.currentAttempt||1,
-    estado: 'COMPLETADA',
+    estado: misionAprobada ? 'COMPLETADA' : 'FINALIZADA-SIN-INSIGNIA',
     puntos: currentPts, maxPuntos: 80, precision: precision,
     decisiones: totalDecisiones, correctas: correctasDecisiones,
     erroresCrit: S.critErrors||0,
@@ -2060,12 +2330,15 @@ function finalizarMision(){
   };
   S.sessionLog.push(record);
   enviarASheets(record);
-  mostrarMensajeIA(`🎉 **¡MISIÓN COMPLETADA!**\n\nPuntos: **${currentPts}/80** · Precisión: **${precision}%**\nErrores críticos: **${S.critErrors||0}** · Tiempo: **${Math.floor(tiempoSeg/60)}m ${tiempoSeg%60}s**\n\n¡Cada decisión correcta salva vidas reales!`);
+  const msgResultado = misionAprobada
+    ? `🎉 **¡MISIÓN COMPLETADA!**\n\nPuntos: **${currentPts}/80** · Precisión: **${precision}%**\nErrores críticos: **${S.critErrors||0}** · Tiempo: **${Math.floor(tiempoSeg/60)}m ${tiempoSeg%60}s**\n\n¡Cada decisión correcta salva vidas reales!`
+    : `⚠️ **MISIÓN FINALIZADA — SIN INSIGNIA**\n\nPuntos: **${currentPts}/80** · Precisión: **${precision}%**\nErrores críticos: **${S.critErrors||0}** · Tiempo: **${Math.floor(tiempoSeg/60)}m ${tiempoSeg%60}s**\n\n🔁 Para ganar la insignia necesitas: **precisión ≥ 60%** y **≤ 2 errores críticos**.\n¡Vuelve a intentarlo — cada práctica te acerca a salvar una vida!`;
+  mostrarMensajeIA(msgResultado);
   setTimeout(() => {
     if(!S.done.includes(S.currentMission.id)) S.done.push(S.currentMission.id);
     S.totalPts += currentPts;
     actualizarRangoGlobal();
-    awardMissionBadge(S.currentMission.id);
+    if(misionAprobada) awardMissionBadge(S.currentMission.id);
     if(S.currentMission._cdwMode) stopCdwTimer();
     if(S.isEpic){
       handleEpicComplete(currentPts);
@@ -2426,7 +2699,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbxuNps9QVbEbp0JvlqmTDkOE7lEgybel0MOCFpPd8DFO74TKBXfaUTOHWkgjGQBZ_-n/exec',
+  url: 'https://script.google.com/macros/s/AKfycbypw3rga7Op-D2J328F81VJSL_Xx2IlQxeOPjKOCg9nysD3TZpsNwQ--3WaIe27_N6E/exec',
   enabled: true
 };
 
@@ -2665,6 +2938,47 @@ function exportCSV(){
 // SISTEMA DE INSIGNIAS, DIPLOMAS Y VISITAS — RCP HERO v3
 // ══════════════════════════════════════════════════════════
 
+
+// ── Accesibilidad: ciclo de tamaño de fuente ──
+const FS_MODES = [
+  {cls:'',       label:'Normal', icon:'🔡'},
+  {cls:'fs-grande', label:'Grande', icon:'🔤'},
+  {cls:'fs-extra',  label:'Extra',  icon:'🔠'},
+];
+let fsModeIdx = 0;
+
+function loadFSMode(){
+  try {
+    const key = 'rcphero_fs_' + (S.name||'HEROE').toUpperCase().trim();
+    const saved = localStorage.getItem(key);
+    if(saved !== null) fsModeIdx = parseInt(saved)||0;
+  } catch(e){}
+  applyFSMode(false);
+}
+function saveFSMode(){
+  try {
+    const key = 'rcphero_fs_' + (S.name||'HEROE').toUpperCase().trim();
+    localStorage.setItem(key, String(fsModeIdx));
+  } catch(e){}
+}
+function applyFSMode(save){
+  const m = FS_MODES[fsModeIdx];
+  document.body.classList.remove('fs-grande','fs-extra');
+  if(m.cls) document.body.classList.add(m.cls);
+  // Actualizar píldoras activas
+  document.querySelectorAll('.a11y-pill').forEach((pill,i)=>{
+    pill.classList.toggle('active', i === fsModeIdx);
+  });
+  if(save) saveFSMode();
+}
+function setFS(idx){
+  fsModeIdx = idx;
+  applyFSMode(true);
+}
+function cycleFS(){ setFS((fsModeIdx+1) % FS_MODES.length); }
+// Cargar tamaño guardado al inicio
+loadFSMode();
+
 // ── Definición de insignias por misión ──
 const MISSION_BADGES = {
   E1:{icon:'🚶',name:'Primer Respondedor',desc:'Pasillo Solitario'},
@@ -2715,16 +3029,20 @@ const CDW_MISSIONS = [
 
 // ── Estado de insignias (en memoria de sesión) ──
 // Se usa localStorage para persistencia entre visitas
-function loadBadgeState(){
+function badgeKey(nombre){
+  const n = (nombre||S.name||'HEROE').toUpperCase().trim().replace(/\s+/g,'_');
+  return 'rcphero_badges_' + n;
+}
+function loadBadgeState(nombre){
   try{
-    const raw = localStorage.getItem('rcphero_badges');
-    return raw ? JSON.parse(raw) : {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[]};
-  }catch(e){ return {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[]}; }
+    const raw = localStorage.getItem(badgeKey(nombre));
+    return raw ? JSON.parse(raw) : {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false};
+  }catch(e){ return {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false}; }
 }
 function saveBadgeState(bs){
-  try{ localStorage.setItem('rcphero_badges', JSON.stringify(bs)); }catch(e){}
+  try{ localStorage.setItem(badgeKey(), JSON.stringify(bs)); }catch(e){}
 }
-let BS = loadBadgeState();
+let BS = {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false};
 
 // ── Consultar visitas reales desde Google Sheets ──
 async function registerVisit(){
