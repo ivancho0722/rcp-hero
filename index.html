@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RCP HERO v1.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&family=Bebas+Neue&family=Black+Ops+One&display=swap" rel="stylesheet">
 <style>
 :root{--red:#FF1E2D;--red2:#FF4D57;--rdark:#9B0010;--rglow:rgba(255,30,45,.5);--bg:#0A0A12;--bg2:#0E0E18;--bg3:#14141F;--panel:rgba(18,18,30,.97);--panel2:rgba(26,26,46,.95);--border:rgba(255,30,45,.2);--border2:rgba(255,30,45,.45);--text:#F0F0F8;--muted:#9898C0;--muted2:#B8B8D8;--gold:#FFD700;--gglow:rgba(255,215,0,.45);--green:#00FF88;--greglow:rgba(0,255,136,.35);--cyan:#00D4FF;--cglow:rgba(0,212,255,.35);--orange:#FF6B00;--purple:#A855F7;}
 /* ══ BRIEFING ABR ══ */
@@ -99,16 +99,16 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 @keyframes hbr{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.6);opacity:0}}
 .hbc-core{position:absolute;inset:22px;background:linear-gradient(135deg,var(--rdark),var(--red));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 0 30px var(--rglow);animation:hbcore 1.8s ease-in-out infinite;}
 @keyframes hbcore{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(.94)}}
-.ecgl{width:300px;height:52px;overflow:hidden;margin-bottom:6px;}
-.ecgp{fill:none;stroke:var(--green);stroke-width:2;stroke-dasharray:640;stroke-dashoffset:640;animation:ecgd 2s ease forwards,ecgloop 3s linear 2s infinite;filter:drop-shadow(0 0 4px var(--green));}
+.ecgl{width:300px;height:64px;overflow:hidden;margin-bottom:6px;}
+.ecgp{fill:none;stroke:var(--green);stroke-width:1.8;stroke-dasharray:820;stroke-dashoffset:820;animation:ecgd 2.5s ease forwards,ecgloop 3.5s linear 2.5s infinite;filter:drop-shadow(0 0 6px var(--green)) drop-shadow(0 0 2px #00ff88);}
 @keyframes ecgd{to{stroke-dashoffset:0}}
 @keyframes ecgloop{0%{stroke-dashoffset:0;opacity:1}80%{opacity:1}100%{stroke-dashoffset:-640;opacity:0}}
 .stitle{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(64px,14vw,108px);letter-spacing:8px;line-height:.85;color:var(--red);text-shadow:0 0 20px var(--rglow),0 0 60px rgba(255,30,45,.3);animation:tflick 5s ease-in-out infinite;}
 
 
 @keyframes tflick{0%,94%,100%{opacity:1}95%{opacity:.65}97%{opacity:1}99%{opacity:.4}}
-.shero{font-family:'Orbitron',monospace;font-size:clamp(22px,5vw,38px);font-weight:400;letter-spacing:4px;}
-.sslogan{font-size:13px;color:var(--muted2);letter-spacing:4px;text-transform:uppercase;margin-top:4px;}
+.shero{font-family:'Black Ops One','Orbitron',monospace;font-size:clamp(38px,8vw,64px);font-weight:400;letter-spacing:10px;color:#fff;text-shadow:0 0 20px rgba(255,255,255,.3),2px 2px 0px rgba(255,30,45,.6);}
+.sslogan{font-size:14px;color:var(--muted2);letter-spacing:5px;text-transform:uppercase;margin-top:8px;font-family:'Share Tech Mono',monospace;}
 .sbadges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0 16px;}
 .badge{padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:1px;font-weight:700;font-family:'Share Tech Mono',monospace;cursor:default;}
 .b-mot{background:rgba(255,30,45,.15);border:1px solid var(--border2);color:var(--red2);}
@@ -483,6 +483,38 @@ body.fs-extra .lvl-desc   { font-size: 16px !important; }
 body.fs-extra .ctx-desc   { font-size: 15px !important; }
 body.fs-extra #cinput     { font-size: 18px !important; }
 body.fs-extra .qopt       { padding: 16px 18px !important; min-height: 56px !important; }
+
+/* Escalar texto splash */
+body.fs-grande .stitle    { font-size: clamp(72px,15vw,120px) !important; }
+body.fs-extra  .stitle    { font-size: clamp(80px,17vw,136px) !important; }
+body.fs-grande .shero     { font-size: clamp(26px,6vw,44px) !important; }
+body.fs-extra  .shero     { font-size: clamp(30px,7vw,50px) !important; }
+body.fs-grande .sslogan   { font-size: 15px !important; }
+body.fs-extra  .sslogan   { font-size: 18px !important; }
+body.fs-grande .badge     { font-size: 13px !important; }
+body.fs-extra  .badge     { font-size: 15px !important; }
+body.fs-grande .nsec label { font-size: 14px !important; }
+body.fs-extra  .nsec label { font-size: 16px !important; }
+body.fs-grande #pname     { font-size: 18px !important; }
+body.fs-extra  #pname     { font-size: 21px !important; }
+body.fs-grande .sbtn      { font-size: 20px !important; }
+body.fs-extra  .sbtn      { font-size: 22px !important; }
+body.fs-grande .swarn li  { font-size: 15px !important; }
+body.fs-extra  .swarn li  { font-size: 18px !important; }
+body.fs-grande .pname-d   { font-size: 15px !important; }
+body.fs-extra  .pname-d   { font-size: 17px !important; }
+body.fs-grande .prank-d   { font-size: 12px !important; }
+body.fs-extra  .prank-d   { font-size: 14px !important; }
+body.fs-grande .gsv       { font-size: 22px !important; }
+body.fs-extra  .gsv       { font-size: 26px !important; }
+body.fs-grande .gsl       { font-size: 11px !important; }
+body.fs-extra  .gsl       { font-size: 13px !important; }
+body.fs-grande .sec-title { font-size: 12px !important; }
+body.fs-extra  .sec-title { font-size: 14px !important; }
+body.fs-grande .nc-label  { font-size: 11px !important; }
+body.fs-extra  .nc-label  { font-size: 13px !important; }
+body.fs-grande .nc-prog   { font-size: 10px !important; }
+body.fs-extra  .nc-prog   { font-size: 12px !important; }
 body.fs-extra .swarn li   { font-size: 17px !important; }
 body.fs-extra .brief-challenge-q { font-size: 20px !important; }
 body.fs-extra .mcard      { padding: 16px !important; }
@@ -553,8 +585,16 @@ body.fs-extra .mcard      { padding: 16px !important; }
 }
 .fs-btn:active { transform: scale(.95); }
 .fs-btn .fs-a { font-weight: 900; color: var(--muted2); line-height: 1; }
-.fs-btn .fs-lbl { font-size: 9px; letter-spacing: 1px; color: var(--muted);
+.fs-btn .fs-lbl { font-size: 11px; letter-spacing: 1px; color: var(--muted);
   text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+body.fs-grande .fs-btn .fs-lbl { font-size: 13px !important; }
+body.fs-extra  .fs-btn .fs-lbl { font-size: 15px !important; }
+body.fs-grande .fs-btn-n .fs-a { font-size: 20px !important; }
+body.fs-grande .fs-btn-g .fs-a { font-size: 26px !important; }
+body.fs-grande .fs-btn-x .fs-a { font-size: 32px !important; }
+body.fs-extra  .fs-btn-n .fs-a { font-size: 24px !important; }
+body.fs-extra  .fs-btn-g .fs-a { font-size: 30px !important; }
+body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
 .fs-btn-n .fs-a { font-size: 16px; }
 .fs-btn-g .fs-a { font-size: 22px; }
 .fs-btn-x .fs-a { font-size: 28px; }
@@ -594,6 +634,21 @@ body.fs-extra .mcard      { padding: 16px !important; }
 .hub-fs-btn-x.active { border-color: var(--cyan); background: rgba(0,212,255,.12); box-shadow: 0 0 8px rgba(0,212,255,.3); }
 .hub-fs-btn-x.active .hfs-a  { color: var(--cyan); }
 .hub-fs-btn-x.active .hfs-lbl{ color: var(--cyan); }
+
+/* ── Audio TTS ── */
+#tts-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--panel); border: 2px solid var(--border);
+  border-radius: 50px; padding: 7px 14px; cursor: pointer;
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  letter-spacing: 1px; color: var(--muted); transition: all .2s;
+  white-space: nowrap;
+}
+#tts-btn:hover { border-color: var(--green); }
+#tts-btn.on { border-color: var(--green); background: rgba(0,255,136,.1); color: var(--green); box-shadow: 0 0 12px rgba(0,255,136,.25); }
+#tts-btn .tts-icon { font-size: 18px; line-height: 1; }
+#tts-btn.speaking .tts-icon { animation: ttspulse .6s ease-in-out infinite; }
+@keyframes ttspulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
 </style>
 </head>
 <body>
@@ -607,28 +662,35 @@ body.fs-extra .mcard      { padding: 16px !important; }
 <div class="screen active" id="ss">
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:20px;gap:0;text-align:center;">
     <div class="hbc"><div class="hbr"></div><div class="hbr"></div><div class="hbr"></div><div class="hbc-core">❤️</div></div>
-    <svg class="ecgl" viewBox="0 0 300 52"><path class="ecgp" d="M0,26 L42,26 L52,26 L57,6 L62,46 L67,11 L72,26 L95,26 L110,6 L115,46 L120,11 L125,26 L155,26 L160,6 L165,46 L170,11 L175,26 L210,26 L215,6 L220,46 L225,11 L230,26 L270,26 L275,6 L280,46 L285,11 L290,26 L300,26"/></svg>
+    <svg class="ecgl" viewBox="0 0 300 64"><path class="ecgp" d="M0,32 L12,32 C15,32 16,24 19,24 C22,24 23,32 26,32 L30,32 L32,32 L33,37 L35,4 L37,40 L39,32 L42,32 C46,32 48,20 52,20 C56,20 58,32 62,32 L68,32 C71,32 72,24 75,24 C78,24 79,32 82,32 L86,32 L88,32 L89,37 L91,4 L93,40 L95,32 L98,32 C102,32 104,20 108,20 C112,20 114,32 118,32 L124,32 C127,32 128,24 131,24 C134,24 135,32 138,32 L142,32 L144,32 L145,37 L147,4 L149,40 L151,32 L154,32 C158,32 160,20 164,20 C168,20 170,32 174,32 L180,32 C183,32 184,24 187,24 C190,24 191,32 194,32 L198,32 L200,32 L201,37 L203,4 L205,40 L207,32 L210,32 C214,32 216,20 220,20 C224,20 226,32 230,32 L236,32 C239,32 240,24 243,24 C246,24 247,32 250,32 L254,32 L256,32 L257,37 L259,4 L261,40 L263,32 L266,32 C270,32 272,20 276,20 C280,20 282,32 286,32 L300,32"/></svg>
     <div class="stitle">RCP</div>
     <div class="shero">HERO</div>
     <div class="sslogan">El poder está en tus manos</div>
     <div class="sbadges">
       <span class="badge b-mot">❤️ TÚ PUEDES SALVAR VIDAS</span>
-      <span class="badge b-reto">⚡ MISIÓN ACTIVA</span>
-      <span class="badge b-urg">💓 1 VIDA CADA 2 MIN</span>
-      <span class="badge b-cyan">🎯 ¿ESTÁS LISTO?</span>
+      <span class="badge b-urg">🚨 Emergencia → llama al 123</span>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">
-      <span style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">⚠️ Educativo</span>
+      <span style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">⚠️ Solo educativo</span>
       <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">🧑‍⚕️ No reemplaza práctica</span>
-      <span style="background:rgba(255,30,45,.1);border:1px solid rgba(255,30,45,.3);color:var(--red2);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">🚨 Emergencia → 123</span>
     </div>
     <div class="nsec">
-      <label>Nombre y apellido</label>
-      <input type="text" id="pname" placeholder="Ej: CARLOS RAMÍREZ" maxlength="50" autocomplete="off"
-        oninput="this.value=this.value.toUpperCase()">
+      <label>🧑‍🎓 Nombre y apellido</label>
+      <div style="position:relative;width:280px;">
+        <input type="text" id="pname" placeholder="Ej: CARLOS RAMÍREZ" maxlength="50" autocomplete="off"
+          oninput="this.value=this.value.toUpperCase()"
+          style="width:100%;padding-right:44px;box-sizing:border-box;">
+      </div>
       <input type="hidden" id="papellido" value="">
       <input type="hidden" id="pcourse" value="—">
       <input type="hidden" id="pinst" value="—">
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+      <button id="tts-btn" onclick="toggleTTS()" title="Activar lectura en voz alta"
+        style="width:280px;justify-content:center;">
+        <span class="tts-icon">🔇</span>
+        <span id="tts-label">Audio desactivado</span>
+      </button>
     </div>
     <div style="margin-bottom:4px;">
       <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-family:'Share Tech Mono',monospace;text-align:center;margin-bottom:8px;">🔡 Tamaño de texto</div>
@@ -730,6 +792,9 @@ body.fs-extra .mcard      { padding: 16px !important; }
         <div class="gsl">Tamaño de texto</div>
       </div>
       <button onclick="showBadges()" style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:8px 16px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;">🏅 INSIGNIAS</button>
+      <button id="tts-btn-hub" onclick="toggleTTS()" style="display:flex;align-items:center;gap:5px;background:var(--panel);border:2px solid var(--border);border-radius:50px;padding:7px 12px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);transition:all .2s;" title="Audio">
+        <span id="tts-icon-hub">🔇</span>
+      </button>
       <button id="testbtn" onclick="testSheets()" style="display:none;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">🔌 TEST</button>
       <button id="trackbtn" onclick="showTracking()" style="display:none;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">📊</button>
     </div>
@@ -1043,6 +1108,7 @@ function createParticles(){
 }
 function showScreen(n){
   window.scrollTo(0,0);
+  _ttsCancel();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const m={splash:'ss',welcome:'swelcome',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
   document.getElementById(m[n]||n).classList.add('active');
@@ -1056,6 +1122,7 @@ function goMissions(){
   if(!S.sessionStart) S.sessionStart = Date.now();
   BS = loadBadgeState(S.name);
   loadFSMode();
+  initTTS();
   registerVisit();
   if(BS._cdwUnlocked){ const b=document.getElementById('cdw-mode-btn'); if(b)b.style.display=''; }
   // Mostrar bienvenida de regreso si tiene historial en Sheets
@@ -2291,6 +2358,7 @@ function mostrarMensajeIA(txt){
   d.innerHTML = `<div class="mav">❤️</div><div class="mbub">${fmtMsg(txt)}</div>`;
   c.appendChild(d);
   d.scrollIntoView({behavior:"smooth",block:"end"});
+  speakTTS(txt);
 }
 
 function mostrarMensajeUser(txt){
@@ -2300,6 +2368,7 @@ function mostrarMensajeUser(txt){
   d.innerHTML = `<div class="mav">🧑‍🎓</div><div class="mbub">${fmtMsg(txt)}</div>`;
   c.appendChild(d);
   d.scrollIntoView({behavior:"smooth",block:"end"});
+  speakTTS(txt);
 }
 
 function crearOpciones(ops, originalOps){
@@ -2321,11 +2390,15 @@ function crearOpciones(ops, originalOps){
 
   c.appendChild(container);
   container.scrollIntoView({behavior:"smooth",block:"nearest"});
+  // TTS: encolar opciones
+  const optsText = ops.map((op,i) => 'ABCD'[i] + '. ' + op.txt).join('. ');
+  speakTTS(optsText);
 }
 
 function procesarDecision(op, container){
   if(pasosBloqueados) return;
   pasosBloqueados = true;
+  _ttsCancel(); // Cancelar lectura de opciones en curso
   totalDecisiones++;
   S.decisions++;
 
@@ -2388,6 +2461,7 @@ function procesarDecision(op, container){
       fbEl.style.margin = '0 0 8px 0';
       fbEl.innerHTML = `<div class="qexp-t">${op.crit ? '⚠️ ERROR CRÍTICO' : '💡 RETROALIMENTACIÓN'}</div><div>${op.fb}</div>`;
       document.getElementById('chatmsgs').appendChild(fbEl);
+      speakTTS((op.crit ? 'Error crítico. ' : '') + op.fb);
       fbEl.scrollIntoView({behavior:'smooth',block:'nearest'});
 
       setTimeout(() => {
@@ -3076,16 +3150,26 @@ let fsModeIdx = 0;
 
 function loadFSMode(){
   try {
-    const key = 'rcphero_fs_' + (S.name||'HEROE').toUpperCase().trim();
-    const saved = localStorage.getItem(key);
+    // Primero cargar preferencia global (para splash)
+    const globalKey = 'rcphero_fs_global';
+    const saved = localStorage.getItem(globalKey);
     if(saved !== null) fsModeIdx = parseInt(saved)||0;
+    // Si hay nombre, cargar preferencia específica del usuario
+    if(S.name && S.name !== 'HÉROE'){
+      const userKey = 'rcphero_fs_' + S.name.toUpperCase().trim();
+      const userSaved = localStorage.getItem(userKey);
+      if(userSaved !== null) fsModeIdx = parseInt(userSaved)||0;
+    }
   } catch(e){}
   applyFSMode(false);
 }
 function saveFSMode(){
   try {
-    const key = 'rcphero_fs_' + (S.name||'HEROE').toUpperCase().trim();
-    localStorage.setItem(key, String(fsModeIdx));
+    // Guardar siempre en global Y en usuario si hay nombre
+    localStorage.setItem('rcphero_fs_global', String(fsModeIdx));
+    if(S.name && S.name !== 'HÉROE'){
+      localStorage.setItem('rcphero_fs_' + S.name.toUpperCase().trim(), String(fsModeIdx));
+    }
   } catch(e){}
 }
 function applyFSMode(save){
@@ -3119,6 +3203,99 @@ function setFS(idx){
 function cycleFS(){ setFS((fsModeIdx+1) % FS_MODES.length); }
 // Cargar tamaño guardado al inicio
 loadFSMode();
+
+
+// ══ SISTEMA TTS — LECTURA EN VOZ ALTA ══
+let ttsEnabled = false;
+let ttsVoice = null;
+let ttsSpeaking = false;
+
+function initTTS(){
+  if(!('speechSynthesis' in window)) return;
+  // Cargar preferencia guardada
+  try {
+    const saved = localStorage.getItem('rcphero_tts_'+(S.name||''));
+    if(saved === '1') { ttsEnabled = true; updateTTSBtn(); }
+  } catch(e){}
+  // Seleccionar mejor voz en español
+  function pickVoice(){
+    const voices = window.speechSynthesis.getVoices();
+    // Preferir voz femenina en español latinoamericano
+    ttsVoice = voices.find(v => v.lang === 'es-CO') ||
+               voices.find(v => v.lang === 'es-US') ||
+               voices.find(v => v.lang.startsWith('es')) ||
+               voices[0] || null;
+  }
+  pickVoice();
+  window.speechSynthesis.onvoiceschanged = pickVoice;
+}
+
+function toggleTTS(){
+  if(!('speechSynthesis' in window)){
+    alert('Tu navegador no soporta la lectura en voz alta. Prueba con Chrome.');
+    return;
+  }
+  ttsEnabled = !ttsEnabled;
+  if(!ttsEnabled) window.speechSynthesis.cancel();
+  updateTTSBtn();
+  try { localStorage.setItem('rcphero_tts_'+(S.name||''), ttsEnabled?'1':'0'); } catch(e){}
+  if(ttsEnabled) speakTTS('Audio activado. Listo para leer las decisiones.');
+}
+
+function updateTTSBtn(){
+  const btn = document.getElementById('tts-btn');
+  const lbl = document.getElementById('tts-label');
+  const ico = btn ? btn.querySelector('.tts-icon') : null;
+  if(btn) btn.classList.toggle('on', ttsEnabled);
+  if(lbl) lbl.textContent = ttsEnabled ? 'Audio activado' : 'Audio desactivado';
+  if(ico) ico.textContent = ttsEnabled ? '🔊' : '🔇';
+  // Sincronizar botón del hub
+  const hubBtn = document.getElementById('tts-btn-hub');
+  const hubIco = document.getElementById('tts-icon-hub');
+  if(hubBtn){ hubBtn.style.borderColor = ttsEnabled ? 'var(--green)' : 'var(--border)'; hubBtn.style.background = ttsEnabled ? 'rgba(0,255,136,.1)' : 'var(--panel)'; }
+  if(hubIco) hubIco.textContent = ttsEnabled ? '🔊' : '🔇';
+}
+
+// Cola TTS para no cortar la lectura anterior
+let _ttsQueue = [];
+let _ttsBusy = false;
+
+function speakTTS(text){
+  if(!ttsEnabled || !('speechSynthesis' in window)) return;
+  let clean = text;
+  clean = clean.replace(/\*\*(.*?)\*\*/g, '$1');
+  clean = clean.replace(/\n+/g, '. ');
+  clean = clean.replace(/\s+/g, ' ');
+  clean = clean.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '');
+  clean = clean.replace(/[\u2600-\u27BF]/g, '');
+  clean = clean.trim();
+  if(!clean) return;
+  _ttsQueue.push(clean);
+  if(!_ttsBusy) _ttsNext();
+}
+
+function _ttsNext(){
+  if(!_ttsQueue.length){ _ttsBusy=false; return; }
+  _ttsBusy = true;
+  const clean = _ttsQueue.shift();
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.lang = 'es-CO';
+  utt.rate = 0.95;
+  utt.pitch = 1;
+  utt.volume = 1;
+  if(ttsVoice) utt.voice = ttsVoice;
+  const btn = document.getElementById('tts-btn');
+  utt.onstart = () => { ttsSpeaking=true; if(btn) btn.classList.add('speaking'); };
+  utt.onend = () => { ttsSpeaking=false; if(btn) btn.classList.remove('speaking'); _ttsNext(); };
+  utt.onerror = () => { ttsSpeaking=false; if(btn) btn.classList.remove('speaking'); _ttsNext(); };
+  window.speechSynthesis.speak(utt);
+}
+
+function _ttsCancel(){
+  _ttsQueue = [];
+  _ttsBusy = false;
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+}
 
 // ── Definición de insignias por misión ──
 const MISSION_BADGES = {
@@ -3347,6 +3524,10 @@ function showBriefing(m, isEpic=false){
   document.getElementById('brief-title').textContent = m.id + ': ' + m.title;
   document.getElementById('brief-desc').textContent = m.desc;
   document.getElementById('brief-tip').textContent = m.tip;
+  // TTS: leer el caso
+  const reto2 = document.getElementById('brief-reto').textContent;
+  const desc2 = document.getElementById('brief-desc').textContent;
+  setTimeout(() => speakTTS(reto2 + '. ' + desc2), 600);
   document.getElementById('brief-start-btn').onclick = () => {
     showScreen('simulator');
     startMission(_briefingMission, _briefingIsEpic);
