@@ -432,7 +432,7 @@ body.fs-extra .brief-challenge-q { font-size: 20px !important; }
 body.fs-extra .mcard      { padding: 16px !important; }
 
 /* Botón flotante accesibilidad */
-/* ── Botón accesibilidad rediseñado ── */
+/* ── Accesibilidad: escritorio (panel fijo) ── */
 #a11y-panel {
   position: fixed; bottom: 18px; right: 14px; z-index: 800;
   background: var(--panel2);
@@ -440,44 +440,10 @@ body.fs-extra .mcard      { padding: 16px !important; }
   border-radius: 16px;
   padding: 10px 12px;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
-  user-select: none;
-  min-width: 68px;
-  transition: all .25s;
+  box-shadow: 0 6px 24px rgba(0,0,0,.55);
+  user-select: none; min-width: 68px;
 }
-/* En móvil: colapsado por defecto */
-@media(max-width:640px){
-  #a11y-panel {
-    padding: 8px 10px;
-    min-width: unset;
-    gap: 0;
-    border-radius: 50px;
-  }
-  #a11y-panel-title { display: none; }
-  #a11y-pills { display: none; gap: 6px; flex-direction: row; }
-  #a11y-panel.open {
-    border-radius: 16px;
-    padding: 10px 12px;
-    gap: 8px;
-  }
-  #a11y-panel.open #a11y-panel-title { display: block; }
-  #a11y-panel.open #a11y-pills { display: flex; flex-direction: column; }
-  #a11y-toggle { display: flex; }
-}
-@media(min-width:641px){
-  #a11y-toggle { display: none; }
-}
-#a11y-toggle {
-  align-items: center; gap: 6px; cursor: pointer;
-  font-family: 'Share Tech Mono', monospace;
-  background: none; border: none; color: var(--muted2);
-  padding: 2px 4px;
-}
-#a11y-toggle-icon { font-size: 20px; line-height: 1; }
-#a11y-toggle-letter {
-  font-size: 15px; font-weight: 900; color: var(--cyan);
-  font-family: 'Exo 2', sans-serif;
-}
+#a11y-toggle { display: none; }
 #a11y-panel-title {
   font-family: 'Share Tech Mono', monospace;
   font-size: 9px; letter-spacing: 2px; color: var(--muted);
@@ -487,11 +453,8 @@ body.fs-extra .mcard      { padding: 16px !important; }
 .a11y-pill {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   padding: 8px 10px; border-radius: 10px; cursor: pointer;
-  border: 1.5px solid var(--border);
-  background: var(--panel);
-  transition: all .18s;
-  font-family: 'Exo 2', sans-serif;
-  white-space: nowrap;
+  border: 1.5px solid var(--border); background: var(--panel);
+  transition: all .18s; font-family: 'Exo 2', sans-serif; white-space: nowrap;
 }
 .a11y-pill:hover { border-color: var(--cyan); background: rgba(0,212,255,.08); }
 .a11y-pill.active { border-color: var(--cyan); background: rgba(0,212,255,.14); box-shadow: 0 0 10px rgba(0,212,255,.2); }
@@ -499,14 +462,47 @@ body.fs-extra .mcard      { padding: 16px !important; }
 .pill-letter { font-weight: 900; line-height: 1; color: var(--muted2); }
 .a11y-pill.active .pill-letter { color: var(--cyan); }
 .a11y-pill.active.pill-extra .pill-letter { color: var(--gold); }
-.pill-normal .pill-letter  { font-size: 13px; }
-.pill-grande .pill-letter  { font-size: 17px; }
-.pill-extra  .pill-letter  { font-size: 22px; }
+.pill-normal .pill-letter { font-size: 13px; }
+.pill-grande .pill-letter { font-size: 17px; }
+.pill-extra  .pill-letter { font-size: 22px; }
 .pill-lbl {
   font-size: 10px; letter-spacing: 1px; color: var(--muted2);
   text-transform: uppercase; font-family: 'Share Tech Mono', monospace;
 }
 .a11y-pill.active .pill-lbl { color: var(--text); }
+
+/* ── Accesibilidad: móvil — botón mínimo esquina superior izquierda ── */
+@media(max-width:640px){
+  #a11y-panel {
+    bottom: auto; top: 8px; right: auto; left: 8px;
+    padding: 5px 8px; min-width: unset; gap: 0;
+    border-radius: 50px; flex-direction: row;
+    border-color: rgba(255,255,255,.12);
+    background: rgba(20,20,40,.85);
+    box-shadow: none;
+  }
+  #a11y-panel-title { display: none; }
+  #a11y-pills { display: none; flex-direction: column; gap: 5px; width: 100%; }
+  #a11y-toggle {
+    display: flex; align-items: center; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 3px 4px;
+  }
+  #a11y-toggle-icon { font-size: 16px; line-height: 1; }
+  #a11y-toggle-letter {
+    font-size: 15px; font-weight: 900;
+    font-family: 'Exo 2', sans-serif; line-height: 1;
+  }
+  /* Menú emergente hacia abajo cuando está abierto */
+  #a11y-panel.open {
+    border-radius: 14px; padding: 8px 10px;
+    gap: 8px; flex-direction: column;
+    border-color: var(--border2);
+    background: var(--panel2);
+    box-shadow: 0 6px 24px rgba(0,0,0,.6);
+  }
+  #a11y-panel.open #a11y-panel-title { display: block; }
+  #a11y-panel.open #a11y-pills { display: flex; }
+}
 
 /* ── Pantalla bienvenida de regreso ── */
 #swelcome { align-items:center; justify-content:center; padding:24px; }
