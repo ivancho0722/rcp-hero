@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RCP HERO v1.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
@@ -85,7 +83,7 @@
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-html{overscroll-behavior:none;overflow:hidden;}body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior:none;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;}
 .bgc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .bgg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,30,45,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,30,45,.04) 1px,transparent 1px);background-size:48px 48px;animation:gdrift 18s linear infinite;}
 @keyframes gdrift{from{transform:translateY(0)}to{transform:translateY(48px)}}
