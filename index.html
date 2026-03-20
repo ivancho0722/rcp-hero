@@ -102,6 +102,10 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .ecgl{width:300px;height:64px;overflow:hidden;margin-bottom:6px;}
 .ecgp{fill:none;stroke:var(--green);stroke-width:1.8;stroke-dasharray:820;stroke-dashoffset:820;animation:ecgd 2.5s ease forwards,ecgloop 3.5s linear 2.5s infinite;filter:drop-shadow(0 0 6px var(--green)) drop-shadow(0 0 2px #00ff88);}
 @keyframes ecgd{to{stroke-dashoffset:0}}
+@keyframes parpadeo{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes rebote{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}15%{transform:translateX(-10px)}30%{transform:translateX(10px)}45%{transform:translateX(-8px)}60%{transform:translateX(8px)}75%{transform:translateX(-5px)}90%{transform:translateX(5px)}}
+.shake-input{animation:shake .5s ease-in-out!important;}
 @keyframes ecgloop{0%{stroke-dashoffset:0;opacity:1}80%{opacity:1}100%{stroke-dashoffset:-640;opacity:0}}
 .stitle{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(64px,14vw,108px);letter-spacing:8px;line-height:.85;color:var(--red);text-shadow:0 0 20px var(--rglow),0 0 60px rgba(255,30,45,.3);animation:tflick 5s ease-in-out infinite;}
 
@@ -675,11 +679,24 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
       <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">🧑‍⚕️ No reemplaza práctica</span>
     </div>
     <div class="nsec">
-      <label>🧑‍🎓 Nombre y apellido</label>
+      <!-- FLECHA ANIMADA -->
+      <div id="nombre-hint" style="display:flex;flex-direction:column;align-items:center;margin-bottom:6px;">
+        <div style="font-size:13px;font-weight:700;color:#FF1E2D;letter-spacing:1px;font-family:'Orbitron',monospace;text-align:center;animation:parpadeo 1s ease-in-out infinite;">
+          👇 ESCRIBE TU NOMBRE AQUÍ PRIMERO
+        </div>
+        <div style="font-size:22px;animation:rebote 0.7s ease-in-out infinite;">👇</div>
+      </div>
       <div style="position:relative;width:280px;">
-        <input type="text" id="pname" placeholder="Ej: CARLOS RAMÍREZ" maxlength="50" autocomplete="off"
-          oninput="this.value=this.value.toUpperCase()"
-          style="width:100%;padding-right:44px;box-sizing:border-box;">
+        <input type="text" id="pname"
+          placeholder="✏️ TU NOMBRE Y APELLIDO"
+          maxlength="50" autocomplete="off"
+          oninput="this.value=this.value.toUpperCase();checkNombre()"
+          style="width:100%;padding-right:44px;box-sizing:border-box;font-size:15px;font-weight:700;border:2px solid var(--red);box-shadow:0 0 16px rgba(255,30,45,.4);">
+      </div>
+      <div id="nombre-ok" style="display:none;font-size:12px;color:var(--green);font-weight:700;margin-top:6px;letter-spacing:1px;">✅ ¡Listo! Ya puedes iniciar</div>
+      <div id="nombre-warn" style="display:none;margin-top:8px;background:rgba(255,30,45,.2);border:2px solid #FF1E2D;border-radius:10px;padding:10px 16px;text-align:center;width:280px;">
+        <div style="font-size:16px;font-weight:900;color:#FF1E2D;font-family:'Orbitron',monospace;letter-spacing:2px;">⛔ SIN NOMBRE</div>
+        <div style="font-size:12px;color:#FF8888;margin-top:3px;">¡No podemos registrar tu progreso sin tu nombre!</div>
       </div>
       <input type="hidden" id="papellido" value="">
       <input type="hidden" id="pcourse" value="—">
@@ -706,7 +723,7 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
         </div>
       </div>
     </div>
-    <button class="sbtn" onclick="goMissions()">INICIAR MISIÓN ▶</button>
+    <button class="sbtn" id="sbtn-main" onclick="goMissions()">INICIAR MISIÓN ▶</button>
   </div>
 </div>
 <!-- PANTALLA BIENVENIDA DE REGRESO -->
@@ -797,6 +814,7 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
       </button>
       <button id="testbtn" onclick="testSheets()" style="display:none;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">🔌 TEST</button>
       <button id="trackbtn" onclick="showTracking()" style="display:none;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:6px 12px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">📊</button>
+      <button onclick="confirmarSalir()" style="background:rgba(255,30,45,.12);border:1px solid rgba(255,30,45,.4);border-radius:8px;padding:7px 14px;color:#FF4D57;font-size:11px;font-weight:700;font-family:'Orbitron',monospace;cursor:pointer;letter-spacing:1px;transition:all .2s;" onmouseover="this.style.background='rgba(255,30,45,.28)'" onmouseout="this.style.background='rgba(255,30,45,.12)'">✕ SALIR</button>
     </div>
   </div>
   <div class="mbody">
@@ -1120,7 +1138,29 @@ function showScreen(n){
 }
 function goMissions(){
   const fullName = document.getElementById('pname').value.trim().toUpperCase();
-  S.name = fullName || 'HÉROE';
+  if(!fullName){
+    const inp = document.getElementById('pname');
+    // Shake + flash effect
+    inp.style.transition='none';
+    inp.style.borderColor='#FF1E2D';
+    inp.style.boxShadow='0 0 0 4px rgba(255,30,45,.6), 0 0 40px rgba(255,30,45,.8)';
+    inp.style.background='rgba(255,30,45,.15)';
+    inp.placeholder='⚠️ ¡ESCRIBE TU NOMBRE!';
+    // Shake animation
+    inp.classList.add('shake-input');
+    inp.focus();
+    // Show big warning message
+    const warn = document.getElementById('nombre-warn');
+    if(warn){ warn.style.display='block'; warn.style.animation='parpadeo .3s ease-in-out 4'; }
+    setTimeout(()=>{
+      inp.classList.remove('shake-input');
+      inp.style.background='';
+      inp.placeholder='✏️ TU NOMBRE Y APELLIDO';
+      if(warn) warn.style.display='none';
+    }, 2500);
+    return;
+  }
+  S.name = fullName;
   S.course = (document.getElementById('pcourse').value.trim()||'—').toUpperCase();
   S.inst   = (document.getElementById('pinst').value.trim()||'—').toUpperCase();
   if(!S.sessionStart) S.sessionStart = Date.now();
@@ -3235,6 +3275,45 @@ function setFS(idx){
 function cycleFS(){ setFS((fsModeIdx+1) % FS_MODES.length); }
 // Cargar tamaño guardado al inicio
 loadFSMode();
+checkNombre();
+
+function confirmarSalir(){
+  if(confirm('¿Seguro que quieres salir? Tu progreso de la sesión quedará guardado en el sistema.')){
+    // Reset state
+    S.name='HÉROE'; S.totalPts=0; S.done=[]; S.rank='Novato';
+    S.sessionLog=[]; S.sessionStart=null;
+    _ttsCancel();
+    showScreen('screen-splash');
+    // Clear name field
+    const pn=document.getElementById('pname');
+    if(pn) pn.value='';
+    checkNombre();
+  }
+}
+
+function checkNombre(){
+  const v = (document.getElementById('pname')||{}).value||'';
+  const btn = document.getElementById('sbtn-main');
+  const hint = document.getElementById('nombre-hint');
+  const ok   = document.getElementById('nombre-ok');
+  const inp  = document.getElementById('pname');
+  if(!btn) return;
+  if(v.trim().length >= 3){
+    btn.style.opacity='1';
+    btn.style.cursor='pointer';
+    btn.style.background='';
+    if(hint) hint.style.display='none';
+    if(ok)   ok.style.display='block';
+    if(inp){inp.style.borderColor='var(--green)';inp.style.boxShadow='0 0 16px rgba(0,255,136,.3)';}
+  } else {
+    btn.style.opacity='0.45';
+    btn.style.cursor='not-allowed';
+    btn.style.background='linear-gradient(135deg,#333,#555)';
+    if(hint) hint.style.display='flex';
+    if(ok)   ok.style.display='none';
+    if(inp){inp.style.borderColor='var(--red)';inp.style.boxShadow='0 0 16px rgba(255,30,45,.4)';}
+  }
+}
 
 
 // ══ SISTEMA TTS — LECTURA EN VOZ ALTA ══
