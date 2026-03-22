@@ -2532,14 +2532,18 @@ function procesarDecision(op, container){
     S.streak = 0;
     if(op.crit) S.critErrors = (S.critErrors||0) + 1;
     // Capturar en erroresDetalle TODOS los errores (no solo el primero)
-    const _pasoActualRef = mission.pasos ? mission.pasos[currentPaso - 1] : null;
-    const _correctaRef   = _pasoActualRef ? _pasoActualRef.opciones.find(o => o.ok) : null;
-    S.erroresDetalle.push({
-      paso:        currentPaso,
-      seleccionada: op.txt || '',
-      correcta:    _correctaRef ? _correctaRef.txt : '',
-      feedback:    op.fb || ''
-    });
+    try {
+      const _esc = ESCENARIOS[S.currentMission && S.currentMission.id];
+      const _paso = _esc && _esc.pasos ? _esc.pasos[currentPaso] : null;
+      const _correctaRef = _paso && _paso.ops ? _paso.ops.find(function(o){ return o.cor; }) : null;
+      S.erroresDetalle.push({
+        paso:         currentPaso,
+        seleccionada: op.txt || '',
+        correcta:     _correctaRef ? _correctaRef.txt : '',
+        feedback:     op.fb || '',
+        critico:      op.crit ? true : false
+      });
+    } catch(_e) { /* no romper el flujo */ }
 
     if(S.primerFallo === null) {
       S.primerFallo = 'Paso ' + currentPaso;
