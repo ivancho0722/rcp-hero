@@ -1106,7 +1106,7 @@ Emergencia real → llama al 123 de inmediato.
 ¡DESPLEGANDO MISIÓN!`;
 
 // ══ STATE ══
-const S={name:'HÉROE',course:'',inst:'',totalPts:0,rank:'Novato',done:[],currentMission:null,decisions:0,correctDec:0,history:[],loading:false,emergency:false,phase:0,streak:0,currentLevel:'easy',epicDone:[],epicPts:0,isEpic:false,epicIdx:0,sessionLog:[],sessionStart:null,missionAttempts:{},abandonadas:0,primerFallo:null};
+const S={name:'HÉROE',course:'',inst:'',totalPts:0,rank:'Novato',done:[],currentMission:null,decisions:0,correctDec:0,history:[],loading:false,emergency:false,phase:0,streak:0,currentLevel:'easy',epicDone:[],epicPts:0,isEpic:false,epicIdx:0,sessionLog:[],sessionStart:null,missionAttempts:{},abandonadas:0,primerFallo:null,primerFalloOpcion:null,primerFalloPregunta:null,primerFalloCorrecta:null};
 
 // ══ INIT ══
 function init(){
@@ -1165,6 +1165,19 @@ function goMissions(){
   S.inst   = (document.getElementById('pinst').value.trim()||'—').toUpperCase();
   if(!S.sessionStart) S.sessionStart = Date.now();
   BS = loadBadgeState(S.name);
+
+  // ── Restaurar progreso desde BS ──
+  // Misiones completadas: el hub muestra ✓ en las que ya ganó insignia
+  if(BS.missionBadges && BS.missionBadges.length > 0){
+    S.done = BS.missionBadges.slice(); // copia para no compartir referencia
+  }
+  // Puntos y rango estimados desde insignias ganadas
+  if(BS.missionBadges && BS.missionBadges.length > 0){
+    const pts = BS.missionBadges.length * 60; // ~60 pts promedio por misión ganada
+    S.totalPts = pts;
+    S.rank = pts >= 70 ? 'Héroe Escolar' : pts >= 40 ? 'Rescatista' : pts >= 20 ? 'Aprendiz' : 'Novato';
+  }
+
   loadFSMode();
   initTTS();
   registerVisit();
@@ -2346,6 +2359,9 @@ function startMission(m, isEpic=false){
   S.missionStartTime = Date.now();
   S.critErrors = 0;
   S.primerFallo = null;
+  S.primerFalloOpcion = null;
+  S.primerFalloPregunta = null;
+  S.primerFalloCorrecta = null;
   // Contar intentos por mision
   const mid = m.id;
   S.missionAttempts[mid] = (S.missionAttempts[mid] || 0) + 1;
@@ -2514,7 +2530,23 @@ function procesarDecision(op, container){
     if(currentPts < 0) currentPts = 0;
     S.streak = 0;
     if(op.crit) S.critErrors = (S.critErrors||0) + 1;
-    if(S.primerFallo === null) S.primerFallo = 'Paso ' + currentPaso;
+    if(S.primerFallo === null) {
+      S.primerFallo = 'Paso ' + currentPaso;
+      S.primerFalloOpcion = op.txt || '';
+      // Capturar la pregunta y la opción correcta del paso actual
+      try {
+        const escActual = ESCENARIOS[S.currentMission.id];
+        const pasoActual = escActual && escActual.pasos[currentPaso];
+        S.primerFalloPregunta = pasoActual ? pasoActual.txt : '';
+        const correctaOp = container._originalOps
+          ? container._originalOps.find(o => o.cor)
+          : (pasoActual ? pasoActual.ops.find(o => o.cor) : null);
+        S.primerFalloCorrecta = correctaOp ? correctaOp.txt : '';
+      } catch(e) {
+        S.primerFalloPregunta = '';
+        S.primerFalloCorrecta = '';
+      }
+    }
     actualizarPuntos(currentPts);
     flashFX('wf');
     showScorePop(op.crit ? '-25 ⚠️' : '' + penalidad);
@@ -2583,6 +2615,9 @@ function finalizarMision(){
     decisiones: totalDecisiones, correctas: correctasDecisiones,
     erroresCrit: S.critErrors||0,
     primerFallo: S.primerFallo || 'Ninguno',
+    primerFalloOpcion: S.primerFalloOpcion || 'Ninguno',
+    primerFalloPregunta: S.primerFalloPregunta || 'Ninguno',
+    primerFalloCorrecta: S.primerFalloCorrecta || 'Ninguno',
     tiempoSeg: tiempoSeg,
     nivelMaxSesion: nivelMax,
     sesionTotalMin: S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
@@ -2712,6 +2747,9 @@ function endMission(){
       precision:           totalDecisiones>0 ? Math.round(correctasDecisiones/totalDecisiones*100) : 0,
       erroresCrit:         S.critErrors||0,
       primerFallo:         S.primerFallo||'Ninguno',
+      primerFalloOpcion:   S.primerFalloOpcion||'Ninguno',
+      primerFalloPregunta: S.primerFalloPregunta||'Ninguno',
+      primerFalloCorrecta: S.primerFalloCorrecta||'Ninguno',
       tiempoSeg:           Math.round((Date.now()-(S.missionStartTime||Date.now()))/1000),
       nivelMaxSesion:      S.currentMission.diff||'',
       sesionTotalMin:      S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
@@ -3008,6 +3046,9 @@ async function enviarASheets(record){
         precision:           record.precision           !== undefined ? record.precision : 0,
         erroresCrit:         record.erroresCrit         || 0,
         primerFallo:         record.primerFallo         || 'Ninguno',
+        primerFalloOpcion:   record.primerFalloOpcion   || 'Ninguno',
+        primerFalloPregunta: record.primerFalloPregunta || 'Ninguno',
+        primerFalloCorrecta: record.primerFalloCorrecta || 'Ninguno',
         tiempoSeg:           record.tiempoSeg           || 0,
         nivelMaxSesion:      record.nivelMaxSesion      || '',
         sesionTotalMin:      record.sesionTotalMin      || 0,
