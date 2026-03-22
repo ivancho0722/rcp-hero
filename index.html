@@ -1106,7 +1106,7 @@ Emergencia real → llama al 123 de inmediato.
 ¡DESPLEGANDO MISIÓN!`;
 
 // ══ STATE ══
-const S={name:'HÉROE',course:'',inst:'',totalPts:0,rank:'Novato',done:[],currentMission:null,decisions:0,correctDec:0,history:[],loading:false,emergency:false,phase:0,streak:0,currentLevel:'easy',epicDone:[],epicPts:0,isEpic:false,epicIdx:0,sessionLog:[],sessionStart:null,missionAttempts:{},abandonadas:0,primerFallo:null,primerFalloOpcion:null,primerFalloPregunta:null,primerFalloCorrecta:null};
+const S={name:'HÉROE',course:'',inst:'',totalPts:0,rank:'Novato',done:[],currentMission:null,decisions:0,correctDec:0,history:[],loading:false,emergency:false,phase:0,streak:0,currentLevel:'easy',epicDone:[],epicPts:0,isEpic:false,epicIdx:0,sessionLog:[],sessionStart:null,missionAttempts:{},abandonadas:0,primerFallo:null,primerFalloOpcion:null,primerFalloPregunta:null,primerFalloCorrecta:null,erroresDetalle:[]};
 
 // ══ INIT ══
 function init(){
@@ -2362,6 +2362,7 @@ function startMission(m, isEpic=false){
   S.primerFalloOpcion = null;
   S.primerFalloPregunta = null;
   S.primerFalloCorrecta = null;
+  S.erroresDetalle = [];
   // Contar intentos por mision
   const mid = m.id;
   S.missionAttempts[mid] = (S.missionAttempts[mid] || 0) + 1;
@@ -2530,6 +2531,16 @@ function procesarDecision(op, container){
     if(currentPts < 0) currentPts = 0;
     S.streak = 0;
     if(op.crit) S.critErrors = (S.critErrors||0) + 1;
+    // Capturar en erroresDetalle TODOS los errores (no solo el primero)
+    const _pasoActualRef = mission.pasos ? mission.pasos[currentPaso - 1] : null;
+    const _correctaRef   = _pasoActualRef ? _pasoActualRef.opciones.find(o => o.ok) : null;
+    S.erroresDetalle.push({
+      paso:        currentPaso,
+      seleccionada: op.txt || '',
+      correcta:    _correctaRef ? _correctaRef.txt : '',
+      feedback:    op.fb || ''
+    });
+
     if(S.primerFallo === null) {
       S.primerFallo = 'Paso ' + currentPaso;
       S.primerFalloOpcion = op.txt || '';
@@ -2618,6 +2629,7 @@ function finalizarMision(){
     primerFalloOpcion: S.primerFalloOpcion || 'Ninguno',
     primerFalloPregunta: S.primerFalloPregunta || 'Ninguno',
     primerFalloCorrecta: S.primerFalloCorrecta || 'Ninguno',
+    erroresDetalle: S.erroresDetalle || [],
     tiempoSeg: tiempoSeg,
     nivelMaxSesion: nivelMax,
     sesionTotalMin: S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
@@ -2750,6 +2762,7 @@ function endMission(){
       primerFalloOpcion:   S.primerFalloOpcion||'Ninguno',
       primerFalloPregunta: S.primerFalloPregunta||'Ninguno',
       primerFalloCorrecta: S.primerFalloCorrecta||'Ninguno',
+      erroresDetalle:      S.erroresDetalle||[],
       tiempoSeg:           Math.round((Date.now()-(S.missionStartTime||Date.now()))/1000),
       nivelMaxSesion:      S.currentMission.diff||'',
       sesionTotalMin:      S.sessionStart ? Math.round((Date.now()-S.sessionStart)/6000)/10 : 0,
@@ -3010,7 +3023,7 @@ function endTrivia(){
 // ══ GOOGLE SHEETS INTEGRATION ══
 // Configuración — reemplaza esta URL con la de tu Google Apps Script
 const SHEETS_CONFIG = {
-  url: 'https://script.google.com/macros/s/AKfycbyoKQqkDHmBuQr4s7wA1KnKZZcOeXkgqN-lcJqZeP9a3mxgm6DB0oMDKfm1xsZQNgc/exec',
+  url: 'https://script.google.com/macros/s/AKfycbyh6IVOO0jCdxKE8_wDKxndDzJyRTftNzJ-TJtYaoxIumLYQXPlWOBdhjho2ApTgbUz/exec',
   enabled: true
 };
 
@@ -3049,6 +3062,7 @@ async function enviarASheets(record){
         primerFalloOpcion:   record.primerFalloOpcion   || 'Ninguno',
         primerFalloPregunta: record.primerFalloPregunta || 'Ninguno',
         primerFalloCorrecta: record.primerFalloCorrecta || 'Ninguno',
+        erroresDetalle:      record.erroresDetalle      || [],
         tiempoSeg:           record.tiempoSeg           || 0,
         nivelMaxSesion:      record.nivelMaxSesion      || '',
         sesionTotalMin:      record.sesionTotalMin      || 0,
