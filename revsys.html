@@ -66,11 +66,11 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
 .section-content.active{display:block}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fgrid.three{grid-template-columns:1fr 1fr 1fr}
-.fitem{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px 11px}
+.fitem{background:var(--surface);border:1px solid var(--border);border-left:3px solid #9FE1CB;border-radius:7px;padding:10px 12px}
 .fitem.full{grid-column:1/-1}
-.flabel{font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.fval{font-size:12px;color:var(--text);line-height:1.45}
-.fval.empty{color:var(--muted);font-style:italic}
+.flabel{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#1D9E75;margin-bottom:5px;border-bottom:1px solid #9FE1CB;padding-bottom:3px}
+.fval{font-size:13px;color:var(--text);line-height:1.45;font-weight:400}
+.fval.empty{color:#b0afa9;font-style:italic}
 .outcome-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .ochip{font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid}
 .ochip.yes{background:var(--teal-lt);color:#0F6E56;border-color:#9FE1CB}
@@ -102,7 +102,7 @@ footer{text-align:center;padding:2rem;font-size:11px;color:var(--muted);border-t
   </div>
 </header>
 <main><div id="app-container"><div class="state-screen"><div class="spinner"></div><p>Leyendo datos desde Google Sheets...</p></div></div></main>
-<footer id="footer-info">RevSys Viewer · Iván Valverde Chamorro · Universidad Icesi · 2026</footer>
+<footer id="footer-info">RevSys Viewer · Iván Valverde Chamorro · 2026</footer>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQE0_gqt430f0cwp5GF8KgNLdg2FZcjareqawlcp1ct5QgFioUYzq0HzYgC-4_50g5/exec";
@@ -198,7 +198,7 @@ function renderUI(){
   document.getElementById('app-container').innerHTML=`
     <div style="margin-bottom:1.5rem">
       <h1 style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px">${TITULO}</h1>
-      <p style="font-size:12px;color:var(--muted)">Iván Valverde Chamorro · Universidad Icesi · 2026</p>
+      <p style="font-size:12px;color:var(--muted)">Iván Valverde Chamorro · 2026</p>
     </div>
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-label">Total artículos</div><div class="stat-val">${total}</div></div>
