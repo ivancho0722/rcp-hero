@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visor — Revisión Sistemática · Terapia Manual en Cáncer de Mama</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#1D9E75;--teal-lt:#E1F5EE;--teal-mid:#5DCAA5;--red:#A32D2D;--red-lt:#FCEBEB;--gray:#5F5E5A;--gray-lt:#F1EFE8;--amber:#854F0B;--amber-lt:#FAEEDA;--bg:#F8F7F4;--surface:#FFFFFF;--border:rgba(0,0,0,0.10);--border2:rgba(0,0,0,0.16);--text:#1A1A18;--muted:#6B6A66;--radius:10px;--shadow:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.05)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.logo-text{font-family:'DM Serif Display',serif;font-size:17px;color:var(--text)}
+.logo-sub{font-size:11px;color:var(--muted);font-weight:300;margin-top:-2px}
+.header-right{display:flex;align-items:center;gap:12px}
+.sync-info{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.btn-refresh{display:flex;align-items:center;gap:6px;font-size:12px;font-family:'DM Sans',sans-serif;padding:6px 14px;border-radius:20px;border:1px solid var(--teal);background:var(--teal-lt);color:var(--teal);cursor:pointer;font-weight:500;transition:all .15s}
+.btn-refresh:hover{background:var(--teal);color:#fff}
+.btn-refresh.spinning svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:1.75rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow)}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.stat-val{font-family:'DM Serif Display',serif;font-size:28px;color:var(--text)}
+.stat-card.inc .stat-val{color:var(--teal)}
+.stat-card.exc .stat-val{color:var(--red)}
+.stat-card.pend .stat-val{color:var(--gray)}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap}
+.filter-group{display:flex;gap:6px;flex-wrap:wrap}
+.fbtn{font-size:12px;font-family:'DM Sans',sans-serif;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s}
+.fbtn:hover{border-color:var(--teal);color:var(--teal)}
+.fbtn.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:500}
+.search-wrap{margin-left:auto}
+.search-input{font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text);width:220px;outline:none;transition:border .15s}
+.search-input:focus{border-color:var(--teal)}
+.search-input::placeholder{color:var(--muted)}
+.art-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .15s}
+.art-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1),0 8px 24px rgba(0,0,0,.07)}
+.art-header{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;transition:background .1s}
+.art-header:hover{background:#fafaf8}
+.art-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;font-family:'DM Mono',monospace}
+.num-inc{background:var(--teal-lt);color:#0F6E56}
+.num-exc{background:var(--red-lt);color:var(--red)}
+.num-pend{background:var(--gray-lt);color:var(--gray)}
+.art-info{flex:1;min-width:0}
+.art-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.art-meta-line{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.badge-inc{background:var(--teal-lt);color:#0F6E56}
+.badge-exc{background:var(--red-lt);color:var(--red)}
+.badge-pend{background:var(--gray-lt);color:var(--gray)}
+.badge-disc{background:var(--amber-lt);color:var(--amber)}
+.chevron-icon{flex-shrink:0;color:var(--muted);transition:transform .22s;width:18px;height:18px;display:flex;align-items:center;justify-content:center}
+.chevron-icon.open{transform:rotate(180deg)}
+.art-body{display:none;border-top:1px solid var(--border)}
+.art-body.open{display:block}
+.section-nav{display:flex;gap:0;overflow-x:auto;background:#fafaf8;border-bottom:1px solid var(--border);scrollbar-width:none}
+.section-nav::-webkit-scrollbar{display:none}
+.snav-tab{font-size:11px;font-weight:400;padding:9px 16px;cursor:pointer;white-space:nowrap;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
+.snav-tab:hover{color:var(--text)}
+.snav-tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:500}
+.section-content{display:none;padding:16px 20px}
+.section-content.active{display:block}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fgrid.three{grid-template-columns:1fr 1fr 1fr}
+.fitem{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px 11px}
+.fitem.full{grid-column:1/-1}
+.flabel{font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.fval{font-size:12px;color:var(--text);line-height:1.45}
+.fval.empty{color:var(--muted);font-style:italic}
+.outcome-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.ochip{font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid}
+.ochip.yes{background:var(--teal-lt);color:#0F6E56;border-color:#9FE1CB}
+.ochip.no{background:var(--gray-lt);color:var(--gray);border-color:#D3D1C7}
+.state-screen{text-align:center;padding:4rem 2rem;color:var(--muted);font-size:14px}
+.state-screen h3{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);margin-bottom:8px}
+.spinner{width:36px;height:36px;border:3px solid var(--teal-lt);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+.empty-msg{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+footer{text-align:center;padding:2rem;font-size:11px;color:var(--muted);border-top:1px solid var(--border);margin-top:2rem;font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">RevSys Viewer</div>
+      <div class="logo-sub" id="header-sub">Conectando...</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="sync-info" id="sync-info">—</div>
+    <button class="btn-refresh" id="btn-refresh" onclick="loadData()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Actualizar
+    </button>
+  </div>
+</header>
+<main><div id="app-container"><div class="state-screen"><div class="spinner"></div><p>Leyendo datos desde Google Sheets...</p></div></div></main>
+<footer id="footer-info">RevSys Viewer · Iván Valverde Chamorro · Universidad Icesi · 2026</footer>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQE0_gqt430f0cwp5GF8KgNLdg2FZcjareqawlcp1ct5QgFioUYzq0HzYgC-4_50g5/exec";
+const TITULO = "Terapia manual en supervivientes de cáncer de mama";
+
+const COL_NAMES = {
+  art_num:"# Art.",timestamp:"Marca de tiempo",decision:"0.2 Decisión final del estudio",
+  exc_reason:"0.3 Motivo principal de exclusión",discussion:"0.4 ¿Requiere discusión con segundo revisor?",
+  comment:"0.5 Comentario breve de elegibilidad",study_id:"1.1 ID del estudio",author:"1.2 Autor principal",
+  year:"1.3 Año de publicación",title:"1.4 Título del estudio",journal:"1.5 Revista",doi:"1.6 DOI",
+  country:"1.7 País del estudio",region:"1.8 Región geográfica",design:"1.9 Tipo de estudio (diseño)",
+  centres:"1.10 Número de centros",context:"1.11 Contexto del estudio",funding:"1.12 Fuente de financiación",
+  coi:"1.13 Conflicto de intereses",registered:"1.14 Registro del estudio",reg_code:"1.14b Nombre y código del registro",
+  d_design:"2.1 Tipo de diseño principal",d_arms:"2.2 Número de brazos",d_random:"2.3 Tipo de aleatorización",
+  d_mask:"2.4 Enmascaramiento",d_unit:"2.5 Unidad de análisis",d_duration:"2.6 Duración total de la intervención",
+  d_followup:"2.7 Seguimiento postratamiento",d_timepoints:"2.10 Descripción de puntos temporales",
+  d_metaok:"2.11 ¿Diseño apto para metaanálisis directo?",p_n:"3.1 N muestra total (randomizado)",
+  p_nanalyzed:"3.2 N muestra analizado",p_nexp:"3.3 N grupo experimental",p_nctrl:"3.3b N grupo control",
+  p_age:"3.4b Valor de edad",p_sex:"3.5 Sexo",p_diag:"3.6 Diagnóstico confirmado de cáncer de mama",
+  p_stage:"3.7 Estadio del cáncer",p_txstatus:"3.8 Estado del tratamiento oncológico al ingreso",
+  p_tx:"3.9 Tipo(s) de tratamiento oncológico recibido",p_timesince:"3.10 Tiempo desde tratamiento oncológico",
+  p_condition:"3.11 Condición clínica de inclusión",p_severity:"3.12 Severidad basal",
+  p_inclusion:"3.13 Criterios de inclusión relevantes",p_exclusion:"3.14 Criterios de exclusión relevantes",
+  p_homog:"3.15 ¿Población homogénea?",p_comment:"3.16 Comentario clínico relevante",
+  i_family:"4.1 Familia de intervención principal",i_manual:"4.2 ¿Intervención manual/fascial como componente principal?",
+  i_name:"4.3 Nombre exacto de la intervención",i_components:"4.4 Componentes específicos",
+  i_region:"4.5 Región anatómica tratada",i_professional:"4.6 Profesional que aplica",
+  i_duration:"4.7 Duración de cada sesión",i_freq:"4.8 Frecuencia",i_sessions:"4.9 N° total de sesiones",
+  i_totaltime:"4.10 Duración total del programa",i_protocol:"4.11 ¿Intervención protocolizada?",
+  i_adherence:"4.12 ¿Se reporta adherencia?",i_ae:"4.13 ¿Se reportan eventos adversos?",
+  c_type:"5.1 Tipo de comparador",c_name:"5.2 Nombre exacto del comparador",c_control:"5.3 Tipo de control",
+  c_coint:"5.4 ¿Co-intervenciones iguales entre grupos?",c_isolates:"5.5 ¿Permite aislar efecto de terapia manual/fascial?",
+  o_type:"6.1 Tipo de outcome según protocolo",oa_resp:"6A.1 ¿Se reporta función respiratoria?",
+  oc_pain:"6C.1 ¿Se reporta dolor?",oc_pain_loc:"6C.2 Localización",oc_pain_scale:"6C.3 Escala",
+  oc_pain_type:"6C.4 Tipo de dolor",od_rom:"6D.1 ¿Se reporta ROM?",od_rom_reg:"6D.2 Región",
+  od_rom_move:"6D.3 Movimiento",od_rom_inst:"6D.4 Instrumento",oe_msfunc:"6E.1 ¿Se reporta función MS?",
+  oe_msfunc_inst:"6E.2 Instrumento",of_qol:"6F.1 ¿Se reporta calidad de vida?",of_qol_inst:"6F.2 Instrumento",
+  og_lymph:"6G.1 ¿Se reporta linfedema?",og_lymph_met:"6G.2 Método",oh_strength:"6H.1 ¿Se reporta fuerza?",
+  oh_str_type:"6H.2 Tipo",oi_fatigue:"6I.1 ¿Se reporta fatiga?",oi_fat_inst:"6I.2 Instrumento",
+  d_datatype:"7.1 Tipo de datos disponibles",d_ngroup:"7.2 N por grupo",d_extractable:"7.3 Datos extraíbles completos",
+  d_effecttype:"7.4 Tipo de efecto posible",d_poolcomment:"7.5 Comentario para pooling",
+  reviewer:"Nombre del revisor",extract_date:"Fecha de extracción",notes:"Comentarios adicionales"
+};
+
+let allArticles=[], colMap={}, currentFilter='all', searchTerm='';
+
+async function loadData(){
+  const btn=document.getElementById('btn-refresh');
+  btn.classList.add('spinning');
+  document.getElementById('sync-info').textContent='Actualizando...';
+  try{
+    const res=await fetch(SCRIPT_URL);
+    const json=await res.json();
+    if(json.status!=='ok') throw new Error('Respuesta inválida del script');
+    const rows=json.data;
+    const headers=rows[0];
+    colMap={};
+    headers.forEach((h,i)=>{ colMap[String(h).trim()]=i; });
+    allArticles=[];
+    for(let i=1;i<rows.length;i++){
+      const row=rows[i];
+      if(!row||row.every(c=>!String(c).trim())) continue;
+      const artNum=gc(row,'art_num');
+      const ts=gc(row,'timestamp');
+      if(!artNum&&!ts) continue;
+      allArticles.push({row,num:artNum||i,hasDatos:!!ts});
+    }
+    const now=new Date();
+    document.getElementById('sync-info').textContent='Sync: '+now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('header-sub').textContent='Revisión sistemática · Extracción estructurada';
+    renderUI();
+  }catch(err){
+    document.getElementById('sync-info').textContent='Error';
+    document.getElementById('app-container').innerHTML=`<div class="state-screen"><h3>⚠️ No se pudo conectar</h3><p style="margin-top:8px;font-size:12px">${err.message}</p></div>`;
+  }
+  btn.classList.remove('spinning');
+}
+
+function gc(row,key){
+  const name=COL_NAMES[key];
+  const idx=colMap[name];
+  if(idx===undefined) return '';
+  return String(row[idx]||'').trim();
+}
+
+function isYes(v){ return v&&(v.toLowerCase().startsWith('sí')||v.toLowerCase()==='si'); }
+
+function renderUI(){
+  const total=allArticles.length;
+  const inc=allArticles.filter(a=>gc(a.row,'decision')==='Incluir').length;
+  const exc=allArticles.filter(a=>gc(a.row,'decision')==='Excluir').length;
+  const pend=total-inc-exc;
+  document.getElementById('app-container').innerHTML=`
+    <div style="margin-bottom:1.5rem">
+      <h1 style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px">${TITULO}</h1>
+      <p style="font-size:12px;color:var(--muted)">Iván Valverde Chamorro · Universidad Icesi · 2026</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Total artículos</div><div class="stat-val">${total}</div></div>
+      <div class="stat-card inc"><div class="stat-label">Incluidos</div><div class="stat-val">${inc}</div></div>
+      <div class="stat-card exc"><div class="stat-label">Excluidos</div><div class="stat-val">${exc}</div></div>
+      <div class="stat-card pend"><div class="stat-label">Pendientes</div><div class="stat-val">${pend}</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="filter-group">
+        <button class="fbtn ${currentFilter==='all'?'active':''}" onclick="applyFilter('all',this)">Todos (${total})</button>
+        <button class="fbtn ${currentFilter==='Incluir'?'active':''}" onclick="applyFilter('Incluir',this)">Incluidos (${inc})</button>
+        <button class="fbtn ${currentFilter==='Excluir'?'active':''}" onclick="applyFilter('Excluir',this)">Excluidos (${exc})</button>
+        <button class="fbtn ${currentFilter==='pend'?'active':''}" onclick="applyFilter('pend',this)">Pendientes (${pend})</button>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" type="text" placeholder="Buscar autor, título, país..." value="${searchTerm}" oninput="applySearch(this.value)">
+      </div>
+    </div>
+    <div id="articles-list">${renderList(getFiltered())}</div>`;
+}
+
+function getFiltered(){
+  let list=allArticles;
+  if(currentFilter!=='all'){
+    if(currentFilter==='pend') list=list.filter(a=>{ const d=gc(a.row,'decision'); return d!=='Incluir'&&d!=='Excluir'; });
+    else list=list.filter(a=>gc(a.row,'decision')===currentFilter);
+  }
+  if(searchTerm){
+    const q=searchTerm.toLowerCase();
+    list=list.filter(a=>gc(a.row,'title').toLowerCase().includes(q)||gc(a.row,'author').toLowerCase().includes(q)||gc(a.row,'country').toLowerCase().includes(q)||gc(a.row,'journal').toLowerCase().includes(q));
+  }
+  return list;
+}
+
+function applyFilter(f,btn){ currentFilter=f; document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.getElementById('articles-list').innerHTML=renderList(getFiltered()); }
+function applySearch(q){ searchTerm=q; document.getElementById('articles-list').innerHTML=renderList(getFiltered()); }
+
+function renderList(arts){
+  if(!arts.length) return '<div class="empty-msg">No hay artículos con ese filtro.</div>';
+  return arts.map((a,i)=>renderCard(a,i)).join('');
+}
+
+function renderCard(a,idx){
+  const r=a.row;
+  const decision=gc(r,'decision'), author=gc(r,'author'), year=gc(r,'year');
+  const title=gc(r,'title')||'(Pendiente de extracción)';
+  const journal=gc(r,'journal'), country=gc(r,'country'), discuss=gc(r,'discussion');
+  const numClass=decision==='Incluir'?'num-inc':decision==='Excluir'?'num-exc':'num-pend';
+  const badgeClass=decision==='Incluir'?'badge-inc':decision==='Excluir'?'badge-exc':isYes(discuss)?'badge-disc':'badge-pend';
+  const badgeLabel=decision==='Incluir'?'Incluido':decision==='Excluir'?'Excluido':isYes(discuss)?'Discutir':'Pendiente';
+  const meta=[author&&year?`${author} (${year})`:null,journal,country].filter(Boolean).join(' · ');
+  const tabs=['Identificación','Diseño','Población','Intervención','Comparador','Outcomes','Datos/Pooling'];
+  const tids=['info','design','pop','int','comp','out','data'];
+  return `<div class="art-card" id="card-${idx}">
+    <div class="art-header" onclick="toggleCard(${idx})">
+      <div class="art-num ${numClass}">${a.num}</div>
+      <div class="art-info">
+        <div class="art-title">${title}</div>
+        <div class="art-meta-line">${meta||'Sin datos aún'}</div>
+      </div>
+      <span class="decision-badge ${badgeClass}">${badgeLabel}</span>
+      <div class="chevron-icon" id="chev-${idx}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="art-body" id="body-${idx}">
+      <div class="section-nav">${tabs.map((t,i)=>`<div class="snav-tab${i===0?' active':''}" onclick="switchTab(${idx},'${tids[i]}',this)">${t}</div>`).join('')}</div>
+      ${tids.map((tid,i)=>`<div class="section-content${i===0?' active':''}" id="sc-${idx}-${tid}">${renderSection(a,tid)}</div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function f(label,val,full=false){ const v=String(val||''); const isEmpty=!v||v==='—'||v==='undefined'; return `<div class="fitem${full?' full':''}"><div class="flabel">${label}</div><div class="fval${isEmpty?' empty':''}">${isEmpty?'—':v}</div></div>`; }
+function gg(a,key){ return gc(a.row,key); }
+
+function renderSection(a,tab){
+  if(!a.hasDatos&&tab!=='info') return '<div class="empty-msg" style="padding:2rem;font-size:12px">Pendiente de extracción.</div>';
+  if(tab==='info') return `<div class="fgrid three">${f('Autor',gg(a,'author'))}${f('Año',gg(a,'year'))}${f('País',gg(a,'country'))}${f('Región',gg(a,'region'))}${f('Diseño',gg(a,'design'))}${f('N° centros',gg(a,'centres'))}${f('Contexto',gg(a,'context'))}${f('Financiación',gg(a,'funding'))}${f('Conflicto de intereses',gg(a,'coi'))}${f('Registro',gg(a,'registered'))}${f('Código registro',gg(a,'reg_code'))}${f('Decisión',gg(a,'decision'))}${f('Motivo exclusión',gg(a,'exc_reason'))}${f('Requiere discusión',gg(a,'discussion'))}${f('ID del estudio',gg(a,'study_id'))}${f('Revista',gg(a,'journal'),true)}${f('DOI',gg(a,'doi'),true)}${f('Título',gg(a,'title'),true)}${f('Comentario elegibilidad',gg(a,'comment'),true)}</div>`;
+  if(tab==='design') return `<div class="fgrid">${f('Diseño principal',gg(a,'d_design'))}${f('N° brazos',gg(a,'d_arms'))}${f('Aleatorización',gg(a,'d_random'),true)}${f('Enmascaramiento',gg(a,'d_mask'))}${f('Unidad de análisis',gg(a,'d_unit'))}${f('Duración intervención',gg(a,'d_duration'))}${f('Seguimiento',gg(a,'d_followup'))}${f('Puntos de medición',gg(a,'d_timepoints'),true)}${f('Apto para metaanálisis',gg(a,'d_metaok'))}</div>`;
+  if(tab==='pop') return `<div class="fgrid">${f('N total',gg(a,'p_n'))}${f('N analizado',gg(a,'p_nanalyzed'))}${f('N experimental',gg(a,'p_nexp'))}${f('N control',gg(a,'p_nctrl'))}${f('Edad',gg(a,'p_age'))}${f('Sexo',gg(a,'p_sex'))}${f('Dx confirmado',gg(a,'p_diag'))}${f('Estadio',gg(a,'p_stage'))}${f('Estado tto al ingreso',gg(a,'p_txstatus'))}${f('Tiempo desde tto',gg(a,'p_timesince'))}${f('Tratamientos oncológicos',gg(a,'p_tx'),true)}${f('Condición clínica',gg(a,'p_condition'),true)}${f('Severidad basal',gg(a,'p_severity'),true)}${f('Criterios de inclusión',gg(a,'p_inclusion'),true)}${f('Criterios de exclusión',gg(a,'p_exclusion'),true)}${f('¿Población homogénea?',gg(a,'p_homog'),true)}${f('Comentario clínico',gg(a,'p_comment'),true)}</div>`;
+  if(tab==='int') return `<div class="fgrid">${f('Familia de intervención',gg(a,'i_family'),true)}${f('¿Manual/fascial principal?',gg(a,'i_manual'))}${f('Nombre exacto',gg(a,'i_name'),true)}${f('Componentes',gg(a,'i_components'),true)}${f('Región anatómica',gg(a,'i_region'),true)}${f('Profesional',gg(a,'i_professional'))}${f('Duración/sesión',gg(a,'i_duration'))}${f('Frecuencia',gg(a,'i_freq'))}${f('N° sesiones',gg(a,'i_sessions'))}${f('Duración total',gg(a,'i_totaltime'))}${f('¿Protocolizada?',gg(a,'i_protocol'))}${f('Adherencia',gg(a,'i_adherence'))}${f('Eventos adversos',gg(a,'i_ae'))}</div>`;
+  if(tab==='comp') return `<div class="fgrid">${f('Tipo de comparador',gg(a,'c_type'))}${f('Tipo de control',gg(a,'c_control'))}${f('Nombre del comparador',gg(a,'c_name'),true)}${f('Co-intervenciones iguales',gg(a,'c_coint'))}${f('¿Aísla efecto manual?',gg(a,'c_isolates'))}</div>`;
+  if(tab==='out'){
+    const ocs=[{k:'oa_resp',l:'Función respiratoria'},{k:'oc_pain',l:'Dolor'},{k:'od_rom',l:'ROM'},{k:'oe_msfunc',l:'Función MS'},{k:'of_qol',l:'Calidad de vida'},{k:'og_lymph',l:'Linfedema'},{k:'oh_strength',l:'Fuerza'},{k:'oi_fatigue',l:'Fatiga'}];
+    return `<div style="margin-bottom:12px;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Outcomes reportados</div><div class="outcome-chips">${ocs.map(o=>`<span class="ochip ${isYes(gg(a,o.k))?'yes':'no'}">${o.l}</span>`).join('')}</div><div class="fgrid">${f('Tipo de outcome',gg(a,'o_type'),true)}${f('Dolor — Localización',gg(a,'oc_pain_loc'))}${f('Dolor — Escala',gg(a,'oc_pain_scale'))}${f('ROM — Región',gg(a,'od_rom_reg'))}${f('ROM — Movimientos',gg(a,'od_rom_move'))}${f('ROM — Instrumento',gg(a,'od_rom_inst'))}${f('Función MS — Instrumento',gg(a,'oe_msfunc_inst'))}${f('Calidad de vida — Instrumento',gg(a,'of_qol_inst'))}${f('Linfedema — Método',gg(a,'og_lymph_met'))}${f('Fuerza — Tipo',gg(a,'oh_str_type'))}${f('Fatiga — Instrumento',gg(a,'oi_fat_inst'))}</div>`;
+  }
+  if(tab==='data') return `<div class="fgrid">${f('Tipo de datos',gg(a,'d_datatype'))}${f('Datos extraíbles',gg(a,'d_extractable'))}${f('Tipo de efecto',gg(a,'d_effecttype'))}${f('N por grupo',gg(a,'d_ngroup'))}${f('Revisor',gg(a,'reviewer'))}${f('Fecha extracción',gg(a,'extract_date'))}${f('Comentario para pooling',gg(a,'d_poolcomment'),true)}${f('Notas adicionales',gg(a,'notes'),true)}</div>`;
+  return '';
+}
+
+function toggleCard(idx){ document.getElementById('body-'+idx).classList.toggle('open'); document.getElementById('chev-'+idx).classList.toggle('open'); }
+function switchTab(artIdx,tabId,el){ document.querySelectorAll(`#card-${artIdx} .snav-tab`).forEach(t=>t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll(`[id^="sc-${artIdx}-"]`).forEach(p=>p.classList.remove('active')); document.getElementById(`sc-${artIdx}-${tabId}`).classList.add('active'); }
+
+window.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>
