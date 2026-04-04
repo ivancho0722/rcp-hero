@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RevSys Viewer — Revisión Sistemática</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
   --bg:#EDEAE4; --surface:#fff; --text:#111; --muted:#666;
@@ -132,6 +134,23 @@ main{max-width:1080px;margin:0 auto;padding:1.75rem 1.5rem}
 .state-screen h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
 
 footer{text-align:center;padding:2rem;font-size:12px;color:#aaa;border-top:1px solid var(--border);margin-top:2rem;font-family:'JetBrains Mono',monospace}
+.btn-exp{display:flex;align-items:center;gap:5px;font-size:12px;padding:6px 14px;border-radius:20px;border:1px solid #1D9E75;background:transparent;color:#1D9E75;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.btn-exp:hover{background:#1D9E75;color:#fff}
+.btn-pdf{display:flex;align-items:center;gap:4px;font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #6D28D9;background:transparent;color:#6D28D9;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;margin-left:8px}
+.btn-pdf:hover{background:#6D28D9;color:#fff}
+
+/* PRINT / PDF */
+@media print {
+  header,footer,.toolbar,.stats,.filters,.search,.prov-toggle,.btn-pdf,.abody:not(.printing){display:none!important}
+  .acard:not(.printing-card){display:none!important}
+  .abody.printing{display:block!important}
+  .spanel{display:block!important}
+  .prov-row,.prov-block{display:block!important}
+  .stabs{display:none!important}
+  body{background:#fff}
+  .acard{border:none;box-shadow:none}
+  .fitem{break-inside:avoid}
+}
 
 /* ── PROCEDENCIA INLINE ── */
 .prov-toggle{margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid #c9ead9;background:#f0fdf8;color:#1D9E75;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
@@ -377,6 +396,16 @@ function render(){
     <div class="sc exc"><div class="sc-label">Excluidos</div><div class="sc-val">${exc}</div></div>
     <div class="sc pend"><div class="sc-label">Pendientes</div><div class="sc-val">${pend}</div></div>
   </div>
+  <div style="display:flex;gap:10px;margin-bottom:1.25rem">
+    <button onclick="exportarExcel()" style="display:flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;border:2px solid #1D9E75;background:#f0fdf8;color:#065F46;font-size:13px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s" onmouseover="this.style.background='#1D9E75';this.style.color='#fff'" onmouseout="this.style.background='#f0fdf8';this.style.color='#065F46'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exportar Excel completo
+    </button>
+    <button onclick="exportarPDF()" style="display:flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;border:2px solid #6D28D9;background:#f5f3ff;color:#5B21B6;font-size:13px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s" onmouseover="this.style.background='#6D28D9';this.style.color='#fff'" onmouseout="this.style.background='#f5f3ff';this.style.color='#5B21B6'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Exportar PDF completo
+    </button>
+  </div>
   <div class="toolbar">
     <div class="filters">
       <button class="fbtn ${filter==='all'?'on':''}" onclick="setFilter('all',this)">Todos (${total})</button>
@@ -419,16 +448,24 @@ function card(a,idx){
           <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;flex-shrink:0"><path d="M12 2C8.7 2 6 4.7 6 8c0 4.5 6 12 6 12s6-7.5 6-12c0-3.3-2.7-6-6-6zm0 8.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
           <span>Ver fuentes</span>
         </button>
+
       </div>
       ${SECS.map((s,i)=>`<div class="spanel${i===0?' on':''}" id="sp-${idx}-${s.id}">${panel(a,s,idx)}</div>`).join('')}
     </div>
   </div>`;
 }
 
+let activeIdx = null;
 function toggle(idx){
-  document.getElementById('ab-'+idx).classList.toggle('open');
+  const body = document.getElementById('ab-'+idx);
+  const wasOpen = body.classList.contains('open');
+  body.classList.toggle('open');
   document.getElementById('ch-'+idx).classList.toggle('open');
+  const btn = document.getElementById('btn-pdf-active');
+  if(!wasOpen){ activeIdx=idx; btn.style.display='flex'; }
+  else { activeIdx=null; btn.style.display='none'; }
 }
+
 
 function switchTab(idx,sid,el){
   document.querySelectorAll(`#ac-${idx} .stab`).forEach(t=>{t.classList.remove('on');t.style.color='';t.style.borderBottomColor='';});
@@ -596,6 +633,334 @@ function panel(a,sec,idx){
     ${fld('Notas','Comentarios adicionales',g(r,'notes'),true,c)}
   </div>`;
   return '';
+}
+
+
+// ═══════════════════════════════════════════════════════
+// EXPORTAR EXCEL — todos los artículos con procedencia
+// ═══════════════════════════════════════════════════════
+const FIELD_LABELS = {
+  '0.1':'ID del registro','0.2':'Decisión final','0.3':'Motivo exclusión','0.4':'Requiere discusión','0.5':'Comentario elegibilidad',
+  '1.1':'ID estudio','1.2':'Autor principal','1.3':'Año','1.4':'Título','1.5':'Revista','1.6':'DOI','1.7':'País','1.8':'Región','1.9':'Tipo de estudio','1.10':'N° centros','1.11':'Contexto','1.12':'Financiación','1.13':'Conflicto intereses','1.14':'Registro','1.14b':'Código registro','1.15':'ID interno',
+  '2.1':'Diseño','2.2':'N° brazos','2.3':'Aleatorización','2.4':'Enmascaramiento','2.5':'Unidad análisis','2.6':'Duración intervención','2.7':'Seguimiento','2.8':'Tiempos evaluación','2.9':'N° puntos medición','2.10':'Puntos temporales','2.11':'Apto metaanálisis',
+  '3.1':'N total','3.2':'N analizado','3.3':'N grupo exp','3.3b':'N grupo control','3.4':'Edad medida','3.4b':'Valor edad','3.5':'Sexo','3.6':'Diagnóstico','3.7':'Estadio','3.8':'Estado tto','3.9':'Ttos oncológicos','3.10':'Tiempo desde tto','3.11':'Condición clínica','3.12':'Severidad basal','3.13':'Criterios inclusión','3.14':'Criterios exclusión','3.15':'Población homogénea','3.16':'Comentario clínico',
+  '4.1':'Familia intervención','4.2':'Manual principal','4.3':'Nombre intervención','4.4':'Componentes','4.5':'Región anatómica','4.6':'Profesional','4.7':'Duración sesión','4.8':'Frecuencia','4.9':'N° sesiones','4.10':'Duración total','4.11':'Protocolizada','4.12':'Adherencia','4.13':'Eventos adversos',
+  '5.1':'Tipo comparador','5.2':'Nombre comparador','5.3':'Tipo control','5.4':'Co-intervenciones iguales','5.5':'Aísla efecto manual',
+  '6.1':'Tipo outcome','6A.1':'Función respiratoria','6A.2':'Variable resp','6A.3':'Instrumento resp','6A.4':'Unidad resp','6A.5':'Dato resp',
+  '6B.1':'Movilidad torácica','6B.2':'Método mob','6B.3':'Nivel anatómico','6B.4':'Unidad mob','6B.5':'Dato mob',
+  '6C.1':'Dolor','6C.2':'Localización dolor','6C.3':'Escala dolor','6C.4':'Tipo dolor','6C.5':'Dato dolor',
+  '6D.1':'ROM','6D.2':'Región ROM','6D.3':'Movimiento ROM','6D.4':'Instrumento ROM','6D.5':'Dato ROM',
+  '6E.1':'Función MS','6E.2':'Instrumento MS','6E.3':'Dato MS',
+  '6F.1':'Calidad de vida','6F.2':'Instrumento CV','6F.3':'Dato CV',
+  '6G.1':'Linfedema','6G.2':'Método linfedema','6G.3':'Dato linfedema',
+  '6H.1':'Fuerza','6H.2':'Tipo fuerza','6H.3':'Dato fuerza',
+  '6I.1':'Fatiga','6I.2':'Instrumento fatiga','6I.3':'Dato fatiga',
+  '7.1':'Tipo datos','7.2':'N por grupo','7.3':'Datos extraíbles','7.4':'Tipo efecto','7.5':'Comentario pooling',
+  'Rev.':'Revisor','Fecha':'Fecha extracción','Notas':'Comentarios'
+};
+
+const FIELD_KEYS = [
+  ['0.1','reg_id'],['0.2','decision'],['0.3','exc_reason'],['0.4','discussion'],['0.5','comment'],
+  ['1.1','study_id'],['1.2','author'],['1.3','year'],['1.4','title'],['1.5','journal'],['1.6','doi'],
+  ['1.7','country'],['1.8','region'],['1.9','design'],['1.10','centres'],['1.11','context'],
+  ['1.12','funding'],['1.13','coi'],['1.14','registered'],['1.14b','reg_code'],['1.15','internal_id'],
+  ['2.1','d_design'],['2.2','d_arms'],['2.3','d_random'],['2.4','d_mask'],['2.5','d_unit'],
+  ['2.6','d_duration'],['2.7','d_followup'],['2.8','d_eval_times'],['2.9','d_npoints'],['2.10','d_timepoints'],['2.11','d_metaok'],
+  ['3.1','p_n'],['3.2','p_nanalyzed'],['3.3','p_nexp'],['3.3b','p_nctrl'],['3.4','p_age_measure'],['3.4b','p_age'],
+  ['3.5','p_sex'],['3.6','p_diag'],['3.7','p_stage'],['3.8','p_txstatus'],['3.9','p_tx'],['3.10','p_timesince'],
+  ['3.11','p_condition'],['3.12','p_severity'],['3.13','p_inclusion'],['3.14','p_exclusion'],['3.15','p_homog'],['3.16','p_comment'],
+  ['4.1','i_family'],['4.2','i_manual'],['4.3','i_name'],['4.4','i_components'],['4.5','i_region'],
+  ['4.6','i_professional'],['4.7','i_duration'],['4.8','i_freq'],['4.9','i_sessions'],['4.10','i_totaltime'],
+  ['4.11','i_protocol'],['4.12','i_adherence'],['4.13','i_ae'],
+  ['5.1','c_type'],['5.2','c_name'],['5.3','c_control'],['5.4','c_coint'],['5.5','c_isolates'],
+  ['6.1','o_type'],
+  ['7.1','d_datatype'],['7.2','d_ngroup'],['7.3','d_extractable'],['7.4','d_effecttype'],['7.5','d_poolcomment'],
+  ['Rev.','reviewer'],['Fecha','extract_date'],['Notas','notes']
+];
+
+function exportarExcel(){
+  if(!arts.length){ alert('No hay datos cargados.'); return; }
+  const wb = XLSX.utils.book_new();
+
+  // Hoja 1: Datos completos con procedencia
+  const headers = ['Art#','Autor','Año','Código','Campo','Valor','Procedencia','Justificación'];
+  const rows = [headers];
+
+  arts.forEach(a => {
+    const artNum = g(a.r,'art_num')||String(a.num);
+    const autor = g(a.r,'author');
+    const anio = g(a.r,'year');
+    FIELD_KEYS.forEach(([code, key]) => {
+      const val = g(a.r, key);
+      const label = FIELD_LABELS[code]||code;
+      const p = getProv(artNum, code);
+      rows.push([
+        artNum, autor, anio, code, label,
+        val||'—',
+        p ? p.procedencia : '',
+        p ? p.justificacion : ''
+      ]);
+    });
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [6,12,6,8,22,30,22,40].map(w=>({wch:w}));
+  // Header style
+  XLSX.utils.book_append_sheet(wb, ws, 'Datos completos');
+
+  // Hoja 2: Resumen por artículo
+  const sum_headers = ['Art#','ID','Autor','Año','Título','País','Diseño','N total','Decisión'];
+  const sum_rows = [sum_headers];
+  arts.forEach(a => {
+    sum_rows.push([
+      g(a.r,'art_num')||String(a.num),
+      g(a.r,'study_id'), g(a.r,'author'), g(a.r,'year'),
+      g(a.r,'title'), g(a.r,'country'), g(a.r,'design'),
+      g(a.r,'p_n'), g(a.r,'decision')
+    ]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(sum_rows);
+  ws2['!cols'] = [6,14,14,6,50,12,20,10,10].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb, ws2, 'Resumen');
+
+  XLSX.writeFile(wb, 'RevSys_Exportacion_' + new Date().toISOString().slice(0,10) + '.xlsx');
+}
+
+// ═══════════════════════════════════════════════════════
+// EXPORTAR PDF — reporte por artículo
+// ═══════════════════════════════════════════════════════
+function exportarPDF(){
+  if(!arts.length){ alert('No hay datos cargados.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+  const pageW=210, margin=14, colW=pageW-margin*2;
+  let y=margin, isFirst=true;
+
+  const checkY=(need=10)=>{ if(y+need>282){ doc.addPage(); y=margin; } };
+
+  // Cover page
+  doc.setFillColor(17,17,17);
+  doc.rect(0,0,210,297,'F');
+  doc.setTextColor(29,158,117);
+  doc.setFontSize(28); doc.setFont('helvetica','bold');
+  doc.text('RevSys Viewer', margin, 80);
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(16); doc.setFont('helvetica','normal');
+  const tit = doc.splitTextToSize('Terapia manual en supervivientes de cáncer de mama', colW);
+  doc.text(tit, margin, 95);
+  doc.setFontSize(11); doc.setTextColor(150,150,150);
+  doc.text('Revisión sistemática · Base de datos completa con procedencia documentada', margin, 115);
+  doc.text('Iván Valverde Chamorro · 2026', margin, 123);
+  doc.setFontSize(10);
+  doc.text(`Artículos totales: ${arts.length}`, margin, 140);
+  doc.text(`Incluidos: ${arts.filter(a=>g(a.r,'decision')==='Incluir').length}`, margin, 148);
+  doc.text(`Generado: ${new Date().toLocaleDateString('es-CO')}`, margin, 156);
+
+  arts.forEach((a,ai) => {
+    doc.addPage(); y=margin;
+    const artNum = g(a.r,'art_num')||String(a.num);
+    const autor = g(a.r,'author')||'—';
+    const anio = g(a.r,'year')||'—';
+    const titulo = g(a.r,'title')||'Sin título';
+    const decision = g(a.r,'decision')||'Pendiente';
+    const prov = provDB[String(artNum)]||{};
+
+    // Article header
+    doc.setFillColor(17,17,17);
+    doc.rect(0,y-4,210,18,'F');
+    doc.setTextColor(29,158,117); doc.setFontSize(10); doc.setFont('helvetica','bold');
+    doc.text(`Artículo #${artNum}`, margin, y+3);
+    doc.setTextColor(255,255,255); doc.setFontSize(8); doc.setFont('helvetica','normal');
+    doc.text(`${autor} (${anio}) · ${g(a.r,'journal')||'—'} · ${decision}`, margin, y+9);
+    y+=20;
+
+    // Title
+    doc.setTextColor(0,0,0); doc.setFontSize(9); doc.setFont('helvetica','bold');
+    const tLines = doc.splitTextToSize(titulo, colW);
+    doc.text(tLines, margin, y); y+=tLines.length*4.5+4;
+
+    const SECS_PDF = [
+      {label:'0. Decisión', color:[107,114,128], fields:[['0.1','reg_id'],['0.2','decision'],['0.3','exc_reason'],['0.5','comment']]},
+      {label:'1. Identificación', color:[180,83,9], fields:[['1.1','study_id'],['1.2','author'],['1.3','year'],['1.4','title'],['1.5','journal'],['1.6','doi'],['1.7','country'],['1.8','region'],['1.9','design'],['1.10','centres'],['1.11','context'],['1.12','funding'],['1.13','coi'],['1.14','registered'],['1.14b','reg_code']]},
+      {label:'2. Diseño', color:[6,95,70], fields:[['2.1','d_design'],['2.2','d_arms'],['2.3','d_random'],['2.4','d_mask'],['2.5','d_unit'],['2.6','d_duration'],['2.7','d_followup'],['2.8','d_eval_times'],['2.9','d_npoints'],['2.10','d_timepoints'],['2.11','d_metaok']]},
+      {label:'3. Población', color:[14,116,144], fields:[['3.1','p_n'],['3.2','p_nanalyzed'],['3.3','p_nexp'],['3.3b','p_nctrl'],['3.4','p_age_measure'],['3.4b','p_age'],['3.5','p_sex'],['3.6','p_diag'],['3.7','p_stage'],['3.8','p_txstatus'],['3.9','p_tx'],['3.10','p_timesince'],['3.11','p_condition'],['3.12','p_severity'],['3.13','p_inclusion'],['3.14','p_exclusion'],['3.15','p_homog'],['3.16','p_comment']]},
+      {label:'4. Intervención', color:[194,65,12], fields:[['4.1','i_family'],['4.2','i_manual'],['4.3','i_name'],['4.4','i_components'],['4.5','i_region'],['4.6','i_professional'],['4.7','i_duration'],['4.8','i_freq'],['4.9','i_sessions'],['4.10','i_totaltime'],['4.11','i_protocol'],['4.12','i_adherence'],['4.13','i_ae']]},
+      {label:'5. Comparador', color:[109,40,217], fields:[['5.1','c_type'],['5.2','c_name'],['5.3','c_control'],['5.4','c_coint'],['5.5','c_isolates']]},
+      {label:'7. Datos/Pooling', color:[30,64,175], fields:[['7.1','d_datatype'],['7.2','d_ngroup'],['7.3','d_extractable'],['7.4','d_effecttype'],['7.5','d_poolcomment'],['Rev.','reviewer'],['Fecha','extract_date'],['Notas','notes']]}
+    ];
+
+    SECS_PDF.forEach(sec => {
+      checkY(12);
+      const [r2,g2,b2]=sec.color;
+      doc.setFillColor(r2,g2,b2);
+      doc.rect(margin,y,colW,6,'F');
+      doc.setTextColor(255,255,255); doc.setFontSize(8); doc.setFont('helvetica','bold');
+      doc.text(sec.label, margin+2, y+4.2); y+=8;
+
+      sec.fields.forEach(([code,key])=>{
+        const val=g(a.r,key)||'—';
+        const label=FIELD_LABELS[code]||code;
+        const p=prov[code];
+        const needH = p ? 16 : 9;
+        checkY(needH);
+
+        doc.setTextColor(100,100,100); doc.setFontSize(7); doc.setFont('helvetica','bold');
+        doc.text(`${code}  ${label}`, margin, y); y+=3.5;
+
+        doc.setTextColor(0,0,0); doc.setFont('helvetica','normal'); doc.setFontSize(8);
+        const vLines=doc.splitTextToSize(String(val),colW-2);
+        doc.text(vLines, margin+2, y); y+=vLines.length*3.8;
+
+        if(p){
+          checkY(10);
+          doc.setFillColor(240,253,248);
+          doc.rect(margin+2,y,colW-2,9,'F');
+          doc.setDrawColor(187,247,208); doc.rect(margin+2,y,colW-2,9,'S');
+          doc.setTextColor(6,95,70); doc.setFontSize(6.5); doc.setFont('helvetica','bold');
+          doc.text('Procedencia:', margin+3, y+3);
+          doc.setFont('helvetica','normal');
+          doc.text(String(p.procedencia), margin+22, y+3);
+          doc.setTextColor(120,80,0); doc.setFont('helvetica','bold');
+          doc.text('Justificación:', margin+3, y+7);
+          doc.setFont('helvetica','normal'); doc.setTextColor(55,65,81);
+          const jl=doc.splitTextToSize(String(p.justificacion),colW-26);
+          doc.text(jl, margin+23, y+7);
+          y+=11;
+        }
+        y+=1.5;
+      });
+      y+=2;
+    });
+  });
+
+  // Page numbers
+  const total=doc.internal.getNumberOfPages();
+  for(let i=2;i<=total;i++){
+    doc.setPage(i);
+    doc.setFontSize(6.5); doc.setTextColor(150,150,150);
+    doc.text(`RevSys Viewer · Iván Valverde Chamorro · 2026 · Página ${i-1}/${total-1}`, margin, 292);
+  }
+
+  doc.save('RevSys_BaseCompleta_' + new Date().toISOString().slice(0,10) + '.pdf');
+}
+
+// legacy stub
+function exportarPDFActivo(){}
+function exportarPDFOLD(idx){
+  const a = filtered()[idx];
+  if(!a){ alert('Artículo no encontrado.'); return; }
+
+  const artNum = g(a.r,'art_num')||String(a.num);
+  const autor = g(a.r,'author')||'—';
+  const anio = g(a.r,'year')||'—';
+  const titulo = g(a.r,'title')||'Sin título';
+  const prov = provDB[String(artNum)]||{};
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+  const pageW = 210, margin = 14, colW = pageW - margin*2;
+  let y = margin;
+
+  const addPage = () => { doc.addPage(); y = margin; };
+  const checkY = (need=10) => { if(y + need > 280) addPage(); };
+
+  // Header
+  doc.setFillColor(17,17,17);
+  doc.rect(0,0,210,22,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(13); doc.setFont('helvetica','bold');
+  doc.text('RevSys Viewer — Reporte de Artículo', margin, 10);
+  doc.setFontSize(8); doc.setFont('helvetica','normal');
+  doc.text('Revisión sistemática · Terapia manual · Cáncer de mama · Iván Valverde Chamorro · 2026', margin, 17);
+  y = 30;
+
+  // Título artículo
+  doc.setTextColor(0,0,0);
+  doc.setFontSize(11); doc.setFont('helvetica','bold');
+  const tLines = doc.splitTextToSize(`Art. #${artNum} — ${titulo}`, colW);
+  doc.text(tLines, margin, y); y += tLines.length*5 + 3;
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(100,100,100);
+  doc.text(`${autor} (${anio}) · ${g(a.r,'journal')||'—'} · ${g(a.r,'country')||'—'}`, margin, y); y += 8;
+
+  // Secciones
+  const SECS_DATA = [
+    {label:'0. Decisión de elegibilidad', color:[107,114,128], fields:[
+      ['0.1','reg_id'],['0.2','decision'],['0.3','exc_reason'],['0.5','comment']
+    ]},
+    {label:'1. Identificación del estudio', color:[180,83,9], fields:[
+      ['1.1','study_id'],['1.2','author'],['1.3','year'],['1.4','title'],['1.5','journal'],['1.6','doi'],['1.7','country'],['1.9','design']
+    ]},
+    {label:'2. Diseño metodológico', color:[6,95,70], fields:[
+      ['2.1','d_design'],['2.2','d_arms'],['2.3','d_random'],['2.4','d_mask'],['2.6','d_duration'],['2.7','d_followup']
+    ]},
+    {label:'3. Población', color:[14,116,144], fields:[
+      ['3.1','p_n'],['3.2','p_nanalyzed'],['3.3','p_nexp'],['3.3b','p_nctrl'],['3.5','p_sex'],['3.6','p_diag'],['3.13','p_inclusion'],['3.14','p_exclusion']
+    ]},
+    {label:'4. Intervención', color:[194,65,12], fields:[
+      ['4.1','i_family'],['4.3','i_name'],['4.4','i_components'],['4.6','i_professional'],['4.7','i_duration'],['4.8','i_freq'],['4.9','i_sessions']
+    ]},
+    {label:'5. Comparador', color:[109,40,217], fields:[
+      ['5.1','c_type'],['5.2','c_name'],['5.3','c_control']
+    ]},
+    {label:'7. Datos para pooling', color:[30,64,175], fields:[
+      ['7.1','d_datatype'],['7.2','d_ngroup'],['7.3','d_extractable'],['7.4','d_effecttype'],['7.5','d_poolcomment']
+    ]}
+  ];
+
+  SECS_DATA.forEach(sec => {
+    checkY(14);
+    // Section header
+    const [r,g2,b] = sec.color;
+    doc.setFillColor(r,g2,b);
+    doc.rect(margin, y, colW, 7, 'F');
+    doc.setTextColor(255,255,255); doc.setFontSize(9); doc.setFont('helvetica','bold');
+    doc.text(sec.label, margin+3, y+5); y+=9;
+
+    sec.fields.forEach(([code,key]) => {
+      const val = g(a.r,key)||'—';
+      const label = FIELD_LABELS[code]||code;
+      const p = prov[code];
+      checkY(p?18:10);
+
+      doc.setTextColor(80,80,80); doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+      doc.text(`${code}  ${label}`, margin, y); y+=4;
+
+      doc.setTextColor(0,0,0); doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+      const vLines = doc.splitTextToSize(val, colW);
+      doc.text(vLines, margin+2, y); y+=vLines.length*4;
+
+      if(p){
+        // Procedencia
+        doc.setFillColor(240,253,248);
+        const ph = 4*2+2;
+        doc.rect(margin+2, y, colW-2, ph, 'F');
+        doc.setDrawColor(187,247,208); doc.rect(margin+2,y,colW-2,ph,'S');
+        doc.setTextColor(6,95,70); doc.setFontSize(7); doc.setFont('helvetica','bold');
+        doc.text('📍 Procedencia:', margin+4, y+3.5);
+        doc.setFont('helvetica','normal'); doc.setTextColor(0,80,0);
+        doc.text(p.procedencia, margin+28, y+3.5);
+        // Justificación
+        doc.setTextColor(107,83,0); doc.setFont('helvetica','bold');
+        doc.text('💡 Justificación:', margin+4, y+7.5);
+        doc.setFont('helvetica','normal'); doc.setTextColor(55,65,81);
+        const jLines = doc.splitTextToSize(p.justificacion, colW-32);
+        doc.text(jLines, margin+29, y+7.5);
+        y += ph+1;
+      }
+      y+=2;
+    });
+    y+=3;
+  });
+
+  // Footer
+  const totalPages = doc.internal.getNumberOfPages();
+  for(let i=1;i<=totalPages;i++){
+    doc.setPage(i);
+    doc.setFontSize(7); doc.setTextColor(150,150,150);
+    doc.text(`RevSys Viewer · Iván Valverde Chamorro · 2026 · Pág. ${i}/${totalPages}`, margin, 290);
+  }
+
+  doc.save(`RevSys_Art${artNum}_${autor}_${anio}.pdf`);
 }
 
 window.addEventListener('DOMContentLoaded', loadAll);
