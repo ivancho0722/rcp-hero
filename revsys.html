@@ -78,7 +78,7 @@ main{max-width:1080px;margin:0 auto;padding:1.75rem 1.5rem}
 .abody.open{display:block}
 
 /* SECTION TABS */
-.stabs{display:flex;overflow-x:auto;background:#FAFAF8;border-bottom:1px solid var(--border);scrollbar-width:none;gap:2px;padding:0 8px}
+.stabs{display:flex;overflow-x:auto;background:#FAFAF8;border-bottom:1px solid var(--border);scrollbar-width:none;gap:2px;padding:0 8px;align-items:center}
 .stabs::-webkit-scrollbar{display:none}
 .stab{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:10px 12px;cursor:pointer;white-space:nowrap;color:#aaa;border-bottom:2.5px solid transparent;transition:all .15s;font-family:'Nunito',sans-serif}
 .stab:hover{color:var(--text)}
@@ -132,6 +132,24 @@ main{max-width:1080px;margin:0 auto;padding:1.75rem 1.5rem}
 .state-screen h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
 
 footer{text-align:center;padding:2rem;font-size:12px;color:#aaa;border-top:1px solid var(--border);margin-top:2rem;font-family:'JetBrains Mono',monospace}
+
+/* ── PROCEDENCIA INLINE ── */
+.prov-toggle{margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid #c9ead9;background:#f0fdf8;color:#1D9E75;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.prov-toggle:hover{background:#d1fae5;border-color:#1D9E75}
+.prov-toggle.on{background:#1D9E75;border-color:#1D9E75;color:#fff}
+
+/* Bloque oculto por defecto, visible cuando .prov-on está en .abody */
+.prov-block{display:none;margin-top:8px;border-radius:6px;overflow:hidden;font-size:11.5px;line-height:1.5}
+.prov-on .prov-block{display:block}
+
+.prov-line{display:flex;align-items:flex-start;gap:7px;padding:5px 10px}
+.prov-line+.prov-line{border-top:1px solid rgba(0,0,0,.06)}
+.prov-line.proc{background:#f0fdf8;border:1px solid #bbf7d0;border-radius:5px 5px 0 0}
+.prov-line.just{background:#fffbeb;border:1px solid #fde68a;border-top:none;border-radius:0 0 5px 5px}
+.prov-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.prov-label{font-weight:800;color:#555;flex-shrink:0}
+.prov-text{color:#374151}
+.prov-text.src{font-family:'JetBrains Mono',monospace;font-size:11px;color:#065F46;font-weight:700}
 </style>
 </head>
 <body>
@@ -242,7 +260,67 @@ const OUT_BLOCKS = [
   {key:'oi',rep:'oi_rep',label:'6I · Fatiga',fields:[{k:'oi_inst',l:'Instrumento'},{k:'oi_data',l:'Tipo de dato'}]}
 ];
 
-let arts=[], colMap={}, filter='all', search='';
+// Mapa explícito de claves internas → códigos de procedencia para outcomes
+const FIELD_CODES={
+  'oa_var':'6A.2','oa_inst':'6A.3','oa_unit':'6A.4','oa_data':'6A.5',
+  'ob_method':'6B.2','ob_level':'6B.3','ob_unit':'6B.4','ob_data':'6B.5',
+  'oc_loc':'6C.2','oc_scale':'6C.3','oc_type':'6C.4','oc_data':'6C.5',
+  'od_reg':'6D.2','od_move':'6D.3','od_inst':'6D.4','od_data':'6D.5',
+  'oe_inst':'6E.2','oe_data':'6E.3',
+  'of_inst':'6F.2','of_data':'6F.3',
+  'og_method':'6G.2','og_data':'6G.3',
+  'oh_type':'6H.2','oh_data':'6H.3',
+  'oi_inst':'6I.2','oi_data':'6I.3'
+};
+let arts=[], colMap={}, filter='all', search='';let provDB={"2": {"0.1": {"procedencia": "system.id", "justificacion": "ID asignado internamente por el sistema de revisión"}, "0.2": {"procedencia": "reviewer.decision", "justificacion": "Decisión del revisor basada en criterios de elegibilidad (p.2-3)"}, "0.3": {"procedencia": "system.exclusion", "justificacion": "No aplica - estudio incluido"}, "0.4": {"procedencia": "reviewer.discussion", "justificacion": "No requerido - criterios claros"}, "0.5": {"procedencia": "reviewer.eligibility_comment", "justificacion": "Síntesis del revisor: \"RCT sobre síndrome de la red axilar post-mastectomía; compara drenaje linfático manual (MLD) vs movilización de tejidos blandos (STM)\""}, "1.1": {"procedencia": "system.study_id", "justificacion": "ID interno asignado: Meer_2023"}, "1.2": {"procedencia": "p.1.header", "justificacion": "Tahniyat Amir Meer - primer autor en encabezado del artículo"}, "1.3": {"procedencia": "p.1.header", "justificacion": "(2023) en cita de revista BMC Women's Health"}, "1.4": {"procedencia": "p.1.header", "justificacion": "Título completo: Comparative effects of lymphatic drainage and soft tissue mobilization on pain threshold, shoulder mobility and quality of life in patients with axillary web syndrome after mastectomy"}, "1.5": {"procedencia": "p.1.header", "justificacion": "BMC Women's Health en cabecera de página"}, "1.6": {"procedencia": "p.1.doi_line", "justificacion": "https://doi.org/10.1186/s12905-023-02762-w"}, "1.7": {"procedencia": "p.3.affiliation", "justificacion": "Lahore, Pakistan - afiliación de autores"}, "1.8": {"procedencia": "p.3.affiliation", "justificacion": "Inferido de Pakistan → Asia"}, "1.9": {"procedencia": "p.3.methodology_section", "justificacion": "The study was a randomized clinical trial"}, "1.10": {"procedencia": "p.3.data_collection", "justificacion": "Allied Hospital (Oncology ward, Breast Clinic and Physiotherapy ward), Faisalabad - monocéntrico"}, "1.11": {"procedencia": "p.3.data_collection", "justificacion": "Hospital general (Allied Hospital)"}, "1.12": {"procedencia": "p.7.funding_section", "justificacion": "No financial support was available for this study"}, "1.13": {"procedencia": "p.7.declarations", "justificacion": "The authors declare that they have no competing interests"}, "1.14": {"procedencia": "p.2.trial_registration", "justificacion": "This trial is registered at ClinicalTrial.gov PRS"}, "1.14b": {"procedencia": "p.2.trial_registration", "justificacion": "NCT05463185 on date 18/07/2022"}, "1.15": {"procedencia": "system.internal_id", "justificacion": "002 - asignación interna del revisor"}, "2.1": {"procedencia": "p.3.methodology", "justificacion": "randomized clinical trial + 2 grupos paralelos"}, "2.2": {"procedencia": "p.3.randomization", "justificacion": "groups A and B → 2 brazos"}, "2.3": {"procedencia": "p.3.randomization", "justificacion": "lottery method by an unbiased physiotherapist"}, "2.4": {"procedencia": "p.3.blinding", "justificacion": "The outcome assessor and participants were blinded from the group allocation"}, "2.5": {"procedencia": "p.3.methodology", "justificacion": "Participantes individuales (implícito en diseño)"}, "2.6": {"procedencia": "p.4.treatment_approach", "justificacion": "four weeks"}, "2.7": {"procedencia": "p.4.assessments", "justificacion": "No hay follow-up post-semana 4 mencionado"}, "2.8": {"procedencia": "p.4.assessments", "justificacion": "All outcome measure readings were recorded at baseline and the end(4th week)"}, "2.9": {"procedencia": "p.4.assessments", "justificacion": "1 punto (semana 4)"}, "2.10": {"procedencia": "p.4.assessments", "justificacion": "baseline and the end(4th week)"}, "2.11": {"procedencia": "p.3.methodology", "justificacion": "RCT paralelo con datos completos → Sí"}, "3.1": {"procedencia": "p.5.results", "justificacion": "A total of 36 participants were enrolled"}, "3.2": {"procedencia": "p.5.results", "justificacion": "5 patients discontinued treatment → 36-5=31"}, "3.3": {"procedencia": "p.5.results", "justificacion": "Group A (MLD): 16 participantes"}, "3.3b": {"procedencia": "p.5.results", "justificacion": "Group B (STM): 15 participantes"}, "3.4": {"procedencia": "p.5.results", "justificacion": "mean age...49.84 ± 12.35 years...45.88 ± 11.95 years"}, "3.4b": {"procedencia": "p.5.results", "justificacion": "mean age...47.34 ± 10.67...Group A(MLD) was 49.84 ± 12.35 years...Group B(STM) was 45.88 ± 11.95 years"}, "3.5": {"procedencia": "p.3.inclusion_criteria", "justificacion": "Breast cancer patients + contexto → 100% mujeres"}, "3.6": {"procedencia": "p.3.inclusion_criteria", "justificacion": "Breast cancer patients with pain(NPRS> 3) points"}, "3.7": {"procedencia": "not_reported", "justificacion": "No se reporta en el PDF"}, "3.8": {"procedencia": "p.3.inclusion_criteria", "justificacion": "four weeks after surgery"}, "3.9": {"procedencia": "p.2.introduction", "justificacion": "mastectomy with axillary lymph node dissection(ALND)"}, "3.10": {"procedencia": "p.3.inclusion_criteria", "justificacion": "four weeks after surgery"}, "3.11": {"procedencia": "p.3.inclusion_criteria", "justificacion": "pain(NPRS> 3)...visible and palpable cords...shoulder abduction limited to 70–80°...minor-level lymphedema or grade I lymphedema"}, "3.12": {"procedencia": "p.3.inclusion_criteria", "justificacion": "NPRS> 3...abduction limited to 70–80° → Moderada"}, "3.13": {"procedencia": "p.3.inclusion_criteria", "justificacion": "Breast cancer patients with pain(NPRS> 3) points and four weeks after surgery...ages ranged from 18 to 60 years, with visible and palpable cords...shoulder abduction limited to the range of 70–80 and shoulder extension to 20–30 degrees...minor-level lymphedema or grade I lymphedema"}, "3.14": {"procedencia": "p.3.exclusion_criteria", "justificacion": "chemotherapy and radiotherapy, acute thrombosis, musculoskeletal disorders, skin problems, infections, osteoarthritis, rheumatoid arthritis, rotator cuff syndrome, adhesive capsulitis, and any post-surgical condition"}, "3.15": {"procedencia": "p.5.results", "justificacion": "The baseline data of both groups at the pre-intervention stage had no significant differences; both groups were homogeneous p> 0.05"}, "3.16": {"procedencia": "p.5-6.results_discussion", "justificacion": "baseline data...homogeneous...syndrome de red axilar como criterio específico"}, "4.1": {"procedencia": "p.2.abstract", "justificacion": "Manual lymphatic drainage"}, "4.2": {"procedencia": "p.4.GroupA_intervention", "justificacion": "Sí (combinada con otras terapias)"}, "4.3": {"procedencia": "p.4.GroupA_intervention", "justificacion": "Manual lymphatic drainage (MLD) on shoulder region and upper limb"}, "4.4": {"procedencia": "p.4.GroupA_intervention", "justificacion": "Drenaje linfático manual, Movilización articular, Masaje, Ejercicio terapéutico"}, "4.5": {"procedencia": "p.4.GroupA_intervention", "justificacion": "Axila, Hombro, Brazo, Miembro superior completo"}, "4.6": {"procedencia": "p.3.randomization", "justificacion": "Fisioterapeuta (unbiased physiotherapist)"}, "4.7": {"procedencia": "p.4.GroupA_intervention", "justificacion": "25 min"}, "4.8": {"procedencia": "p.4.treatment_approach", "justificacion": "5 sessions per week for four weeks"}, "4.9": {"procedencia": "p.4.treatment_approach", "justificacion": "5 sesiones/sem × 4 semanas = 20 sesiones"}, "4.10": {"procedencia": "p.4.treatment_approach", "justificacion": "4 semanas"}, "4.11": {"procedencia": "p.4.GroupA_intervention", "justificacion": "Sí (claramente descrita)"}, "4.12": {"procedencia": "p.5.results", "justificacion": "No reportado"}, "4.13": {"procedencia": "p.5-7.results_discussion", "justificacion": "No reportado"}, "5.1": {"procedencia": "p.2.abstract", "justificacion": "Otra terapia manual"}, "5.2": {"procedencia": "p.4.GroupB_intervention", "justificacion": "Soft tissue mobilization (STM) of axillary cord and arm + therapeutic exercises"}, "5.3": {"procedencia": "p.4.GroupB_intervention", "justificacion": "Activo"}, "5.4": {"procedencia": "p.4.common_interventions", "justificacion": "Sí (fuerza, estiramientos, ROM idénticos)"}, "5.5": {"procedencia": "p.7.discussion_limitation", "justificacion": "Parcialmente (diferencia de tiempo: 25 vs 20 min)"}, "6.1": {"procedencia": "p.2.abstract", "justificacion": "Primario"}, "6A.1": {"procedencia": "p.3-4.outcomes", "justificacion": "No"}, "6A.2": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.3": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.4": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.5": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.1": {"procedencia": "p.3-4.outcomes", "justificacion": "No"}, "6B.2": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.3": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.4": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.5": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6C.1": {"procedencia": "p.3.outcomes_Table3", "justificacion": "Sí"}, "6C.2": {"procedencia": "p.3.outcomes", "justificacion": "Hombro"}, "6C.3": {"procedencia": "p.3.NPRS_section", "justificacion": "NPRS (Numeric Pain Rating Scale)"}, "6C.4": {"procedencia": "p.3.NPRS_section", "justificacion": "Intensidad"}, "6C.5": {"procedencia": "p.5.Table3", "justificacion": "Media ± DE"}, "6D.1": {"procedencia": "p.3.outcomes_Table4", "justificacion": "Sí"}, "6D.2": {"procedencia": "p.3.Goniometer", "justificacion": "Hombro"}, "6D.3": {"procedencia": "p.5.Table4", "justificacion": "Flexión, Abducción, Extensión"}, "6D.4": {"procedencia": "p.3.Goniometer", "justificacion": "Goniómetro"}, "6D.5": {"procedencia": "p.5.Table4", "justificacion": "Media ± DE"}, "6E.1": {"procedencia": "p.3.outcomes_Table3", "justificacion": "Sí"}, "6E.2": {"procedencia": "p.3.DASH_PSFS", "justificacion": "DASH, PSFS"}, "6E.3": {"procedencia": "p.5.Table3", "justificacion": "Media ± DE"}, "6F.1": {"procedencia": "p.3.outcomes_Tables1-2", "justificacion": "Sí"}, "6F.2": {"procedencia": "p.3.EORTC_section", "justificacion": "EORTC QLQ-C30 + EORTC QLQ-BR23"}, "6F.3": {"procedencia": "p.5-6.Tables1-2", "justificacion": "Media ± DE"}, "6G.1": {"procedencia": "p.3.p6_discussion", "justificacion": "Sí"}, "6G.2": {"procedencia": "p.6.discussion", "justificacion": "Perimetría"}, "6G.3": {"procedencia": "p.6.discussion", "justificacion": "Media ± DE"}, "6H.1": {"procedencia": "p.3.outcomes_Table3", "justificacion": "Sí"}, "6H.2": {"procedencia": "p.3.Dynamometer", "justificacion": "Miembro superior (Dinamómetro)"}, "6H.3": {"procedencia": "p.5.Table3", "justificacion": "Media ± DE"}, "6I.1": {"procedencia": "p.3.outcomes_Table2", "justificacion": "Sí"}, "6I.2": {"procedencia": "p.3.EORTC_BR23", "justificacion": "EORTC QLQ-BR23 subescala fatiga"}, "6I.3": {"procedencia": "p.6.Table2", "justificacion": "Media ± DE"}, "7.1": {"procedencia": "p.5.results", "justificacion": "Media ± DE"}, "7.2": {"procedencia": "p.5.results", "justificacion": "MLD: 16 / STM: 15"}, "7.3": {"procedencia": "p.5-7.Tables1-4", "justificacion": "Sí"}, "7.4": {"procedencia": "p.5.statistical_analysis", "justificacion": "MD (Diferencia de medias)"}, "7.5": {"procedencia": "p.5-7.results_discussion", "justificacion": "Datos completos para metaanálisis de DASH, NPRS, ROM (flexión, abducción) y EORTC. Co-intervención idéntica facilita comparabilidad. Tiempo de sesión diferente entre grupos (25 min MLD vs 20 min STM) es limitación menor a registrar."}, "Rev.": {"procedencia": "metadata.reviewer", "justificacion": "Iván Valverde"}, "Fecha": {"procedencia": "metadata.date", "justificacion": "03/04/2026"}, "Notas": {"procedencia": "metadata.comments", "justificacion": "Sin comentarios. Datos validados contra Tablas 1-4 y metodología p.3-4."}}, "4": {"0.1": {"procedencia": "system.id", "justificacion": "ID asignado internamente por el sistema de revisión"}, "0.2": {"procedencia": "reviewer.decision", "justificacion": "Decisión del revisor basada en criterios de elegibilidad (p.1-2)"}, "0.3": {"procedencia": "system.exclusion", "justificacion": "No aplica - estudio incluido"}, "0.4": {"procedencia": "reviewer.discussion", "justificacion": "No requerido - criterios claros"}, "0.5": {"procedencia": "reviewer.eligibility_comment", "justificacion": "Síntesis del revisor: RCT sobre terapia miofascial para disfunciones de miembro superior en supervivientes de cáncer de mama; compara liberación miofascial vs placebo + fisioterapia estándar"}, "1.1": {"procedencia": "system.study_id", "justificacion": "ID interno asignado: DeGroef_2017"}, "1.2": {"procedencia": "p.1.header", "justificacion": "An De Groef - primer autor en encabezado del artículo"}, "1.3": {"procedencia": "p.1.header", "justificacion": "(2017) en cita de revista Supportive Care in Cancer"}, "1.4": {"procedencia": "p.1.header", "justificacion": "Effect of myofascial techniques for treatment of upper limb dysfunctions in breast cancer survivors: randomized controlled trial"}, "1.5": {"procedencia": "p.1.header", "justificacion": "Supportive Care in Cancer en cabecera"}, "1.6": {"procedencia": "p.1.doi_line", "justificacion": "DOI 10.1007/s00520-017-3616-9"}, "1.7": {"procedencia": "p.1.affiliation", "justificacion": "Leuven, Belgium - afiliación de autores"}, "1.8": {"procedencia": "p.1.affiliation", "justificacion": "Inferido de Belgium → Europa"}, "1.9": {"procedencia": "p.2.Procedure", "justificacion": "randomized into the intervention group...or the control group"}, "1.10": {"procedencia": "p.2.Participants", "justificacion": "Multidisciplinary Breast Centre and the department of Physical Medicine and Rehabilitation of the University Hospitals in Leuven - monocéntrico"}, "1.11": {"procedencia": "p.2.Participants", "justificacion": "Hospital universitario (University Hospitals Leuven)"}, "1.12": {"procedencia": "p.10.Compliance", "justificacion": "This study was funded by the agency for Innovation by Science and Technology (IWT 110703)"}, "1.13": {"procedencia": "p.10.Compliance", "justificacion": "The authors have no further conflicts of interest"}, "1.14": {"procedencia": "p.2.Procedure", "justificacion": "No se reporta registro en ClinicalTrials.gov"}, "1.14b": {"procedencia": "not_applicable", "justificacion": "No aplica"}, "1.15": {"procedencia": "system.internal_id", "justificacion": "004 - asignación interna del revisor"}, "2.1": {"procedencia": "p.2.Procedure", "justificacion": "randomized controlled trial paralelo"}, "2.2": {"procedencia": "p.2.Procedure", "justificacion": "intervention group...control group → 2 brazos"}, "2.3": {"procedencia": "p.2.Procedure", "justificacion": "computer-generated...permuted blocks(size= 4)...allocation concealed"}, "2.4": {"procedencia": "p.2.Procedure_p.3.Interventions", "justificacion": "Patients were blinded...Three blinded assessors"}, "2.5": {"procedencia": "p.2.Procedure", "justificacion": "Participantes individuales"}, "2.6": {"procedencia": "p.3.Interventions", "justificacion": "12 weeks"}, "2.7": {"procedencia": "p.2.Outcomes", "justificacion": "Sí - 6 and 12 months follow-up"}, "2.8": {"procedencia": "p.2.Outcomes", "justificacion": "before the start...at the end(after 12 weeks), and at 6 and 12 months follow-up"}, "2.9": {"procedencia": "p.2.Outcomes", "justificacion": "3 puntos (post-12sem, 6mo, 12mo)"}, "2.10": {"procedencia": "p.2.Outcomes", "justificacion": "Basal – Post 12 semanas – 6 meses – 12 meses"}, "2.11": {"procedencia": "p.2.Procedure", "justificacion": "RCT paralelo → Sí"}, "3.1": {"procedencia": "p.3.Results", "justificacion": "50 included patients...25 were randomized in the intervention group and 25 in the control group"}, "3.2": {"procedencia": "p.3.Results", "justificacion": "Two patients from the intervention group dropped out → 48 analizados"}, "3.3": {"procedencia": "p.3.Results", "justificacion": "25 (23 analizados)"}, "3.3b": {"procedencia": "p.3.Results", "justificacion": "25"}, "3.4": {"procedencia": "p.3.Table2", "justificacion": "mean (SD)"}, "3.4b": {"procedencia": "p.3.Table2", "justificacion": "Age(years) 55.3(7.5) [intervención] vs 53.1(7.5) [control]"}, "3.5": {"procedencia": "p.2.Participants", "justificacion": "women treated for a primary breast cancer → 100% mujeres"}, "3.6": {"procedencia": "p.2.Participants", "justificacion": "women treated for a primary breast cancer"}, "3.7": {"procedencia": "p.3.Table2", "justificacion": "pT0–T4; pN0–N3 (mixto)"}, "3.8": {"procedencia": "p.2.Participants", "justificacion": "radiation therapy was terminated at least 3 months ago"}, "3.9": {"procedencia": "p.3.Table2", "justificacion": "Mastectomy (68-72%), Breast conserving (28-32%), Axillary surgery levels I-III, Radiotherapy (72-84%), Chemotherapy (60-68%), Endocrine treatment (88-92%)"}, "3.10": {"procedencia": "p.3.Table2", "justificacion": "Time since surgery(years) 3.6(3.4) [intervención]; 3.0(3.4) [control]"}, "3.11": {"procedencia": "p.2.Participants", "justificacion": "pain at the upper limb region reaching a score of at least 40 out of 100 on the visual analogue scale(VAS)...presence of myofascial dysfunctions"}, "3.12": {"procedencia": "p.2.Participants", "justificacion": "Moderada (VAS ≥40, limitaciones funcionales)"}, "3.13": {"procedencia": "p.2.Participants", "justificacion": "(1) women treated for a primary breast cancer,(2) radiation therapy was terminated at least 3 months ago,(3) pain at the upper limb region reaching a score of at least 40 out of 100 on the visual analogue scale(VAS) during the past week, and(4) presence of myofascial dysfunctions at the upper limb region"}, "3.14": {"procedencia": "p.2.Participants", "justificacion": "(1) not able to visit the hospital for the therapeutic sessions and measurements the entire duration of the study, (2) presence of shoulder pathologies for which surgical indications exist(defined by ultrasound investigation), or(3) presence of current episodes of cancer or metastasis"}, "3.15": {"procedencia": "p.3.Results", "justificacion": "All baseline characteristics of the two groups were comparable, except for body mass index(BMI)"}, "3.16": {"procedencia": "p.3.Results_Table2", "justificacion": "Tiempo post-cirugía variable puede introducir heterogeneidad, pero criterios de disfunción miofascial estrictos mejoran homogeneidad clínica. BMI mayor en grupo intervención (28.5 vs 25.4, p=0.018)."}, "4.1": {"procedencia": "p.1.Abstract", "justificacion": "myofascial therapy / myofascial release techniques"}, "4.2": {"procedencia": "p.3.Interventions", "justificacion": "Sí (componente adicional a fisioterapia estándar)"}, "4.3": {"procedencia": "p.3.Interventions", "justificacion": "manual myofascial release techniques on(1) active myofascial trigger points at the upper limb region and(2) on myofascial adhesions in the pectoral, axillary and cervical region, diaphragm, and scars"}, "4.4": {"procedencia": "p.3.Interventions", "justificacion": "Presión superficial a profunda hasta sensación de liberación (soft-end feel), tratamiento de puntos gatillo activos y adherencias"}, "4.5": {"procedencia": "p.3.Interventions", "justificacion": "Miembro superior completo, región pectoral, axilar, cervical, diafragma, cicatrices quirúrgicas"}, "4.6": {"procedencia": "p.3.Interventions", "justificacion": "Two other manual therapists(ED, SDG) performed the myofascial/placebo treatments. Both therapists were educated in myofascial therapy and had several years of clinical experience"}, "4.7": {"procedencia": "p.3.Interventions", "justificacion": "30 min"}, "4.8": {"procedencia": "p.3.Interventions", "justificacion": "once a week for 12 weeks"}, "4.9": {"procedencia": "p.3.Interventions", "justificacion": "12 sesiones"}, "4.10": {"procedencia": "p.3.Interventions", "justificacion": "12 semanas"}, "4.11": {"procedencia": "p.3.Interventions", "justificacion": "Sí (claramente descrita con técnica de presión superficial a profunda hasta sensación de liberación)"}, "4.12": {"procedencia": "p.3.Results_Table2", "justificacion": "Sí (promedio 12 sesiones de terapia miofascial/placebo; 17 sesiones fisioterapia estándar en intervención, 16 en control)"}, "4.13": {"procedencia": "p.3-10.Results_Discussion", "justificacion": "No reportado"}, "5.1": {"procedencia": "p.3.Interventions", "justificacion": "Placebo / Intervención simulada"}, "5.2": {"procedencia": "p.3.Interventions", "justificacion": "static bilateral hand placements at the upper body and arm"}, "5.3": {"procedencia": "p.3.Interventions", "justificacion": "Placebo activo"}, "5.4": {"procedencia": "p.3.Interventions", "justificacion": "Sí (ambos grupos recibieron programa estándar de fisioterapia: movilizaciones pasivas, estiramientos pectorales, masaje de cicatriz, esquemas de ejercicio)"}, "5.5": {"procedencia": "p.3.Interventions_p.9.Discussion", "justificacion": "Sí (diseño controlado con placebo + co-intervención idéntica)"}, "6.1": {"procedencia": "p.3.Statistical_p.9.Discussion", "justificacion": "Primario: intensidad de dolor (reportado en publicación separada); Secundarios: función de miembro superior"}, "6A.1": {"procedencia": "p.4.Table1", "justificacion": "No"}, "6A.2": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.3": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.4": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6A.5": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.1": {"procedencia": "p.4.Table1", "justificacion": "No"}, "6B.2": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.3": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.4": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6B.5": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6C.1": {"procedencia": "p.3.Statistical_p.9.Discussion", "justificacion": "Sí (outcome primario, resultados publicados por separado)"}, "6C.2": {"procedencia": "p.2.Participants", "justificacion": "Miembro superior / Región de hombro"}, "6C.3": {"procedencia": "p.2.Participants", "justificacion": "Escala Visual Analógica (VAS)"}, "6C.4": {"procedencia": "p.2.Participants", "justificacion": "Intensidad"}, "6C.5": {"procedencia": "not_reported_here", "justificacion": "Media ± DE (disponible en publicación complementaria)"}, "6D.1": {"procedencia": "p.4.Table1", "justificacion": "Sí"}, "6D.2": {"procedencia": "p.4.Table1", "justificacion": "Hombro"}, "6D.3": {"procedencia": "p.4.Table1", "justificacion": "Flexión anterior activa, Abducción activa"}, "6D.4": {"procedencia": "p.4.Table1", "justificacion": "Inclinómetro"}, "6D.5": {"procedencia": "p.8.Table3", "justificacion": "Media ± DE (grados)"}, "6E.1": {"procedencia": "p.4.Table1", "justificacion": "Sí"}, "6E.2": {"procedencia": "p.4.Table1", "justificacion": "DASH (Disability of Arm, Shoulder and Hand)"}, "6E.3": {"procedencia": "p.8.Table3", "justificacion": "Media ± DE (puntuación 0-100)"}, "6F.1": {"procedencia": "p.4.Table1", "justificacion": "Sí"}, "6F.2": {"procedencia": "p.4.Table1", "justificacion": "SF-36 (Short Form 36): subescalas funcionamiento físico y mental"}, "6F.3": {"procedencia": "p.8.Table3", "justificacion": "Media ± DE (puntuación 0-100)"}, "6G.1": {"procedencia": "p.4.Table1", "justificacion": "Sí"}, "6G.2": {"procedencia": "p.4.Table1", "justificacion": "Perimetría con fórmula de cono truncado; volumen relativo del brazo"}, "6G.3": {"procedencia": "p.8.Table3", "justificacion": "Media ± DE (% de diferencia de volumen relativo)"}, "6H.1": {"procedencia": "p.4.Table1", "justificacion": "Sí"}, "6H.2": {"procedencia": "p.4.Table1", "justificacion": "Fuerza de prensión manual (handgrip)"}, "6H.3": {"procedencia": "p.8.Table3", "justificacion": "Media ± DE (kg, dinamómetro Jamar)"}, "6I.1": {"procedencia": "p.4.Table1", "justificacion": "No"}, "6I.2": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "6I.3": {"procedencia": "not_applicable", "justificacion": "No reportado"}, "7.1": {"procedencia": "p.3.Statistical_p.8.Table3", "justificacion": "Media ± DE para outcomes continuos; porcentajes para outcomes binarios"}, "7.2": {"procedencia": "p.8.Table3", "justificacion": "Intervención: 23-25 / Control: 25 (varía por outcome)"}, "7.3": {"procedencia": "p.8-9.Results", "justificacion": "Sí"}, "7.4": {"procedencia": "p.3.Statistical", "justificacion": "MD (Diferencia de medias)"}, "7.5": {"procedencia": "p.9-10.Discussion_Limitations", "justificacion": "RCT bien diseñado con aleatorización oculta, evaluadores y participantes cegados, baja tasa de abandono (4%). Ambos grupos recibieron fisioterapia estándar idéntica + intervención miofascial o placebo. Datos completos para metaanálisis de ROM hombro, función DASH, calidad de vida SF-36, linfedema y fuerza. No se encontraron diferencias significativas entre grupos para la mayoría de outcomes a 12 meses, pero ambos grupos mostraron mejorías clínicamente relevantes en ROM y función con fisioterapia estándar. Limitación: no se realizó cálculo de poder para outcomes secundarios reportados aquí."}, "Rev.": {"procedencia": "metadata.reviewer", "justificacion": "Iván Valverde"}, "Fecha": {"procedencia": "metadata.date", "justificacion": "03/04/2026"}, "Notas": {"procedencia": "metadata.comments", "justificacion": "Estudio complementario al reporte de dolor primario (De Groef et al. 2016); misma cohorte. Recomendación: incluir en metaanálisis de función de miembro superior post-cáncer de mama, considerando co-intervención estándar como factor de homogeneización."}}};  // Datos de procedencia incrustados incrustados
+
+// URL del Apps Script del Sheet PROCEDENCIA — cámbiala cuando lo despliegues
+const PROV_CSV = null; // Datos incrustados directamente
+
+
+
+function getProv(artNum, codigo){
+  const art = provDB[String(artNum)];
+  return art ? (art[codigo] || null) : null;
+}
+
+function toggleProv(idx){
+  const body = document.getElementById('ab-'+idx);
+  const btn  = document.getElementById('pb-'+idx);
+  const on   = body.classList.toggle('prov-on');
+  btn.classList.toggle('on', on);
+  btn.querySelector('span').textContent = on ? 'Ocultar fuentes' : 'Ver fuentes';
+}
+async function loadAll(){
+  // Carga datos principales Y procedencia al mismo tiempo
+  const btn=document.getElementById('btn-upd');
+  btn.classList.add('spin');
+  document.getElementById('sync').textContent='Actualizando...';
+  try{
+    const [mainRes] = await Promise.all([fetch(SCRIPT_URL)]);
+    // Datos principales
+    const json=await mainRes.json();
+    if(json.status!=='ok') throw new Error('Error en script');
+    const rows=json.data;
+    colMap={};
+    rows[0].forEach((h,i)=>colMap[String(h).trim()]=i);
+    arts=[];
+    for(let i=1;i<rows.length;i++){
+      const r=rows[i];
+      if(!r||r.every(c=>!String(c).trim())) continue;
+      const n=g(r,'art_num'), ts=g(r,'timestamp');
+      if(!n&&!ts) continue;
+      arts.push({r,num:n||i,has:!!ts});
+    }
+    const now=new Date();
+    document.getElementById('sync').textContent='Sync '+now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    render();
+  }catch(e){
+    document.getElementById('sync').textContent='Error';
+    document.getElementById('app').innerHTML=`<div class="state-screen"><h3>⚠️ Sin conexión</h3><p style="margin-top:6px;font-size:12px">${e.message}</p></div>`;
+  }
+  btn.classList.remove('spin');
+}
 
 async function loadData(){
   const btn=document.getElementById('btn-upd');
@@ -337,6 +415,10 @@ function card(a,idx){
         ${SECS.map((s,i)=>`<div class="stab${i===0?' on':''}" id="st-${idx}-${s.id}" onclick="switchTab(${idx},'${s.id}',this)" style="${i===0?`color:${s.color};border-bottom-color:${s.color}`:''}">
           <span class="snum" id="sn-${idx}-${s.id}" style="${i===0?`background:${s.color}`:'background:#eee;color:#666'}">${s.num}</span>${s.label}
         </div>`).join('')}
+        <button class="prov-toggle" id="pb-${idx}" onclick="toggleProv(${idx})">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;flex-shrink:0"><path d="M12 2C8.7 2 6 4.7 6 8c0 4.5 6 12 6 12s6-7.5 6-12c0-3.3-2.7-6-6-6zm0 8.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+          <span>Ver fuentes</span>
+        </button>
       </div>
       ${SECS.map((s,i)=>`<div class="spanel${i===0?' on':''}" id="sp-${idx}-${s.id}">${panel(a,s,idx)}</div>`).join('')}
     </div>
@@ -361,15 +443,32 @@ function switchTab(idx,sid,el){
   document.getElementById(`sp-${idx}-${sid}`).classList.add('on');
 }
 
-function fld(code,label,val,full=false,color='#666'){
-  const v=String(val||'');const empty=!v||v==='—';
+let currentArtNum = '';
+
+function fld(code, label, val, full=false, color='#666'){
+  const v=String(val||''); const empty=!v||v==='—';
+  const p = getProv(currentArtNum, code);
+  const provHtml = p ? `<div class="prov-block">
+    <div class="prov-line proc">
+      <span class="prov-icon">📍</span>
+      <span class="prov-label">Procedencia:</span>
+      <span class="prov-text src">${p.procedencia}</span>
+    </div>
+    <div class="prov-line just">
+      <span class="prov-icon">💡</span>
+      <span class="prov-label">Justificación:</span>
+      <span class="prov-text">${p.justificacion}</span>
+    </div>
+  </div>` : '';
   return `<div class="fitem${full?' full':''}">
     <div class="flabel" style="color:${color}"><span class="fcode">${code}</span> ${label}</div>
     <div class="fval${empty?' empty':''}">${empty?'—':v}</div>
+    ${provHtml}
   </div>`;
 }
 
 function panel(a,sec,idx){
+  currentArtNum = g(a.r,'art_num') || String(a.num);
   if(!a.has&&sec.id!=='s0') return `<div class="pending-msg">Pendiente de extracción.</div>`;
   const c=sec.color,r=a.r;
   const sh=`<div class="sec-header"><div class="sec-num" style="background:${c}">${sec.num}</div><div><div class="sec-title">${sec.title}</div></div></div>`;
@@ -472,7 +571,16 @@ function panel(a,sec,idx){
             <div class="out-block-title">${ob.label}</div>
             <span class="${yes?'yes-badge':'no-badge'}">${yes?'Sí':'No'}</span>
           </div>
-          ${yes?`<div class="out-fields">${ob.fields.map(f=>{const v=g(r,f.k);const e=!v||v==='—';return`<div class="out-field"><div class="out-label">${f.l}</div><div class="out-val${e?' empty':''}">${e?'—':v}</div></div>`;}).join('')}</div>`:''}
+          ${yes?`<div class="out-fields">${ob.fields.map(f=>{
+            const v=g(r,f.k);const e=!v||v==='—';
+            const fc=FIELD_CODES[f.k]||f.k;
+            const p=getProv(currentArtNum,fc);
+            const provHtml=p?`<div class="prov-block">
+              <div class="prov-line proc"><span class="prov-icon">📍</span><span class="prov-label">Procedencia:</span><span class="prov-text src">${p.procedencia}</span></div>
+              <div class="prov-line just"><span class="prov-icon">💡</span><span class="prov-label">Justificación:</span><span class="prov-text">${p.justificacion}</span></div>
+            </div>`:'';
+            return`<div class="out-field"><div class="out-label">${f.l}</div><div class="out-val${e?' empty':''}">${e?'—':v}</div>${provHtml}</div>`;
+          }).join('')}</div>`:''}
         </div>`;
       }).join('')}
      </div>`;
@@ -490,7 +598,7 @@ function panel(a,sec,idx){
   return '';
 }
 
-window.addEventListener('DOMContentLoaded',loadData);
+window.addEventListener('DOMContentLoaded', loadAll);
 </script>
 </body>
 </html>
