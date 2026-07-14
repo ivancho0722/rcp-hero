@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RCP HERO v1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RCP HERO · Universidad Icesi</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&family=Bebas+Neue&family=Black+Ops+One&display=swap" rel="stylesheet">
 <style>
 :root{--red:#FF1E2D;--red2:#FF4D57;--rdark:#9B0010;--rglow:rgba(255,30,45,.5);--bg:#0A0A12;--bg2:#0E0E18;--bg3:#14141F;--panel:rgba(18,18,30,.97);--panel2:rgba(26,26,46,.95);--border:rgba(255,30,45,.2);--border2:rgba(255,30,45,.45);--text:#F0F0F8;--muted:#9898C0;--muted2:#B8B8D8;--gold:#FFD700;--gglow:rgba(255,215,0,.45);--green:#00FF88;--greglow:rgba(0,255,136,.35);--cyan:#00D4FF;--cglow:rgba(0,212,255,.35);--orange:#FF6B00;--purple:#A855F7;}
@@ -83,13 +83,13 @@
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(14px,1.6vw + 0.5vh,18px);min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
 .bgc{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .bgg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,30,45,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,30,45,.04) 1px,transparent 1px);background-size:48px 48px;animation:gdrift 18s linear infinite;}
 @keyframes gdrift{from{transform:translateY(0)}to{transform:translateY(48px)}}
 .bgr{position:absolute;inset:0;background:radial-gradient(ellipse 55% 40% at 15% 20%,rgba(255,30,45,.07) 0%,transparent 70%),radial-gradient(ellipse 40% 55% at 85% 80%,rgba(0,212,255,.04) 0%,transparent 70%);}
 .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);}
-.screen{display:none;position:relative;z-index:2;min-height:100vh;}
+.screen{display:none;position:relative;z-index:2;min-height:100vh;min-height:100dvh;}
 .screen.active{display:flex;flex-direction:column;}
 /* SPLASH */
 #ss{align-items:center;justify-content:center;text-align:center;padding:20px;}
@@ -151,8 +151,9 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .gsv.fs-color-0{color:#888888;}
 .gsv.fs-color-1{color:var(--gold);text-shadow:0 0 10px var(--gglow);}
 .gsv.fs-color-2{color:var(--cyan);text-shadow:0 0 10px rgba(0,212,255,.5);}
-.mbody{flex:1;padding:18px;overflow-y:auto;}
-.sec-title{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.mbody{flex:1;padding:clamp(12px,4vw,24px);overflow-y:auto;padding-bottom:calc(clamp(12px,4vw,24px) + env(safe-area-inset-bottom));}
+.sec-title{font-family:'Orbitron',monospace;font-size:12px;letter-spacing:3px;color:var(--muted2);text-transform:uppercase;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.sec-title::before{content:'';width:4px;height:15px;border-radius:3px;background:linear-gradient(180deg,var(--cyan),var(--red));flex-shrink:0;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
 .lvl-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
 .lvltab{ display:none; }
@@ -166,10 +167,11 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
   transition:all .25s cubic-bezier(.34,1.2,.64,1);
   position:relative;overflow:hidden;
   background:var(--panel);
+  min-height:80px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .nivel-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;}
 .nivel-card:active{transform:scale(.96);}
-.nivel-card.active{border-color:currentColor;transform:scale(1.04);}
+.nivel-card.active{transform:scale(1.04);}
 .nivel-card.active::before{opacity:1;}
 .nc-emoji{font-size:28px;line-height:1;transition:all .25s;}
 .nivel-card.active .nc-emoji{font-size:34px;}
@@ -178,19 +180,19 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .nc-bar{width:100%;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:2px;}
 .nc-fill{height:100%;border-radius:3px;transition:width .5s ease;}
 .nc-prog{font-size:8px;font-family:'Share Tech Mono',monospace;letter-spacing:.5px;text-align:center;margin-top:1px;}
-/* Colores por nivel */
-.nc-easy{color:#00C853;}
-.nc-easy::before{background:rgba(0,200,83,.07);}
-.nc-easy.active{box-shadow:0 0 20px rgba(0,200,83,.3);}
-.nc-mid{color:#FFD700;}
-.nc-mid::before{background:rgba(255,215,0,.07);}
-.nc-mid.active{box-shadow:0 0 20px rgba(255,215,0,.3);}
-.nc-hard{color:#FF4D57;}
-.nc-hard::before{background:rgba(255,30,45,.07);}
-.nc-hard.active{box-shadow:0 0 20px rgba(255,30,45,.3);}
-.nc-exp{color:#A855F7;}
-.nc-exp::before{background:rgba(168,85,247,.07);}
-.nc-exp.active{box-shadow:0 0 20px rgba(168,85,247,.3);}
+/* Recuadros de nivel: borde siempre visible, brillo al seleccionar */
+.nc-easy{color:#00C853;border-color:rgba(0,200,83,.35);background:rgba(0,200,83,.06);}
+.nc-easy::before{background:rgba(0,200,83,.1);}
+.nc-easy:hover,.nc-easy.active{border-color:#00C853;background:rgba(0,200,83,.14);box-shadow:0 0 22px rgba(0,200,83,.38);}
+.nc-mid{color:#FFD700;border-color:rgba(255,215,0,.35);background:rgba(255,215,0,.06);}
+.nc-mid::before{background:rgba(255,215,0,.1);}
+.nc-mid:hover,.nc-mid.active{border-color:#FFD700;background:rgba(255,215,0,.14);box-shadow:0 0 22px rgba(255,215,0,.38);}
+.nc-hard{color:#FF4D57;border-color:rgba(255,30,45,.35);background:rgba(255,30,45,.06);}
+.nc-hard::before{background:rgba(255,30,45,.1);}
+.nc-hard:hover,.nc-hard.active{border-color:#FF4D57;background:rgba(255,30,45,.14);box-shadow:0 0 22px rgba(255,30,45,.38);}
+.nc-exp{color:#A855F7;border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.06);}
+.nc-exp::before{background:rgba(168,85,247,.1);}
+.nc-exp:hover,.nc-exp.active{border-color:#A855F7;background:rgba(168,85,247,.14);box-shadow:0 0 22px rgba(168,85,247,.38);}
 .dot{width:8px;height:8px;border-radius:50%;}
 .dot-easy{background:var(--green);box-shadow:0 0 6px var(--greglow);}
 .dot-mid{background:var(--gold);box-shadow:0 0 6px var(--gglow);}
@@ -203,12 +205,29 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .lvl-progress-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1);}
 .lvl-progress-lbl{font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;color:var(--muted);display:flex;justify-content:space-between;margin-top:3px;}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:12px;}
-.mcard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
-.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:0;transition:opacity .3s;}
+/* mcard: borde intenso del color de su nivel */
+.mcard{background:var(--panel);border:2px solid rgba(255,255,255,.1);border-radius:14px;padding:16px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s;}
 .mcard:hover::before,.mcard.done::before{opacity:1}
-.mcard:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,30,45,.12);}
-.mcard.done{border-color:rgba(0,255,136,.3);}
-.mcard.done::before{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+/* Fácil — verde */
+.mcard-de{border-color:rgba(0,200,83,.55);background:rgba(0,200,83,.04);}
+.mcard-de::before{background:linear-gradient(90deg,transparent,#00C853,transparent);}
+.mcard-de:hover{border-color:#00C853;background:rgba(0,200,83,.09);box-shadow:0 0 24px rgba(0,200,83,.35),0 6px 18px rgba(0,200,83,.2);transform:translateY(-2px);}
+/* Intermedio — dorado */
+.mcard-dm{border-color:rgba(255,215,0,.55);background:rgba(255,215,0,.04);}
+.mcard-dm::before{background:linear-gradient(90deg,transparent,#FFD700,transparent);}
+.mcard-dm:hover{border-color:#FFD700;background:rgba(255,215,0,.09);box-shadow:0 0 24px rgba(255,215,0,.35),0 6px 18px rgba(255,215,0,.2);transform:translateY(-2px);}
+/* Difícil — rojo */
+.mcard-dh{border-color:rgba(255,30,45,.55);background:rgba(255,30,45,.04);}
+.mcard-dh::before{background:linear-gradient(90deg,transparent,#FF4D57,transparent);}
+.mcard-dh:hover{border-color:#FF4D57;background:rgba(255,30,45,.09);box-shadow:0 0 24px rgba(255,30,45,.35),0 6px 18px rgba(255,30,45,.2);transform:translateY(-2px);}
+/* Experto — MORADO (igual que el nivel) */
+.mcard-dx{border-color:rgba(168,85,247,.55);background:rgba(168,85,247,.04);}
+.mcard-dx::before{background:linear-gradient(90deg,transparent,#A855F7,transparent);}
+.mcard-dx:hover{border-color:#A855F7;background:rgba(168,85,247,.09);box-shadow:0 0 24px rgba(168,85,247,.35),0 6px 18px rgba(168,85,247,.2);transform:translateY(-2px);}
+/* Completada — verde siempre */
+.mcard.done{border-color:rgba(0,255,136,.6) !important;background:rgba(0,255,136,.05) !important;box-shadow:0 0 18px rgba(0,255,136,.2);}
+.mcard.done::before{background:linear-gradient(90deg,transparent,var(--green),transparent) !important;}
 .mcard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
 .micon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .ic-r{background:rgba(255,30,45,.15);border:1px solid rgba(255,30,45,.3);}
@@ -220,7 +239,7 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .de{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.25);}
 .dm{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.25);}
 .dh{background:rgba(255,30,45,.12);color:var(--red2);border:1px solid rgba(255,30,45,.25);}
-.dx{background:rgba(255,107,0,.12);color:var(--orange);border:1px solid rgba(255,107,0,.25);}
+.dx{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25);}
 .mnum-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}
 .mtitle{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:5px;}
 .mdesc{font-size:12px;color:var(--muted2);line-height:1.5;margin-bottom:6px;}
@@ -235,8 +254,8 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .si-done{background:rgba(0,255,136,.15);border:1px solid rgba(0,255,136,.3);}
 .si-open{background:rgba(255,30,45,.15);border:1px solid rgba(255,30,45,.3);}
 .mode-nav{display:flex;gap:12px;margin-top:6px;}
-.mbtn{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px;cursor:pointer;transition:all .25s;text-align:center;}
-.mbtn:hover{border-color:var(--border2);transform:translateY(-2px);}
+.mbtn{flex:1;background:var(--panel);border:2px solid rgba(255,160,0,.30);background:rgba(255,140,0,.04);border-radius:12px;padding:15px;cursor:pointer;transition:all .25s;text-align:center;min-height:64px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.mbtn:hover{border-color:#FFA000;background:rgba(255,160,0,.1);transform:translateY(-2px);box-shadow:0 0 22px rgba(255,160,0,.3),0 6px 16px rgba(255,160,0,.18);}
 .mbtn .mi{font-size:28px;margin-bottom:6px;}
 .mbtn .mn{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;}
 .mbtn .md{font-size:11px;color:var(--muted);margin-top:3px;}
@@ -259,11 +278,11 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 @keyframes pieceReveal{from{transform:scale(0) rotate(-15deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
 .piece-num{position:absolute;bottom:3px;right:5px;font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);}
 .epic-missions{display:flex;flex-direction:column;gap:10px;}
-.epic-mcard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .3s;position:relative;}
-.epic-mcard:hover:not(.locked-card){border-color:var(--border2);transform:translateX(4px);}
-.epic-mcard.done-card{border-color:rgba(0,255,136,.3);}
+.epic-mcard{background:var(--panel);border:1px solid rgba(168,85,247,.28);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .3s;position:relative;}
+.epic-mcard:hover:not(.locked-card){border-color:rgba(168,85,247,.75);transform:translateX(4px);box-shadow:0 0 18px rgba(168,85,247,.22);}
+.epic-mcard.done-card{border-color:rgba(0,255,136,.35);box-shadow:0 0 12px rgba(0,255,136,.1);}
 .epic-mcard.locked-card{opacity:.4;cursor:not-allowed;}
-.epic-mcard.active-card{border-color:rgba(168,85,247,.5);box-shadow:0 0 16px rgba(168,85,247,.2);animation:epicPulse 2s ease-in-out infinite;}
+.epic-mcard.active-card{border-color:rgba(168,85,247,.75);background:rgba(168,85,247,.07);box-shadow:0 0 20px rgba(168,85,247,.3);animation:epicPulse 2s ease-in-out infinite;}
 @keyframes epicPulse{0%,100%{box-shadow:0 0 12px rgba(168,85,247,.2)}50%{box-shadow:0 0 24px rgba(168,85,247,.4)}}
 .epic-mcard-num{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;min-width:36px;text-align:center;}
 .epic-mcard-info{flex:1;}
@@ -322,7 +341,7 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 .qexp-t{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;color:var(--cyan);margin-bottom:5px;}
 .qctr-lbl{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1.5px;}
 /* SIMULATOR */
-#sc{padding:0;height:100vh;overflow:hidden;}
+#sc{padding:0;height:100vh;height:100dvh;overflow:hidden;}
 .simtop{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--border);backdrop-filter:blur(10px);}
 .backbtn{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:6px 11px;cursor:pointer;font-size:11px;font-family:'Exo 2',sans-serif;font-weight:600;letter-spacing:1px;transition:all .2s;}
 .backbtn:hover{border-color:var(--border2);color:var(--text);}
@@ -361,7 +380,7 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 @keyframes phpls3{0%,100%{box-shadow:0 0 16px rgba(168,85,247,.5)}50%{box-shadow:0 0 32px rgba(168,85,247,.9),0 0 60px rgba(168,85,247,.3)}}
 .phs.done .phicon{border-color:var(--green);background:rgba(0,255,136,.12);font-size:18px;}
 .phs.done .phlbl{color:var(--green);}
-#chatmsgs{flex:1;padding:12px;display:flex;flex-direction:column;gap:12px;overflow-y:scroll;max-height:calc(100vh - 295px);scroll-behavior:smooth;overscroll-behavior:contain;}
+#chatmsgs{flex:1;padding:12px;display:flex;flex-direction:column;gap:12px;overflow-y:scroll;max-height:calc(100vh - 295px);max-height:calc(100dvh - 295px);scroll-behavior:smooth;overscroll-behavior:contain;}
 .msg{display:flex;gap:9px;align-items:flex-start;animation:fds .35s cubic-bezier(.34,1.2,.64,1);}
 .msg.user{flex-direction:row-reverse;}
 .mav{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
@@ -432,6 +451,47 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
 @keyframes cpop{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
 .lvlup-ov{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);}
 .lvlup-ov.show{display:flex;}
+/* ══ FASE O · candados y modal ══ */
+.mcard-locked{opacity:.68;border-style:dashed !important;cursor:pointer;position:relative;}
+.mcard-locked .micon{filter:grayscale(.4);}
+.mcard-locked:hover{opacity:.9;border-color:var(--gold) !important;}
+.msi.si-locked{background:rgba(255,215,0,.14);color:var(--gold);}
+.mbtn-locked{opacity:.82;border-style:dashed !important;}
+.mbtn-locked:hover{opacity:1;border-color:var(--gold) !important;}
+.faseo-hint{display:none;margin:0 0 12px;padding:10px 14px;border-radius:10px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.35);color:var(--gold);font-size:13px;line-height:1.45;text-align:center;}
+body.fs-grande .faseo-hint{font-size:15px !important;} body.fs-extra .faseo-hint{font-size:17px !important;}
+/* ══ Recuadros de sección con color propio y brillo al seleccionar ══ */
+.hub-sec{border:1px solid rgba(var(--sc),.30);background:rgba(var(--sc),.045);border-radius:16px;padding:16px 16px 18px;margin-bottom:16px;transition:box-shadow .25s ease,border-color .25s ease,background .25s ease;cursor:default;}
+.hub-sec:hover,.hub-sec:focus-within,.hub-sec.lit{border-color:rgba(var(--sc),.85);background:rgba(var(--sc),.09);box-shadow:0 0 26px rgba(var(--sc),.30),inset 0 0 22px rgba(var(--sc),.05);}
+.hub-sec .sec-title{color:rgb(var(--sc));}
+.hub-sec .sec-title::before{background:rgb(var(--sc));}
+.hub-sec .sec-title::after{background:rgba(var(--sc),.28);}
+.quiz-cta{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:16px;cursor:pointer;background:linear-gradient(135deg,rgba(74,20,140,.5),rgba(168,85,247,.28));border:2px solid rgba(168,85,247,.55);box-shadow:0 0 22px rgba(168,85,247,.15);transition:all .2s;min-height:72px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.quiz-cta:hover{transform:translateY(-2px);border-color:var(--purple);box-shadow:0 0 30px rgba(168,85,247,.35);}
+.quiz-cta-ic{font-size:38px;line-height:1;flex-shrink:0;}
+.quiz-cta-txt{flex:1;min-width:0;}
+.quiz-cta-title{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:#fff;letter-spacing:1px;}
+.quiz-cta-sub{font-size:13px;color:var(--muted2);margin-top:3px;line-height:1.4;}
+.quiz-cta-go{font-size:22px;color:var(--purple);flex-shrink:0;}
+body.fs-grande .quiz-cta-title{font-size:20px !important;} body.fs-grande .quiz-cta-sub{font-size:15px !important;}
+body.fs-extra .quiz-cta-title{font-size:23px !important;} body.fs-extra .quiz-cta-sub{font-size:17px !important;}
+@media(max-width:480px){.quiz-cta-title{font-size:16px;}.quiz-cta-ic{font-size:32px;}.quiz-cta-sub{font-size:12px;}.hub-sec{padding:14px 12px 16px;}}
+.claveo-ov{position:fixed;inset:0;z-index:260;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.86);backdrop-filter:blur(9px);padding:20px;box-sizing:border-box;}
+.claveo-ov.show{display:flex;}
+.claveo-box{width:100%;max-width:440px;background:var(--panel);border:1px solid rgba(255,215,0,.4);border-radius:20px;padding:28px 24px;box-shadow:0 0 40px rgba(0,0,0,.6),0 0 30px rgba(255,215,0,.15);text-align:center;}
+.claveo-icon{font-size:46px;margin-bottom:6px;}
+.claveo-title{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px;}
+.claveo-sub{font-size:14px;color:var(--muted2);line-height:1.6;margin-bottom:18px;}
+#claveo-input{width:100%;box-sizing:border-box;padding:14px 16px;border-radius:12px;border:2px solid var(--border2);background:rgba(255,255,255,.04);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:18px;font-weight:700;letter-spacing:2px;text-align:center;text-transform:uppercase;}
+#claveo-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 16px rgba(255,215,0,.25);}
+.claveo-err{min-height:18px;color:var(--red2);font-size:13px;font-weight:700;margin:10px 0 4px;}
+.claveo-actions{display:flex;gap:12px;margin-top:8px;}
+.claveo-btn{flex:1;border-radius:12px;padding:14px;font-family:'Orbitron',monospace;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;min-height:52px;border:2px solid var(--border2);}
+.claveo-cancel{background:var(--panel2);color:var(--muted2);}
+.claveo-go{background:linear-gradient(135deg,#7A5800,#FFD700);color:#1a1400;border-color:transparent;}
+.claveo-go:hover{transform:translateY(-1px);}
+body.fs-grande .claveo-sub{font-size:16px !important;} body.fs-extra .claveo-sub{font-size:18px !important;}
+body.fs-grande #claveo-input{font-size:20px !important;} body.fs-extra #claveo-input{font-size:22px !important;}
 .lvlup-inner{text-align:center;animation:lvlb .5s cubic-bezier(.34,1.56,.64,1);}
 @keyframes lvlb{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 .lvlup-icon{font-size:80px;margin-bottom:12px;}
@@ -449,14 +509,48 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-h
   .cert-rank-lbl{color:#CC0000!important;}
   .cert-pts{color:#996600!important;}
 }
-@media(max-width:580px){.qopts{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.simchips{display:none}.mode-nav{flex-direction:column}}
+/* ══ MÓVIL · Adaptaciones por breakpoint ══ */
+@media(max-width:580px){
+  .qopts{grid-template-columns:1fr}
+  .mgrid{grid-template-columns:1fr}
+  .simchips{display:none}
+  .mode-nav{flex-direction:column}
+  .mcard{padding:14px 12px;}
+  .mtitle{font-size:13px;}
+  .hub-sec{padding:14px 12px 16px;margin-bottom:12px;}
+  .nivel-grid{gap:6px;}
+  .nivel-card{padding:10px 6px 8px;}
+  .nc-emoji{font-size:24px;}
+  .nc-label{font-size:8px;}
+}
+/* Móvil compacto (iPhone SE, Android 360px) */
+@media(max-width:390px){
+  .mbody{padding:10px;}
+  .hub-sec{padding:12px 10px 14px;border-radius:12px;}
+  .mgrid{gap:10px;}
+  .mcard{padding:12px 10px;}
+  .nivel-grid{grid-template-columns:repeat(2,1fr);gap:6px;}
+  .nivel-card{padding:8px 4px 6px;}
+  .nc-emoji{font-size:20px;}
+  .quiz-cta{padding:14px 12px;gap:12px;}
+  .quiz-cta-ic{font-size:28px;}
+  .quiz-cta-title{font-size:14px;}
+  .quiz-cta-sub{font-size:11px;}
+  .mbtn{padding:12px 10px;}
+  .mbtn .mi{font-size:22px;}
+  .mbtn .mn{font-size:9px;}
+  .mod-wrap{padding:12px 10px 14px;}
+  .mod-stage{padding:16px 12px;}
+  .mod-btn{padding:14px;font-size:13px;}
+  .mod-cta{padding:16px 20px;font-size:15px;}
+}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
 /* ── ACCESIBILIDAD: TAMAÑOS DE FUENTE ── */
 :root { --fs-base: 1; }
 
-body.fs-grande { font-size: 112% !important; }
-body.fs-extra  { font-size: 128% !important; }
+body.fs-grande { font-size: 118% !important; }
+body.fs-extra  { font-size: 140% !important; }
 
 body.fs-grande .mbub,
 body.fs-grande .qopt,
@@ -513,8 +607,8 @@ body.fs-grande .gsv       { font-size: 22px !important; }
 body.fs-extra  .gsv       { font-size: 26px !important; }
 body.fs-grande .gsl       { font-size: 11px !important; }
 body.fs-extra  .gsl       { font-size: 13px !important; }
-body.fs-grande .sec-title { font-size: 12px !important; }
-body.fs-extra  .sec-title { font-size: 14px !important; }
+body.fs-grande .sec-title { font-size: 14px !important; }
+body.fs-extra  .sec-title { font-size: 16px !important; }
 body.fs-grande .nc-label  { font-size: 11px !important; }
 body.fs-extra  .nc-label  { font-size: 13px !important; }
 body.fs-grande .nc-prog   { font-size: 10px !important; }
@@ -653,6 +747,67 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
 #tts-btn .tts-icon { font-size: 18px; line-height: 1; }
 #tts-btn.speaking .tts-icon { animation: ttspulse .6s ease-in-out infinite; }
 @keyframes ttspulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+/* ══ MÓDULO DE ESTUDIO (H · CARRUSEL) — pantalla completa · accesible ══ */
+#smodulo{align-items:stretch;justify-content:flex-start;padding:0;}
+.mod-wrap{width:100%;max-width:min(1400px,98vw);margin:0 auto;display:flex;flex-direction:column;min-height:100dvh;padding:16px clamp(16px,5vw,50px) 20px;box-sizing:border-box;}
+.mod-hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.mod-back{background:rgba(255,30,45,.12);border:1px solid var(--border2);color:var(--red2);padding:11px 18px;border-radius:10px;font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;min-height:44px;}
+.mod-hdr-title{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:2px;text-align:center;flex:1;line-height:1.25;}
+.mod-count{font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--muted);min-width:56px;text-align:right;}
+.mod-lock{display:none;text-align:center;margin:0 0 12px;padding:10px 14px;border-radius:10px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.4);color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.5px;line-height:1.4;}
+.mod-bar{height:8px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin-bottom:18px;}
+.mod-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:6px;transition:width .35s ease;}
+.mod-stage{flex:1;background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:clamp(30px,4vw,60px);display:flex;flex-direction:column;justify-content:center;gap:20px;box-shadow:0 0 30px rgba(0,0,0,.4);}
+.mod-body-cols{display:flex;flex-direction:column;gap:22px;flex:1;justify-content:center;}
+.mod-col-text{display:flex;flex-direction:column;gap:16px;justify-content:center;max-width:860px;width:100%;margin:0 auto;}
+.mod-col-media{width:100%;}
+@media(min-width:900px){
+  .mod-body-cols.has-media{flex-direction:row;align-items:center;gap:38px;}
+  .mod-body-cols.has-media .mod-col-media{flex:1.15;min-width:0;}
+  .mod-body-cols.has-media .mod-col-text{flex:1;margin:0;max-width:none;}
+}
+.mod-media{width:100%;border-radius:14px;overflow:hidden;background:#07070E;border:1px solid var(--border);}
+.mod-img{width:100%;display:block;max-height:60vh;object-fit:contain;background:#07070E;}
+.mod-video{width:100%;aspect-ratio:16/9;display:block;background:#000;border:none;}
+.mod-svgbox{width:100%;}
+.mod-svgbox svg{width:100%;height:auto;display:block;max-height:56vh;}
+.mod-ph{width:100%;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border2);border-radius:14px;color:var(--muted);text-align:center;padding:16px;box-sizing:border-box;font-size:40px;}
+.mod-ph span{font-size:14px;color:var(--muted);letter-spacing:.5px;font-family:'Share Tech Mono',monospace;}
+.mod-title{font-family:'Orbitron',monospace;font-size:clamp(26px,3vw,38px);font-weight:700;color:var(--text);line-height:1.28;}
+.mod-text{font-size:clamp(19px,2vw,26px);color:var(--muted2);line-height:1.7;}
+.mod-bullets{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px;}
+.mod-bullets li{position:relative;padding-left:32px;font-size:clamp(18px,1.8vw,24px);color:var(--text);line-height:1.5;}
+.mod-bullets li::before{content:'✓';position:absolute;left:0;top:0;color:var(--green);font-weight:700;font-size:1.1em;}
+.mod-portada{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:22px 6px;flex:1;justify-content:center;}
+.mod-p-badge{font-family:'Orbitron',monospace;font-size:12px;letter-spacing:3px;color:var(--gold);border:1px solid rgba(255,215,0,.4);border-radius:20px;padding:8px 16px;background:rgba(255,215,0,.06);}
+.mod-p-title{font-family:'Orbitron',monospace;font-size:clamp(28px,4vw,44px);font-weight:900;color:var(--cyan);letter-spacing:1px;}
+.mod-p-text{font-size:clamp(17px,1.8vw,21px);color:var(--muted2);line-height:1.7;max-width:640px;}
+.mod-p-hint{font-size:14px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:6px;}
+.mod-cta{margin-top:10px;align-self:center;background:linear-gradient(135deg,var(--rdark),var(--red));color:#fff;border:none;border-radius:14px;padding:18px 28px;font-family:'Orbitron',monospace;font-size:clamp(16px,1.8vw,20px);font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 0 24px var(--rglow);min-height:60px;}
+.mod-cta:hover{transform:translateY(-2px);}
+.mod-dots{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 14px;}
+.mod-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:all .2s;}
+.mod-dot.on{background:var(--cyan);box-shadow:0 0 8px var(--cglow);transform:scale(1.25);}
+.mod-nav{display:flex;gap:14px;}
+.mod-btn{flex:1;background:var(--panel2);border:2px solid var(--border2);color:var(--text);border-radius:14px;padding:17px;font-family:'Orbitron',monospace;font-size:clamp(14px,1.5vw,17px);font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;min-height:60px;}
+.mod-btn:hover{border-color:var(--cyan);}
+.mod-btn-next{background:linear-gradient(135deg,#0D3B66,#00A4CF);border-color:transparent;}
+/* Escalado con el selector de tamaño de texto (funcionarios de todas las edades) */
+body.fs-grande .mod-text{font-size:22px !important;}
+body.fs-grande .mod-bullets li{font-size:20px !important;}
+body.fs-grande .mod-title{font-size:30px !important;}
+body.fs-grande .mod-btn{font-size:18px !important;}
+body.fs-grande .mod-cta{font-size:20px !important;}
+body.fs-grande .mod-p-text{font-size:22px !important;}
+body.fs-extra .mod-text{font-size:26px !important;line-height:1.75 !important;}
+body.fs-extra .mod-bullets li{font-size:24px !important;}
+body.fs-extra .mod-title{font-size:34px !important;}
+body.fs-extra .mod-btn{font-size:21px !important;}
+body.fs-extra .mod-cta{font-size:22px !important;}
+body.fs-extra .mod-p-text{font-size:25px !important;}
+@media(max-width:520px){.mod-p-title{font-size:26px;}.mod-title{font-size:20px;}.mod-hdr-title{font-size:12px;}}
+
 </style>
 </head>
 <body>
@@ -662,6 +817,21 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
 <div class="flash-ov" id="flashov"></div>
 <div class="combo-fx" id="combofx"></div>
 <div class="lvlup-ov" id="lvlup"><div class="lvlup-inner"><div class="lvlup-icon">⭐</div><div class="lvlup-title" id="lvlup-t">LEVEL UP</div><div class="lvlup-sub" id="lvlup-s">¡Nuevo rango!</div></div></div>
+<!-- MODAL CLAVE FASE O -->
+<div class="claveo-ov" id="claveo-ov">
+  <div class="claveo-box">
+    <div class="claveo-icon">🔑</div>
+    <div class="claveo-title">FASE O · PRÁCTICA CONTINUA</div>
+    <div class="claveo-sub">Ingresa la clave que te entregó tu instructor al terminar el curso presencial. Con ella se abren los casos restantes de cada nivel y el Modo Épico.</div>
+    <input type="text" id="claveo-input" placeholder="CLAVE DEL CURSO" autocomplete="off"
+      oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')validarClaveO()">
+    <div class="claveo-err" id="claveo-err"></div>
+    <div class="claveo-actions">
+      <button class="claveo-btn claveo-cancel" onclick="cerrarClaveO()">Cancelar</button>
+      <button class="claveo-btn claveo-go" onclick="validarClaveO()">🔓 Desbloquear</button>
+    </div>
+  </div>
+</div>
 <!-- SPLASH -->
 <div class="screen active" id="ss">
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:20px;gap:0;text-align:center;">
@@ -673,6 +843,7 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
     <div class="sbadges">
       <span class="badge b-mot">❤️ TÚ PUEDES SALVAR VIDAS</span>
       <span class="badge b-urg">🚨 Emergencia → llama al 123</span>
+      <span class="badge" style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);color:var(--cyan);">🎓 UNIVERSIDAD ICESI · FUNCIONARIOS</span>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">
       <span style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:12px;font-family:'Share Tech Mono',monospace;">⚠️ Solo educativo</span>
@@ -726,6 +897,25 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
     <button class="sbtn" id="sbtn-main" onclick="goMissions()">INICIAR MISIÓN ▶</button>
   </div>
 </div>
+<!-- MÓDULO DE ESTUDIO (CARRUSEL) -->
+<div class="screen" id="smodulo">
+  <div class="mod-wrap">
+    <div class="mod-hdr">
+      <button class="mod-back" id="mod-back" onclick="modSalir()">← Volver</button>
+      <div class="mod-hdr-title" id="mod-hdr-title">H · MÓDULO DE ESTUDIO</div>
+      <div class="mod-count" id="mod-count">1 / 1</div>
+    </div>
+    <div class="mod-lock" id="mod-lock">🔒 Completa el módulo de estudio para desbloquear las misiones</div>
+    <div class="mod-bar"><div class="mod-bar-fill" id="mod-bar-fill"></div></div>
+    <div class="mod-stage" id="mod-stage"></div>
+    <div class="mod-dots" id="mod-dots"></div>
+    <div class="mod-nav">
+      <button class="mod-btn" id="mod-prev" onclick="modPrev()">‹ Anterior</button>
+      <button class="mod-btn mod-btn-next" id="mod-next" onclick="modNext()">Siguiente ›</button>
+    </div>
+  </div>
+</div>
+
 <!-- PANTALLA BIENVENIDA DE REGRESO -->
 <div class="screen" id="swelcome">
   <div class="wlc-wrap">
@@ -818,14 +1008,38 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
     </div>
   </div>
   <div class="mbody">
-    <div class="nivel-grid" id="nivel-grid"></div>
-    <div class="lvl-desc" id="lvldesc"></div>
-    <div class="mgrid" id="mgrid"></div>
-    <div class="sec-title" style="margin-top:22px;">MODOS ESPECIALES</div>
-    <div class="mode-nav">
-      <div class="mbtn" onclick="startEpic()"><div class="mi">🔥</div><div class="mn">MODO ÉPICO</div><div class="md">8 misiones · colecciona fragmentos · certificado maestro</div></div>
-      <div class="mbtn" onclick="startTrivia()"><div class="mi">🧠</div><div class="mn">APRENDE EN ACCIÓN</div><div class="md">10 retos visuales · 20 seg · combo x3</div></div>
-      <div class="mbtn" id="cdw-mode-btn" onclick="showCdwMissions()" style="display:none;"><div class="mi">⏱</div><div class="mn">MODO CONTRARRELOJ</div><div class="md">Misiones extra · tiempo límite · desbloqueable</div></div>
+    <div class="hub-sec" style="--sc:0,212,255" onclick="litSection(this)">
+      <div class="sec-title">ELIGE TU NIVEL</div>
+      <div class="nivel-grid" id="nivel-grid"></div>
+      <div class="lvl-desc" id="lvldesc"></div>
+    </div>
+
+    <div class="hub-sec" style="--sc:255,30,45" onclick="litSection(this)">
+      <div class="sec-title">MISIONES</div>
+      <div class="faseo-hint" id="faseo-hint"></div>
+      <div class="mgrid" id="mgrid"></div>
+    </div>
+
+    <div class="hub-sec" style="--sc:168,85,247" onclick="litSection(this)">
+      <div class="sec-title">REPASO CON PREGUNTAS</div>
+      <div class="quiz-cta" onclick="startTrivia()">
+        <div class="quiz-cta-ic">❓</div>
+        <div class="quiz-cta-txt">
+          <div class="quiz-cta-title">RETO DE PREGUNTAS</div>
+          <div class="quiz-cta-sub">Pon a prueba lo aprendido · 10 preguntas · a tu ritmo, sin reloj</div>
+        </div>
+        <div class="quiz-cta-go">▶</div>
+      </div>
+    </div>
+
+    <div class="hub-sec" style="--sc:255,215,0" onclick="litSection(this)">
+      <div class="sec-title">MODOS ESPECIALES</div>
+      <div class="mode-nav">
+        <div class="mbtn" onclick="abrirModulo()"><div class="mi">📚</div><div class="mn">H · MÓDULO DE ESTUDIO</div><div class="md">Preparación · repásalo antes y después del curso</div></div>
+        <div class="mbtn" id="faseo-mode-btn" onclick="abrirClaveO()"><div class="mi">🔑</div><div class="mn">🔒 O · PRÁCTICA CONTINUA</div><div class="md">Ingresa la clave que te dio el instructor tras el curso</div></div>
+        <div class="mbtn" id="epic-mode-btn" onclick="intentarEpico()"><div class="mi">🔥</div><div class="mn">MODO ÉPICO</div><div class="md">8 misiones · colecciona fragmentos · certificado maestro</div></div>
+        <div class="mbtn" id="cdw-mode-btn" onclick="showCdwMissions()" style="display:none;"><div class="mi">⏱</div><div class="mn">MODO CONTRARRELOJ</div><div class="md">Misiones extra · tiempo límite · desbloqueable</div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -891,14 +1105,10 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
 <div class="screen" id="st">
   <div class="thdr">
     <button class="backbtn" onclick="showScreen('missions')">← SALIR</button>
-    <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:1px;white-space:nowrap;">APRENDE EN ACCIÓN</div>
+    <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:1px;white-space:nowrap;">RETO DE PREGUNTAS</div>
     <div class="tprog"><div class="tprogf" id="tprogf" style="width:0%"></div></div>
     <div style="display:flex;align-items:center;gap:7px;">
       <div class="qctr-lbl" id="tqctr">1/10</div>
-      <div class="tcirc">
-        <svg viewBox="0 0 44 44"><circle class="tc-bg" cx="22" cy="22" r="18"/><circle class="tc-fill" id="tcfill" cx="22" cy="22" r="18"/></svg>
-        <div class="tc-txt" id="tctxt">20</div>
-      </div>
     </div>
   </div>
   <div class="tbody" id="tbody"></div>
@@ -987,39 +1197,47 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
 <script>
 // ══ DATA ══
 const LEVELS=[
-  {id:'easy',label:'FÁCIL',dot:'dot-easy',emoji:'🫀',desc:'Escenarios en el colegio con ayuda cercana. Ideal para comenzar.',
+  {id:'easy',label:'FÁCIL',dot:'dot-easy',emoji:'🫀',desc:'Entornos cotidianos del campus con ayuda cercana. Ideal para comenzar.',
    missions:[
-    {id:'E1',icon:'🚶',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'PASILLO SOLITARIO',desc:'Un compañero cae en el pasillo. Solo tú lo ves.',tip:'💡 Foco en evaluar y activar el 123.',ctx:'Pasillo escolar, 9am. Compañero inconsciente. Solo el estudiante presente. Misión corta, máx 6 intercambios. Reanimador lego.'},
-    {id:'E2',icon:'📚',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'CLASE SILENCIOSA',desc:'Durante un examen, el compañero del lado colapsa sin hacer ruido.',tip:'💡 Actúa sin crear pánico en el salón.',ctx:'Examen en salón. Compañero colapsa silenciosamente. Docente de espaldas. Máx 6 intercambios. Reanimador lego.'},
-    {id:'E3',icon:'🍽️',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'CAFETERÍA',desc:'Un estudiante desconocido cae de su silla durante el almuerzo.',tip:'💡 Supera el efecto espectador. Nadie actúa.',ctx:'Cafetería llena. Estudiante desconocido cae. Efecto espectador. Máx 6 intercambios. Reanimador lego.'},
-    {id:'E4',icon:'📖',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'BIBLIOTECA',desc:'La bibliotecaria adulta cae detrás del mostrador. Solo tú la viste.',tip:'💡 Primera víctima adulta. Mismo protocolo.',ctx:'Biblioteca silenciosa. Bibliotecaria 60 años cae. Solo el estudiante. Máx 6 intercambios. Reanimador lego.'},
-    {id:'E5',icon:'🌳',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'PARQUE',desc:'Después del colegio, un señor mayor cae frente a ti.',tip:'💡 Víctima desconocida en espacio público.',ctx:'Parque público. Señor 65 años cae. Estudiante con amigos. Máx 6 intercambios. Reanimador lego.'},
+    {id:'E1',icon:'🏢',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'LA OFICINA',desc:'Un colega se desploma en la oficina. Solo tú lo ves.',tip:'💡 Evalúa y activa el 123.',ctx:'Oficina administrativa, 9am. Colega inconsciente. Solo un funcionario presente. Misión corta, máx 6 intercambios. Reanimador lego.'},
+    {id:'E2',icon:'📊',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'SALA DE REUNIONES',desc:'Durante una reunión, el colega de al lado se desploma en silencio.',tip:'💡 Actúa sin generar pánico.',ctx:'Reunión en sala de juntas. Colega se desploma silenciosamente. Otros de espaldas. Máx 6 intercambios. Reanimador lego.'},
+    {id:'E3',icon:'🍽️',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'CAFETERÍA DEL CAMPUS',desc:'Una persona cae de su silla en la cafetería durante el almuerzo.',tip:'💡 Supera el efecto espectador.',ctx:'Cafetería del campus llena. Persona desconocida cae. Efecto espectador. Máx 6 intercambios. Reanimador lego.'},
+    {id:'E4',icon:'📖',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'BIBLIOTECA',desc:'Un funcionario cae detrás del mostrador. Solo tú lo viste.',tip:'💡 Mismo protocolo, actúa ya.',ctx:'Biblioteca silenciosa. Funcionario 60 años cae. Solo tú presente. Máx 6 intercambios. Reanimador lego.'},
+    {id:'E5',icon:'🌳',ic:'ic-r',diff:'FÁCIL',dc:'de',pts:80,time:'5-6 min',title:'ZONAS VERDES',desc:'Al salir del trabajo, una persona cae frente a ti en las zonas verdes del campus.',tip:'💡 Víctima en espacio abierto.',ctx:'Zonas verdes del campus, tarde. Persona 55 años cae. Estás con colegas. Máx 6 intercambios. Reanimador lego.'},
   ]},
-  {id:'mid',label:'INTERMEDIO',dot:'dot-mid',emoji:'⚡',desc:'Mayor presión social, víctimas adultas y coordinación de equipo.',
+  {id:'mid',label:'INTERMEDIO',dot:'dot-mid',emoji:'⚡',desc:'Mayor presión, coordinación de equipo y espacios exigentes del campus.',
    missions:[
-    {id:'M1',icon:'🎭',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'ACTO CULTURAL',desc:'300 estudiantes observan. Un compañero colapsa en el escenario.',tip:'💡 Lidera ante la multitud.',ctx:'Auditorio 300 estudiantes. Compañero colapsa en escenario. Alta presión. Máx 7 intercambios. Reanimador lego.'},
-    {id:'M2',icon:'🏃',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'ED. FÍSICA',desc:'Compañero colapsa en la cancha. DEA a 40m en enfermería.',tip:'💡 Coordina equipo: ¿quién corre por el DEA?',ctx:'Cancha deportiva. Estudiante colapsa. Grupo de 6 disponibles. DEA en enfermería 40m. Máx 7 intercambios. Reanimador lego.'},
-    {id:'M3',icon:'🚻',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'EMERGENCIA EN EL BAÑO',desc:'Golpe fuerte en el baño. Al entrar, encuentras a alguien inconsciente.',tip:'💡 Espacio reducido. El protocolo no cambia.',ctx:'Baño del colegio. Estudiante inconsciente en cubículo. Espacio pequeño. Máx 7 intercambios. Reanimador lego.'},
-    {id:'M4',icon:'🚌',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'BUS ESCOLAR',desc:'En el bus de regreso, el estudiante de adelante colapsa.',tip:'💡 El conductor debe detener el bus.',ctx:'Bus escolar en movimiento. Estudiante colapsa. Espacio estrecho. Máx 7 intercambios. Reanimador lego.'},
-    {id:'M5',icon:'🚪',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'ENTRADA DEL COLEGIO',desc:'Un padre de familia colapsa en la entrada. El vigilante no sabe qué hacer.',tip:'💡 El adulto depende de tu liderazgo.',ctx:'Entrada del colegio. Padre 45 años colapsa. Vigilante en shock. Máx 7 intercambios. Reanimador lego.'},
+    {id:'M1',icon:'🎤',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'EVENTO EN EL AUDITORIO',desc:'Un ponente se desploma en la tarima ante cientos de asistentes.',tip:'💡 Lidera ante la multitud.',ctx:'Auditorio con 300 asistentes. Ponente se desploma en tarima. Alta presión. Máx 7 intercambios. Reanimador lego.'},
+    {id:'M2',icon:'🎾',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'CANCHA DE TENIS',desc:'Un colega se desploma jugando tenis. El DEA está a 40m.',tip:'💡 Coordina: ¿quién corre por el DEA?',ctx:'Cancha de tenis del campus. Colega se desploma. Grupo de 5 disponibles. DEA a 40m. Máx 7 intercambios. Reanimador lego.'},
+    {id:'M3',icon:'🚻',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'EMERGENCIA EN EL BAÑO',desc:'Un golpe fuerte en el baño. Al entrar, alguien está inconsciente.',tip:'💡 Espacio reducido. El protocolo no cambia.',ctx:'Baño del campus. Persona inconsciente. Espacio pequeño. Máx 7 intercambios. Reanimador lego.'},
+    {id:'M4',icon:'🚐',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'BUS DE LA RUTA',desc:'En el bus de la ruta del campus, un pasajero se desploma.',tip:'💡 Detén el bus y busca superficie firme.',ctx:'Bus de la ruta del campus en movimiento. Pasajero se desploma. Espacio estrecho. Máx 7 intercambios. Reanimador lego.'},
+    {id:'M5',icon:'🚪',ic:'ic-o',diff:'INTERMEDIO',dc:'dm',pts:120,time:'6-7 min',title:'PORTERÍA DEL CAMPUS',desc:'Un visitante se desploma en la portería. El vigilante no sabe qué hacer.',tip:'💡 El vigilante depende de tu liderazgo.',ctx:'Portería del campus. Visitante 45 años se desploma. Vigilante en shock. Máx 7 intercambios. Reanimador lego.'},
   ]},
-  {id:'hard',label:'DIFÍCIL',dot:'dot-hard',emoji:'🔥',desc:'Fuera del colegio, víctimas cercanas y entornos complejos.',
+  {id:'hard',label:'DIFÍCIL',dot:'dot-hard',emoji:'🔥',desc:'Fuera de la rutina: víctimas cercanas y entornos complejos.',
    missions:[
-    {id:'H1',icon:'👩‍🏫',ic:'ic-r',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'EL DOCENTE CAE',desc:'Tu docente de 58 años colapsa mientras explica. El salón entra en pánico.',tip:'💡 Gestiona el caos. Figura de autoridad.',ctx:'Salón 28 estudiantes en pánico. Docente 58 años colapsa. Máx 8 intercambios. Reanimador lego.'},
-    {id:'H2',icon:'🏠',ic:'ic-o',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'EN CASA: EL ABUELO',desc:'Estás solo. Tu abuelo de 72 años colapsa en la sala.',tip:'💡 Alta carga emocional. ¿Mantienes la calma?',ctx:'Hogar. Abuelo 72 años colapsa. Solo el estudiante. Alta carga emocional. Máx 8 intercambios. Reanimador lego.'},
-    {id:'H3',icon:'🏪',ic:'ic-o',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'TIENDA ESCOLAR',desc:'La señora de la tienda colapsa. Solo tú y dos amigos.',tip:'💡 Espacio reducido + coordina equipo.',ctx:'Tienda escolar. Señora 50 años colapsa. Espacio estrecho. 3 estudiantes. Máx 8 intercambios. Reanimador lego.'},
-    {id:'H4',icon:'🏬',ic:'ic-c',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'CENTRO COMERCIAL',desc:'Una señora colapsa en la escalera eléctrica. Los guardias no saben RCP.',tip:'💡 Tú sabes más que los adultos. Lidera.',ctx:'Centro comercial. Señora 55 años colapsa. Guardias confundidos. Máx 8 intercambios. Reanimador lego.'},
-    {id:'H5',icon:'☀️',ic:'ic-c',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'GOLPE DE CALOR',desc:'Día de 36°C. Compañero colapsa en el patio durante el recreo.',tip:'💡 Calor extremo no cambia el protocolo.',ctx:'Patio, 36°C. Compañero colapsa jugando. Mismo protocolo BLS. Máx 8 intercambios. Reanimador lego.'},
+    {id:'H1',icon:'👔',ic:'ic-r',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'EL JEFE CAE',desc:'Tu jefe de 58 años se desploma en una presentación. La oficina entra en pánico.',tip:'💡 Gestiona el caos. Figura de autoridad.',ctx:'Oficina, equipo en pánico. Jefe 58 años se desploma en presentación. Máx 8 intercambios. Reanimador lego.'},
+    {id:'H2',icon:'🏠',ic:'ic-o',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'EN CASA: UN FAMILIAR',desc:'Estás solo. Un familiar de 72 años se desploma en la sala.',tip:'💡 Alta carga emocional. Mantén la calma.',ctx:'Hogar. Familiar 72 años se desploma. Solo tú. Alta carga emocional. Máx 8 intercambios. Reanimador lego.'},
+    {id:'H3',icon:'🏪',ic:'ic-o',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'CAFETÍN DEL CAMPUS',desc:'La persona del cafetín se desploma. Solo tú y dos colegas.',tip:'💡 Espacio reducido + coordina equipo.',ctx:'Cafetín del campus. Persona 50 años se desploma. Espacio estrecho. 3 personas. Máx 8 intercambios. Reanimador lego.'},
+    {id:'H4',icon:'🅿️',ic:'ic-c',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'PARQUEADERO CUBIERTO',desc:'Una persona se desploma junto a las escaleras del parqueadero. Los guardias no saben RCP.',tip:'💡 Tú lideras. Delega con claridad.',ctx:'Parqueadero cubierto del campus. Persona 55 años se desploma junto a las escaleras. Guardias confundidos. Máx 8 intercambios. Reanimador lego.'},
+    {id:'H5',icon:'☀️',ic:'ic-c',diff:'DIFÍCIL',dc:'dh',pts:160,time:'7-8 min',title:'GOLPE DE CALOR',desc:'Día de 36°C. Un colega se desploma en las canchas durante una actividad.',tip:'💡 El calor no cambia el protocolo.',ctx:'Canchas del campus, 36°C. Colega se desploma en actividad. Mismo protocolo BLS. Máx 8 intercambios. Reanimador lego.'},
   ]},
   {id:'exp',label:'EXPERTO',dot:'dot-exp',emoji:'💀',desc:'Sin recursos, sin señal, caos masivo o múltiples víctimas.',
    missions:[
-    {id:'X1',icon:'🎪',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'EVENTO DEPORTIVO',desc:'Partido barrial. Jugador adulto colapsa en la cancha. Las gradas enloquecen.',tip:'💡 Caos masivo. Lidera ante 100 personas.',ctx:'Partido fútbol, 100 espectadores en caos. Jugador 40 años colapsa. Máx 8 intercambios. Reanimador lego.'},
-    {id:'X2',icon:'🌙',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'SALIDA NOCTURNA',desc:'Parqueadero oscuro. Alguien cae al suelo.',tip:'💡 Poca luz. Usa el celular como linterna.',ctx:'Parqueadero oscuro, 9pm. Alguien cae. Poca luz. Celular como linterna. Máx 8 intercambios. Reanimador lego.'},
-    {id:'X3',icon:'👥',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'DOS VÍCTIMAS',desc:'Accidente frente al colegio. Dos personas inconscientes.',tip:'💡 No puedes hacer RCP a dos al tiempo. Prioriza.',ctx:'Accidente frente al colegio. Dos adultos inconscientes. 4 estudiantes. Deben priorizar. Máx 8 intercambios. Reanimador lego.'},
-    {id:'X4',icon:'🌧️',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'BAJO LA LLUVIA',desc:'Llueve fuerte. Un adulto colapsa en la calle.',tip:'💡 La lluvia no para la RCP.',ctx:'Lluvia intensa, calle. Adulto 50 años colapsa. Suelo mojado. Máx 8 intercambios. Reanimador lego.'},
-    {id:'X5',icon:'🏔️',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'EXCURSIÓN REMOTA',desc:'Sin señal, sin DEA, a 2km del bus. Docente colapsa en la montaña.',tip:'💡 Solo tus manos. Todo depende de ti.',ctx:'Montaña, sin señal, sin DEA. Docente colapsa a 2km. Solo el estudiante sabe RCP. Máx 8 intercambios. Reanimador lego.'},
+    {id:'X1',icon:'🏟️',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'TORNEO DEPORTIVO',desc:'Torneo interuniversitario. Un jugador adulto se desploma en la cancha. Las gradas enloquecen.',tip:'💡 Caos masivo. Lidera ante cientos.',ctx:'Torneo interuniversitario, 100+ espectadores en caos. Jugador 40 años se desploma. Máx 8 intercambios. Reanimador lego.'},
+    {id:'X2',icon:'🌙',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'PARQUEADERO NOCTURNO',desc:'Parqueadero oscuro, 9pm. Alguien cae al suelo.',tip:'💡 Poca luz. Usa el celular como linterna.',ctx:'Parqueadero oscuro del campus, 9pm. Alguien cae. Poca luz. Celular como linterna. Máx 8 intercambios. Reanimador lego.'},
+    {id:'X3',icon:'👥',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'DOS VÍCTIMAS',desc:'Accidente en la vía frente a la universidad. Dos personas inconscientes.',tip:'💡 No puedes reanimar a dos a la vez. Prioriza.',ctx:'Accidente frente a la universidad. Dos adultos inconscientes. 4 personas ayudan. Deben priorizar. Máx 8 intercambios. Reanimador lego.'},
+    {id:'X4',icon:'🌧️',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'BAJO LA LLUVIA',desc:'Llueve fuerte. Un adulto se desploma en una vía del campus.',tip:'💡 La lluvia no para la RCP.',ctx:'Lluvia intensa, vía del campus. Adulto 50 años se desploma. Suelo mojado. Máx 8 intercambios. Reanimador lego.'},
+    {id:'X5',icon:'🏊',ic:'ic-p',diff:'EXPERTO',dc:'dx',pts:200,time:'7-8 min',title:'RESCATE EN LA PISCINA',desc:'Sacan a una persona de la piscina del campus. No responde y no hay DEA cerca.',tip:'💡 Solo tus manos. Todo depende de ti.',ctx:'Piscina del campus. Persona rescatada del agua, no responde. Sin DEA inmediato. Tú eres quien sabe RCP. Máx 8 intercambios. Reanimador lego.'},
   ]},
 ];
+// ══ FASE O · PRÁCTICA CONTINUA (post-curso) ══════════════════════
+// Clave que el instructor entrega al cerrar el debriefing del taller. EDITABLE.
+const POST_CODE = 'RCP2026';
+// Nº de casos disponibles por nivel ANTES del curso (Fase H).
+// Los casos restantes de cada nivel + el Modo Épico se abren con la clave (Fase O).
+const CASOS_PRE = 2;
+// ═════════════════════════════════════════════════════════════════
+
 const EPIC_ROUTE=[
   {ref:'E1',label:'NIV.1',color:'var(--green)'},
   {ref:'E3',label:'NIV.2',color:'var(--green)'},
@@ -1055,25 +1273,251 @@ const TRIVIA=[
   {cat:'EFECTO ESPECTADOR',q:'¿Por qué la gente no actúa cuando hay muchos testigos?',opts:['Porque no les importa','Efecto espectador: esperan que otro actúe','Porque es ilegal','Porque la RCP no funciona'],correct:1,exp:'Efecto espectador (Bystander Effect): cada persona asume que otro actuará. Solución: señala a alguien específico y delega directamente.',
    svg:`<svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="170" fill="#0C0C14"/><text x="70" y="90" text-anchor="middle" font-size="28">🧑</text><text x="140" y="80" text-anchor="middle" font-size="28">🧑</text><text x="210" y="95" text-anchor="middle" font-size="28">🧑</text><text x="280" y="78" text-anchor="middle" font-size="28">🧑</text><text x="340" y="92" text-anchor="middle" font-size="28">🧑</text><text x="200" y="135" text-anchor="middle" font-size="34">😵</text><text x="200" y="20" text-anchor="middle" fill="#FF4D57" font-family="monospace" font-size="13" font-weight="bold">EFECTO ESPECTADOR</text><text x="200" y="160" text-anchor="middle" fill="#A0A0C8" font-family="monospace" font-size="10">Señala a UNA persona específica y delega</text></svg>`},
 ];
+
+// ══════════════════════════════════════════════════════════════
+// ══ MÓDULO DE ESTUDIO — CARRUSEL (para leer ANTES del curso) ══
+// ══════════════════════════════════════════════════════════════
+// CÓMO EDITAR:
+//  • Cada objeto = una diapositiva.
+//  • Para MOSTRAR UN VIDEO:  youtube:'https://youtu.be/XXXX'  ó  video:'ruta/mi_video.mp4'
+//  • Para MOSTRAR UNA IMAGEN: imagen:'ruta/mi_imagen.jpg'  (URL, ruta local o base64)
+//  • svgIdx:N reutiliza una ilustración ya incluida (0-9). ph:'video'|'img' = recuadro guía.
+//  • Puedes agregar/quitar/reordenar diapositivas libremente.
+const MODULO_SLIDES = [
+  {tipo:'portada', titulo:'MÓDULO DE PREPARACIÓN',
+   texto:'RCP HERO · Universidad Icesi<br><br><b>Domina los conceptos esenciales</b> antes del curso presencial. Este módulo te prepara para practicar con confianza en el simulador.'},
+
+  // DIAPOSITIVA 01: ¿Qué es un paro cardíaco?
+  {tipo:'contenido', titulo:'01 / 13 · ¿Qué es un paro cardíaco?',
+   imagenUrl:'https://tu-cdn.com/modulo/01.webp',
+   texto:'El corazón deja de bombear sangre efectivamente, el cerebro deja de recibir oxígeno. Cada minuto sin RCP reduce críticamente la probabilidad de supervivencia.',
+   bullets:['❤️ El corazón deja de bombear sangre','🧠 El cerebro deja de recibir oxígeno','⏱️ Cada minuto sin RCP reduce la supervivencia','🎯 Actuar rápido puede salvar una vida']},
+
+  // DIAPOSITIVA 02: ¿Cómo reconocer un paro?
+  {tipo:'contenido', titulo:'02 / 13 · ¿Cómo reconocer un paro cardíaco?',
+   imagenUrl:'https://tu-cdn.com/modulo/02.webp',
+   texto:'Verificación rápida en máximo 10 segundos. Si no responde y no respira normalmente, actúa de inmediato.',
+   bullets:['✔ No responde - Sacude y llama fuerte','✔ No respira normalmente - Observa pecho máx 10 seg','⚠️ Jadeos aislados - NO es respiración normal','🚨 Si ambas fallas → INICIA RCP YA']},
+
+  // DIAPOSITIVA 03: Cadena de supervivencia
+  {tipo:'contenido', titulo:'03 / 13 · La cadena de supervivencia',
+   imagenUrl:'https://tu-cdn.com/modulo/03.webp',
+   texto:'Cada eslabón de la cadena aumenta exponencialmente la probabilidad de supervivencia. Todos son críticos.',
+   bullets:['1️⃣ Reconocer - Sin respuesta + sin respiración','2️⃣ Activar - Llamar 123 emergencias','3️⃣ RCP - Iniciar compresiones inmediatamente','4️⃣ DEA - Usar desfibrilador','5️⃣ Avanzada - Atención médica especializada']},
+
+  // DIAPOSITIVA 04: Antes de actuar
+  {tipo:'contenido', titulo:'04 / 13 · Antes de actuar',
+   imagenUrl:'https://tu-cdn.com/modulo/04.webp',
+   texto:'Tu seguridad es la prioridad. Un rescatista seguro salva más vidas.',
+   bullets:['🛡️ Verifica que el lugar sea seguro','📢 Solicita ayuda - Grita y delega','⚡ Pide un DEA - Señala a alguien','👐 Inicia RCP - No esperes confirmación']},
+
+  // DIAPOSITIVA 05: ¿Qué hace la RCP?
+  {tipo:'contenido', titulo:'05 / 13 · ¿Qué hace la RCP?',
+   imagenUrl:'https://tu-cdn.com/modulo/05.webp',
+   texto:'La RCP mantiene la vida hasta que llegue tratamiento definitivo. No reemplaza el corazón, pero lo sustituye temporalmente.',
+   bullets:['❤️ Mantiene la circulación sanguínea','🧠 Lleva oxígeno al cerebro','🚑 Gana tiempo hasta la llegada de ayuda','⏰ En minutos, la diferencia es vida o muerte']},
+
+  // DIAPOSITIVA 06: RCP de alta calidad
+  {tipo:'contenido', titulo:'06 / 13 · RCP de alta calidad',
+   imagenUrl:'https://tu-cdn.com/modulo/06.webp',
+   texto:'La calidad de las compresiones es más importante que la cantidad. Cada parámetro importa.',
+   bullets:['📍 Centro del pecho - Mitad inferior del esternón','📊 100–120 compresiones por minuto','📏 5–6 cm de profundidad - Comprime fuerte','⬆️ Retroceso completo - Deja subir el pecho']},
+
+  // DIAPOSITIVA 07: ¿Qué es un DEA?
+  {tipo:'contenido', titulo:'07 / 13 · ¿Qué es un DEA?',
+   imagenUrl:'https://tu-cdn.com/modulo/07.webp',
+   texto:'El DEA es seguro, fácil de usar y puede aumentar la supervivencia hasta un 70%. Solo descarga cuando es necesario.',
+   bullets:['⚡ Analiza el ritmo cardíaco automáticamente','🎙️ Da instrucciones por voz en español','✅ Solo descarga si el ritmo lo requiere','🔒 No puede dañar a una persona inconsciente']},
+
+  // DIAPOSITIVA 08: OVACE
+  {tipo:'contenido', titulo:'08 / 13 · OVACE (Atragantamiento)',
+   imagenUrl:'https://tu-cdn.com/modulo/08.webp',
+   texto:'Reconocer los signos permite actuar a tiempo. El tiempo es crítico para abrir la vía aérea.',
+   bullets:['✖️ No puede hablar','✖️ No puede toser','✖️ No puede respirar','🤚 Se lleva las manos al cuello = Signo universal']},
+
+  // DIAPOSITIVA 09: Prepárate para aprender
+  {tipo:'contenido', titulo:'09 / 13 · Prepárate para aprender',
+   imagenUrl:'https://tu-cdn.com/modulo/09.webp',
+   texto:'En los siguientes videos conocerás cada procedimiento en detalle. Observa con atención cada paso.',
+   bullets:['❤️ RCP en adultos - Secuencia completa AHA 2025','⚡ Uso del DEA - Paso a paso y seguro','🫁 OVACE inicial - Reconocimiento y técnica','🎯 Cada conocimiento te acerca a salvar una vida']},
+
+  // DIAPOSITIVA 10: Video RCP
+  {tipo:'video', titulo:'10 / 13 · 🎥 Reanimación Cardiopulmonar (RCP)',
+   imagenUrl:'https://tu-cdn.com/modulo/10.webp',
+   youtube:'', video:'',
+   texto:'Aprende la secuencia completa de RCP en personas adultas siguiendo las recomendaciones vigentes de la American Heart Association (AHA).'},
+
+  // DIAPOSITIVA 11: Video DEA
+  {tipo:'video', titulo:'11 / 13 · 🎥 Uso del DEA',
+   imagenUrl:'https://tu-cdn.com/modulo/11.webp',
+   youtube:'', video:'',
+   texto:'Observa cómo utilizar un desfibrilador externo automático (DEA) de forma segura durante un paro cardíaco.'},
+
+  // DIAPOSITIVA 12: Video OVACE
+  {tipo:'video', titulo:'12 / 13 · 🎥 Atención inicial de la OVACE',
+   imagenUrl:'https://tu-cdn.com/modulo/12.webp',
+   youtube:'', video:'',
+   texto:'Aprende a reconocer y atender una obstrucción de la vía aérea por cuerpo extraño en personas adultas.'},
+
+  // CIERRE: Preparación completa
+  {tipo:'cierre', titulo:'✓ ¡Preparación completa!',
+   texto:'<b>¡Felicidades!</b> Has completado el módulo de preparación. Terminaste la fase <b>H · Preparación</b>. Ahora entra a las misiones y pon a prueba lo aprendido antes del taller presencial. Después del curso, con el código de tu instructor, se abrirá la fase <b>O · Práctica Continua</b>.'}
+];
+
+let _modI = 0, _modBound = false, _modForced = false, _modOrigin = 'splash';
+function abrirModulo(forced){
+  _modForced = !!forced;
+  const cur = document.querySelector('.screen.active');
+  _modOrigin = (cur && cur.id === 'sm') ? 'missions' : 'splash';
+  // Rótulos según contexto (obligatorio vs repaso)
+  const lock  = document.getElementById('mod-lock');
+  const back  = document.getElementById('mod-back');
+  const htitle= document.getElementById('mod-hdr-title');
+  if(lock) lock.style.display = _modForced ? 'block' : 'none';
+  if(back) back.textContent   = _modForced ? '⏸ Salir' : '← Volver';
+  if(htitle) htitle.textContent = _modForced ? 'H · PREPARACIÓN (OBLIGATORIO)' : 'H · MÓDULO DE ESTUDIO';
+  _modI = 0; _modRender(); showScreen('modulo');
+  if(!_modBound){
+    _modBound = true;
+    const st = document.getElementById('smodulo');
+    let x0 = null;
+    st.addEventListener('touchstart', e=>{ x0 = e.changedTouches[0].clientX; }, {passive:true});
+    st.addEventListener('touchend', e=>{
+      if(x0==null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 55){ dx < 0 ? modNext() : modPrev(); }
+      x0 = null;
+    }, {passive:true});
+    document.addEventListener('keydown', e=>{
+      const s = document.getElementById('smodulo');
+      if(!s || !s.classList.contains('active')) return;
+      if(e.key === 'ArrowRight') modNext();
+      if(e.key === 'ArrowLeft')  modPrev();
+    });
+  }
+}
+function _modYT(u){
+  if(!u) return '';
+  const m = String(u).match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{6,})/);
+  if(m) return m[1];
+  return /^[\w-]{6,}$/.test(u) ? u : '';
+}
+function _modMedia(s){
+  const yt = _modYT(s.youtube);
+  if(yt) return '<div class="mod-media"><iframe class="mod-video" src="https://www.youtube.com/embed/'+yt+'?rel=0&modestbranding=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
+  if(s.video)  return '<div class="mod-media"><video class="mod-video" controls playsinline preload="metadata" src="'+s.video+'"></video></div>';
+  if(s.imagen) return '<div class="mod-media"><img class="mod-img" src="'+s.imagen+'" alt=""></div>';
+  if(s.svgIdx!=null && typeof TRIVIA!=='undefined' && TRIVIA[s.svgIdx]) return '<div class="mod-media"><div class="mod-svgbox">'+TRIVIA[s.svgIdx].svg+'</div></div>';
+  if(s.svg)    return '<div class="mod-media"><div class="mod-svgbox">'+s.svg+'</div></div>';
+  if(s.ph==='video') return '<div class="mod-ph">🎬<span>Aquí irá tu video (YouTube o .mp4)</span></div>';
+  if(s.ph==='img')   return '<div class="mod-ph">🖼️<span>Aquí irá tu imagen o infografía</span></div>';
+  return '';
+}
+function _modRender(){
+  const s = MODULO_SLIDES[_modI], n = MODULO_SLIDES.length;
+  const stage = document.getElementById('mod-stage');
+  let html = '';
+  if(s.tipo === 'portada'){
+    html = '<div class="mod-portada"><div class="mod-p-badge">RCP HERO · ICESI</div>'
+         + '<div class="mod-p-title">'+s.titulo+'</div>'
+         + '<div class="mod-p-text">'+s.texto+'</div>'
+         + '<div class="mod-p-hint">Desliza o usa ▶ para avanzar</div></div>';
+  } else {
+    const media = _modMedia(s);
+    let textCol = '<div class="mod-title">'+s.titulo+'</div>';
+    // Si tiene imagen URL, usa esa; si no, usa media (video)
+    let mediaHtml = '';
+    if(s.imagenUrl){
+      mediaHtml = '<img src="'+s.imagenUrl+'" style="width:100%;height:auto;border-radius:12px;object-fit:cover;" loading="lazy" alt="'+s.titulo+'">';
+    } else if(media){
+      mediaHtml = media;
+    }
+    // Si tiene HTML personalizado, renderiza eso
+    if(s.html){
+      textCol += s.html;
+    } else {
+      // Fallback a estructura de texto + bullets
+      if(s.texto) textCol += '<div class="mod-text">'+s.texto+'</div>';
+      if(s.bullets && s.bullets.length){
+        textCol += '<ul class="mod-bullets">' + s.bullets.map(b=>'<li>'+b+'</li>').join('') + '</ul>';
+      }
+    }
+    if(s.tipo === 'cierre'){
+      textCol += '<button class="mod-cta" onclick="modIrMisiones()">🎮 IR A LAS MISIONES ▶</button>';
+    }
+    // En pantalla ancha (proyector) media y texto quedan lado a lado; en móvil se apilan
+    html = '<div class="mod-body-cols'+(mediaHtml?' has-media':'')+'">'
+         + (mediaHtml ? '<div class="mod-col-media">'+mediaHtml+'</div>' : '')
+         + '<div class="mod-col-text">'+textCol+'</div>'
+         + '</div>';
+  }
+  stage.innerHTML = html;
+  document.getElementById('mod-count').textContent = (_modI+1)+' / '+n;
+  document.getElementById('mod-bar-fill').style.width = ((_modI+1)/n*100)+'%';
+  document.getElementById('mod-dots').innerHTML =
+    MODULO_SLIDES.map((_,i)=>'<span class="mod-dot '+(i===_modI?'on':'')+'" onclick="_modGo('+i+')"></span>').join('');
+  document.getElementById('mod-prev').style.visibility = _modI===0 ? 'hidden' : 'visible';
+  document.getElementById('mod-next').style.visibility = _modI===n-1 ? 'hidden' : 'visible';
+  window.scrollTo(0,0);
+}
+function _modGo(i){ _modI = Math.max(0, Math.min(MODULO_SLIDES.length-1, i)); _modRender(); }
+function modNext(){ if(_modI < MODULO_SLIDES.length-1){ _modI++; _modRender(); } }
+function modPrev(){ if(_modI > 0){ _modI--; _modRender(); } }
+// Salir del módulo (respeta el candado: si es obligatorio vuelve al splash,
+// pero las misiones siguen bloqueadas hasta completarlo)
+function modSalir(){
+  if(_modOrigin === 'missions'){ showScreen('missions'); return; }
+  showScreen('splash');
+  setTimeout(()=>{ const el=document.getElementById('pname'); if(el) el.focus(); }, 120);
+}
+// Terminar el módulo H → marcarlo completado y continuar
+function modIrMisiones(){
+  const nm = (document.getElementById('pname').value || '').trim().toUpperCase();
+  if(!nm){
+    showScreen('splash');
+    setTimeout(()=>{ const el=document.getElementById('pname'); if(el) el.focus(); }, 120);
+    return;
+  }
+  S.name = nm;
+  // Caso 1: venía obligado desde INICIAR MISIÓN (BS ya cargado y correcto)
+  if(_modForced){
+    if(!BS.moduleDone){ BS.moduleDone = true; saveBadgeState(BS); }
+    _modForced = false;
+    _entrarSimulador(true); // ya está registrado → entra directo a misiones
+    return;
+  }
+  // Caso 2: repaso desde el hub (ya en sesión) → volver a misiones
+  if(_modOrigin === 'missions'){
+    if(!BS.moduleDone){ BS.moduleDone = true; saveBadgeState(BS); }
+    showScreen('missions');
+    return;
+  }
+  // Caso 3: repaso desde el splash sin sesión aún → cargar estado real y entrar
+  BS = loadBadgeState(nm);
+  if(!BS.moduleDone){ BS.moduleDone = true; saveBadgeState(BS); }
+  goMissions();
+}
+// ══════════════════════════════════════════════════════════════
+
 // ══ SYSTEM PROMPT ══
-const SYS=`NOMBRE: RCP HERO v1.0
-Eres RCP HERO, instructor táctico de IA para entrenamiento de RCP, estilo Game Master. Vocabulario juvenil para 15-17 años. Directo, energético, exigente.
+const SYS=`NOMBRE: RCP HERO ICESI
+Eres RCP HERO, instructor táctico de IA para entrenamiento de RCP, estilo Game Master. Público: FUNCIONARIOS ADULTOS de la Universidad Icesi (personal administrativo, colega y de servicios). Tono profesional, cercano, motivador y exigente. Trato de "usted" o neutro, sin lenguaje infantil.
 
 PERFIL: REANIMADOR LEGO
 AHA 2025 e IFRC → ÚNICAMENTE RCP CON MANOS (Hands-Only CPR).
 PROHIBIDO SIEMPRE: ventilaciones, boca a boca, relación 30:2, evaluar ritmo cardíaco, técnicas de profesionales.
-Si el estudiante menciona ventilaciones: "Para legos, AHA 2025 dice solo manos. ¡Sigue comprimiendo sin parar!"
+Si mencionan ventilaciones: "Para reanimadores legos, AHA 2025 indica solo manos. ¡Siga comprimiendo sin parar!"
 
 MISIONES CORTAS
-Máximo 6-8 intercambios por misión. Ritmo rápido tipo videojuego. Frases cortas y contundentes.
+Máximo 6-8 intercambios por misión. Ritmo ágil tipo simulación. Frases cortas y contundentes.
 
 PARÁMETROS TÉCNICOS (legos):
 - RCP SOLO MANOS · 100-120/min · 5-6cm · retroceso completo · minimizar interrupciones
-- Posición: talón centro del pecho, brazos rectos, hombros alineados
+- Posición: talón de la mano en el centro del pecho, brazos rectos, hombros alineados
 - Activar 123 · DEA apenas esté disponible
 
 FASES BLS: 1.Evaluación 2.Activación 3.Compresiones 4.DEA
-No avanzar de fase sin decisión del estudiante.
+No avanzar de fase sin decisión del funcionario.
 
 EMERGENCIA REAL:
 Si indica situación real → mostrar EXACTAMENTE:
@@ -1085,10 +1529,10 @@ Después: NO retomar simulación bajo ninguna circunstancia.
 
 GAMIFICACIÓN:
 +10 acierto primera vez · +5 tras pista · 0 dos fallos
-Rangos: 0-20 Novato · 21-50 Rescatista · +50 Héroe Escolar
+Rangos: 0-20 Novato · 21-50 Rescatista · +50 Héroe Icesi
 
 ESTRUCTURA OBLIGATORIA:
-1️⃣ RESPUESTA INMEDIATA (1 línea, energética)
+1️⃣ RESPUESTA INMEDIATA (1 línea, con energía)
 2️⃣ ANÁLISIS TÉCNICO (máx 3 líneas; si error: ✔Parcial / ❌Error crítico / 🔁Ajusta)
 3️⃣ ¿QUÉ HARÍAS AHORA? (1 pregunta, máx 2 líneas, que evalúe no sugiera)
 4️⃣ ESTADO: 📊Puntos:X · 🏅Rango:Y · ⚡mensaje
@@ -1096,12 +1540,12 @@ ESTRUCTURA OBLIGATORIA:
 REGLAS: 1 pregunta/turno · máx 2 emojis · no saltar fases · no romper rol
 
 INICIO OBLIGATORIO:
-ANTES DE TODO, PIENSA ESTO…
-Si hoy alguien que quieres cae al suelo y no responde…
-¿Sabrías qué hacer en los primeros 10 segundos?
+ANTES DE TODO, PIENSE ESTO…
+Si hoy un colega, un persona o un visitante cae al suelo y no responde…
+¿Sabría qué hacer en los primeros 10 segundos?
 Hoy entrenamos para que esa respuesta sea SÍ.
 
-¡Soy RCP HERO 🎮! Entrenamiento de reanimador lego — RCP solo con manos.
+¡Soy RCP HERO 🎮! Entrenamiento para reanimador lego — RCP solo con manos.
 Emergencia real → llama al 123 de inmediato.
 ¡DESPLEGANDO MISIÓN!`;
 
@@ -1132,7 +1576,7 @@ function showScreen(n){
   window.scrollTo(0,0);
   _ttsCancel();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const m={splash:'ss',welcome:'swelcome',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing'};
+  const m={splash:'ss',welcome:'swelcome',missions:'sm',epic:'se',epicwin:'sv',trivia:'st',simulator:'sc',results:'sr',briefing:'sbriefing',modulo:'smodulo'};
   document.getElementById(m[n]||n).classList.add('active');
   if(n==='missions')renderHub();
 }
@@ -1175,13 +1619,27 @@ function goMissions(){
   if(BS.missionBadges && BS.missionBadges.length > 0){
     const pts = BS.missionBadges.length * 60; // ~60 pts promedio por misión ganada
     S.totalPts = pts;
-    S.rank = pts >= 70 ? 'Héroe Escolar' : pts >= 40 ? 'Rescatista' : pts >= 20 ? 'Aprendiz' : 'Novato';
+    S.rank = pts >= 70 ? 'Héroe Icesi' : pts >= 40 ? 'Rescatista' : pts >= 20 ? 'Aprendiz' : 'Novato';
   }
 
   loadFSMode();
   initTTS();
+
+  // ── CANDADO H.E.R.O. · Hybrid Learning primero ──
+  // La primera vez es OBLIGATORIO completar el módulo de estudio antes de las misiones.
+  if(!BS.moduleDone){
+    abrirModulo(true);
+    return;
+  }
+  _entrarSimulador();
+}
+
+// Entrada real al simulador (tras pasar el módulo H la primera vez)
+// direct=true → registra y entra directo a misiones (sin pantalla de bienvenida)
+function _entrarSimulador(direct){
   registerVisit();
   if(BS._cdwUnlocked){ const b=document.getElementById('cdw-mode-btn'); if(b)b.style.display=''; }
+  if(direct){ showScreen('missions'); return; }
   // Mostrar bienvenida de regreso si tiene historial en Sheets
   mostrarBienvenida();
 }
@@ -1288,7 +1746,7 @@ function renderHub(){
       'Novato':         {bg:'linear-gradient(135deg,#9B0010,#FF1E2D)',  glow:'rgba(255,30,45,.6)'},
       'Aprendiz':       {bg:'linear-gradient(135deg,#5c3d00,#e67e00)',  glow:'rgba(230,126,0,.6)'},
       'Rescatista':     {bg:'linear-gradient(135deg,#0D3B66,#00D4FF)',  glow:'rgba(0,212,255,.5)'},
-      'Héroe Escolar':  {bg:'linear-gradient(135deg,#7A5800,#FFD700)',  glow:'rgba(255,215,0,.6)'},
+      'Héroe Icesi':  {bg:'linear-gradient(135deg,#7A5800,#FFD700)',  glow:'rgba(255,215,0,.6)'},
       'Héroe Máximo':   {bg:'linear-gradient(135deg,#4A0080,#A855F7)',  glow:'rgba(168,85,247,.6)'},
     };
     const rc = rankColors[S.rank] || rankColors['Novato'];
@@ -1320,33 +1778,120 @@ function renderHub(){
   const lvldesc2 = document.getElementById('lvldesc'); if(lvldesc2) lvldesc2.textContent=lv.desc;
 
   const mgrid=document.getElementById('mgrid'); if(!mgrid) return; mgrid.innerHTML='';
-  lv.missions.forEach(m=>{
+  const oUnlocked = !!(BS && BS.postUnlocked);
+  lv.missions.forEach((m,idx)=>{
     const done=S.done.includes(m.id);
+    const locked = (idx >= CASOS_PRE) && !oUnlocked; // casos 3-5: Fase O
     const c=document.createElement('div');
-    c.className='mcard'+(done?' done':'');
+    if(locked){
+      c.className='mcard mcard-'+m.dc+' mcard-locked';
+      c.onclick=()=>abrirClaveO();
+      c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">🔒</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">Se abre en la <b>Fase O · Práctica Continua</b>, después del curso.</div><div class="mfoot"><span class="mpts" style="color:var(--gold)">🔑 Con la clave del curso</span><div class="msi si-locked">🔒</div></div>`;
+      mgrid.appendChild(c);
+      return;
+    }
+    c.className='mcard mcard-'+m.dc+(done?' done':'');
     c.onclick=()=>showBriefing(m);
     c.innerHTML=`<div class="mcard-top"><div class="micon ${m.ic}">${m.icon}</div><div class="mmeta"><span class="dbadge ${m.dc}">${m.diff}</span><span class="mnum-lbl">${m.id}</span></div></div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><button class="mtip-toggle" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('open')">💡</button><div class="mtip">${m.tip}</div><div class="mfoot"><span class="mpts">★ ${m.pts} pts</span><span class="mtime">⏱ ${m.time}</span><div class="msi ${done?'si-done':'si-open'}">${done?'✓':'▶'}</div></div>`;
     mgrid.appendChild(c);
   });
+  updateFaseOUI();
+}
+
+// Ilumina la sección del hub que el usuario toca/selecciona
+function litSection(el){
+  document.querySelectorAll('#sm .hub-sec.lit').forEach(s=>{ if(s!==el) s.classList.remove('lit'); });
+  if(el) el.classList.add('lit');
+}
+// ══ FASE O · PRÁCTICA CONTINUA — desbloqueo con clave ══
+function updateFaseOUI(){
+  const unlocked = !!(BS && BS.postUnlocked);
+  const hint = document.getElementById('faseo-hint');
+  if(hint){
+    if(unlocked){ hint.style.display = 'none'; }
+    else {
+      hint.style.display = 'block';
+      hint.innerHTML = '🔒 <b>2 misiones por nivel</b> habilitadas. Las demás se abren con la <b>clave del curso presencial</b> para repasar lo aprendido.';
+    }
+  }
+  const fo = document.getElementById('faseo-mode-btn');
+  if(fo){
+    const mn = fo.querySelector('.mn'), md = fo.querySelector('.md'), mi = fo.querySelector('.mi');
+    if(mn) mn.textContent = unlocked ? 'O · PRÁCTICA CONTINUA ✓' : '🔒 O · PRÁCTICA CONTINUA';
+    if(md) md.textContent = unlocked ? 'Activada · casos restantes y Modo Épico disponibles' : 'Ingresa la clave que te dio el instructor tras el curso';
+    if(mi) mi.textContent = unlocked ? '✅' : '🔑';
+    fo.classList.toggle('mbtn-locked', !unlocked);
+  }
+  const ep = document.getElementById('epic-mode-btn');
+  if(ep){
+    ep.classList.toggle('mbtn-locked', !unlocked);
+    const md = ep.querySelector('.md');
+    if(md) md.textContent = unlocked
+      ? '8 misiones · colecciona fragmentos · certificado maestro'
+      : '🔒 Se abre en la Fase O (con la clave del curso)';
+  }
+}
+function abrirClaveO(){
+  const ov = document.getElementById('claveo-ov');
+  const err = document.getElementById('claveo-err');
+  const inp = document.getElementById('claveo-input');
+  if(err) err.textContent = '';
+  if(inp) inp.value = '';
+  if(ov) ov.classList.add('show');
+  setTimeout(()=>{ if(inp) inp.focus(); }, 120);
+}
+function cerrarClaveO(){
+  const ov = document.getElementById('claveo-ov');
+  if(ov) ov.classList.remove('show');
+}
+function validarClaveO(){
+  const inp = document.getElementById('claveo-input');
+  const err = document.getElementById('claveo-err');
+  const val = (inp && inp.value || '').trim().toUpperCase().replace(/\s+/g,'');
+  const target = String(POST_CODE).trim().toUpperCase().replace(/\s+/g,'');
+  if(val && val === target){
+    BS.postUnlocked = true;
+    saveBadgeState(BS);
+    registrarFaseO();
+    cerrarClaveO();
+    renderHub();
+    showBadgeUnlock('🔓','FASE O DESBLOQUEADA','Casos restantes + Modo Épico disponibles');
+  } else {
+    if(err) err.textContent = 'Clave incorrecta. Verifícala con tu instructor.';
+    if(inp){ inp.classList.add('shake-input'); setTimeout(()=>inp.classList.remove('shake-input'), 600); }
+  }
+}
+// Registro best-effort del desbloqueo en Sheets (no bloquea si el endpoint no lo soporta)
+function registrarFaseO(){
+  try{
+    if(!SHEETS_CONFIG.enabled || !SHEETS_CONFIG.url) return;
+    const url = SHEETS_CONFIG.url + '?nombre=' + encodeURIComponent(S.name||'') + '&faseO=1';
+    fetch(url).catch(()=>{});
+  }catch(e){}
+}
+// El Modo Épico solo se abre en la Fase O
+function intentarEpico(){
+  if(BS && BS.postUnlocked){ startEpic(); }
+  else { abrirClaveO(); }
 }
 
 // ══ ESCENARIOS — MOTOR DE DECISIONES ══
 const ESCENARIOS = {
 E1:{pasos:{
-  1:{fase:0,txt:"Estás en el pasillo y ves a tu compañero caer al suelo de golpe. ¿Qué haces primero?",ops:[
+  1:{fase:0,txt:"Estás en la oficina y ves a un colega desplomarse de golpe. ¿Qué haces primero?",ops:[
     {txt:"Me acerco y le sacudo el hombro diciendo '¿Estás bien?'",cor:true,next:2,pts:10},
     {txt:"Le busco el pulso en el cuello",fb:"Los reanimadores legos no deben buscar pulso. Primero verifica si responde.",pts:-10},
-    {txt:"Llamo al 123 de inmediato",fb:"Antes de llamar, debes comprobar si la víctima responde.",pts:-10},
+    {txt:"Llamo al 123 de inmediato",fb:"Primero verifica rápidamente si la persona responde. Una vez confirmes que no responde, activa el 123. Si estás solo y tienes celular, puedes usar el altavoz mientras continúas la atención.",pts:-10},
     {txt:"Espero a ver si se levanta solo",fb:"No esperes. Actúa de inmediato: acércate y verifica si responde.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"Tu compañero no responde ni se mueve. ¿Qué haces ahora?",ops:[
-    {txt:"Grito '¡Necesito ayuda!' y pido a alguien que llame al 123",cor:true,next:3,pts:10},
-    {txt:"Espero a que llegue un profesor",fb:"¡No pierdas tiempo! Cada segundo cuenta en un paro cardíaco.",pts:-10,crit:true},
+  2:{fase:0,txt:"El colega no responde y no respira normalmente. ¿Qué haces ahora?",ops:[
+    {txt:"Grito '¡Necesito ayuda!' y pido a alguien que llame al 123",cor:true,next:3,pts:10,fb:"Correcto. Si la víctima no responde y no respira normalmente (o presenta respiración agónica), inicia inmediatamente la RCP. ¡Excelente decisión!"},
+    {txt:"Espero a que llegue un profesor",fb:"¡No pierdas tiempo! La RCP iniciada precozmente aumenta significativamente las probabilidades de supervivencia.",pts:-10,crit:true},
     {txt:"Me voy corriendo a buscar al coordinador",fb:"No debes dejar sola a la víctima. Pide ayuda sin alejarte.",pts:-10},
-    {txt:"Le echo agua en la cara para despertarlo",fb:"El agua no reactiva un paro cardíaco. Activa el 123 de inmediato.",pts:-10}
+    {txt:"Le echo agua en la cara para despertarlo",fb:"Si la víctima no responde y no respira normalmente (o presenta respiración agónica), inicia inmediatamente la RCP.",pts:-10}
   ]},
   3:{fase:1,txt:"Alguien ya llamó al 123. El operador pregunta si hay un DEA cerca. ¿Qué haces?",ops:[
-    {txt:"Pido a otro compañero que corra a buscarlo a la enfermería",cor:true,next:4,pts:10},
+    {txt:"Pido a otro colega que corra a buscarlo a la enfermería",cor:true,next:4,pts:10},
     {txt:"Voy yo mismo a buscar el DEA",fb:"Tú eres el reanimador. Debes quedarte. Envía a otro a buscar el DEA.",pts:-10},
     {txt:"El DEA no importa, empiezo las compresiones",fb:"Ambas cosas importan. El DEA puede salvar la vida. Envía a alguien mientras tú haces RCP.",pts:-10},
     {txt:"Digo que no hay DEA y cuelgo el teléfono",fb:"El operador del 123 puede guiarte. Mantén la línea y busca el DEA.",pts:-10}
@@ -1358,14 +1903,14 @@ E1:{pasos:{
     {txt:"En la espalda, para mayor soporte",fb:"Las compresiones son siempre en el centro del pecho por la parte frontal.",pts:-10}
   ]},
   5:{fase:2,txt:"Tus manos están en posición. ¿Cuál es el ritmo correcto de compresiones?",ops:[
-    {txt:"100–120 compresiones por minuto, firmes y rápidas",cor:true,next:6,pts:10},
+    {txt:"Comprimir entre 100 y 120 veces por minuto, con una profundidad de 5–6 cm y permitiendo el retroceso completo del tórax",cor:true,next:6,pts:10,fb:"Exacto. Una RCP de calidad requiere ritmo, profundidad adecuada y permitir el retroceso completo del tórax entre compresiones."},
     {txt:"30 compresiones suaves para no lastimar",fb:"Las compresiones deben ser firmes y a 100–120 por minuto. La profundidad correcta es clave.",pts:-10},
     {txt:"50 compresiones lentas para no cansarse",fb:"El ritmo mínimo es 100 por minuto. La velocidad mantiene la sangre circulando.",pts:-10},
     {txt:"200 compresiones por minuto, cuanto más rápido mejor",fb:"Exceder 120/min reduce la efectividad. El rango correcto es 100–120/min.",pts:-10}
   ]},
   6:{fase:2,txt:"Llevas 2 minutos haciendo compresiones. Estás cansado. ¿Qué haces?",ops:[
     {txt:"Pido a alguien que me releve sin interrumpir más de 10 segundos",cor:true,next:7,pts:10},
-    {txt:"Paro a descansar 30 segundos",fb:"¡No pares! Cada segundo sin compresiones reduce la supervivencia. Pide relevo.",pts:-10,crit:true},
+    {txt:"Paro a descansar 30 segundos",fb:"¡No pares! Las compresiones mantienen el flujo de sangre al cerebro y al corazón mientras llega la ayuda. Pide relevo.",pts:-10,crit:true},
     {txt:"Disminuyo la velocidad para aguantar más",fb:"Mantén el ritmo o pide relevo. Compresiones lentas son ineficaces.",pts:-10},
     {txt:"Hago solo 20 compresiones cada vez para ahorrar energía",fb:"Las compresiones deben ser continuas y sostenidas. No hagas pausas de tu propia decisión.",pts:-10}
   ]},
@@ -1383,27 +1928,27 @@ E1:{pasos:{
   ]}
 }},
 E2:{pasos:{
-  1:{fase:0,txt:"Durante el examen, el compañero a tu lado se desliza de la silla y cae al suelo. El docente tiene la espalda vuelta. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"Durante la reunión, el colega a tu lado se desliza de la silla y cae al suelo. Los demás están de espaldas. ¿Qué haces?",ops:[
     {txt:"Me levanto, me acerco y verifico si responde sacudiéndole el hombro",cor:true,next:2,pts:10},
-    {txt:"Le hago señas al profesor en silencio para no interrumpir el examen",fb:"¡Esto es una emergencia! La vida del compañero es prioritaria sobre el examen.",pts:-10},
+    {txt:"Le hago señas al profesor en silencio para no interrumpir el examen",fb:"¡Esto es una emergencia! La vida del colega es prioritaria sobre el examen.",pts:-10},
     {txt:"Pregunto en voz baja si está dormido",fb:"No des por sentado que duerme. Verifica su respuesta físicamente.",pts:-10},
     {txt:"Espero que el profesor se gire y lo note",fb:"No esperes. Cada segundo importa. Actúa tú de inmediato.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"Tu compañero no responde. El salón está en silencio. ¿Qué haces?",ops:[
+  2:{fase:0,txt:"El colega no responde y no respira normalmente. ¿Qué haces?",ops:[
     {txt:"Digo fuerte '¡Profe, emergencia!' y pido a otro que llame al 123",cor:true,next:3,pts:10},
-    {txt:"Sigo intentando despertar al compañero en silencio",fb:"Actúa con urgencia. El silencio no importa cuando hay una vida en juego.",pts:-10,crit:true},
-    {txt:"Levanto la mano y espero que el docente me vea",fb:"No hay tiempo. Actúa y habla fuerte. Esto es una emergencia.",pts:-10},
+    {txt:"Sigo intentando despertar al colega en silencio",fb:"Actúa con urgencia. El silencio no importa cuando hay una vida en juego.",pts:-10,crit:true},
+    {txt:"Levanto la mano y espero que el colega me vea",fb:"No hay tiempo. Actúa y habla fuerte. Esto es una emergencia.",pts:-10},
     {txt:"Salgo del salón a buscar ayuda",fb:"No abandones la escena. Pide ayuda en voz alta sin alejarte.",pts:-10}
   ]},
-  3:{fase:1,txt:"El docente está alarmado pero no sabe qué hacer. Alguien está llamando al 123. ¿Qué haces tú?",ops:[
-    {txt:"Pido al docente que busque o pida el DEA mientras yo inicio RCP",cor:true,next:4,pts:10},
-    {txt:"Espero instrucciones del docente",fb:"Tú sabes qué hacer. El docente está en shock. Toma el liderazgo.",pts:-10},
+  3:{fase:1,txt:"El colega está alarmado pero no sabe qué hacer. Alguien está llamando al 123. ¿Qué haces tú?",ops:[
+    {txt:"Pido al colega que busque o pida el DEA mientras yo inicio RCP",cor:true,next:4,pts:10},
+    {txt:"Espero instrucciones del colega",fb:"Tú sabes qué hacer. El colega está en shock. Toma el liderazgo.",pts:-10},
     {txt:"Sigo esperando que llegue el 123",fb:"No esperes. Inicia RCP de inmediato. Cada segundo importa.",pts:-10,crit:true},
     {txt:"Pido a todos que salgan del salón para tener calma",fb:"No es el momento de evacuar. Inicia RCP y asigna roles.",pts:-10}
   ]},
-  4:{fase:2,txt:"Vas a iniciar las compresiones. El compañero lleva camisa gruesa. ¿Qué haces?",ops:[
-    {txt:"Abro o levanto la camisa para hacer compresiones sobre el pecho",cor:true,next:5,pts:10},
-    {txt:"Hago las compresiones sobre la ropa gruesa para no perder tiempo",fb:"La ropa gruesa reduce la efectividad. Abre la camisa rápido y continúa.",pts:-10},
+  4:{fase:2,txt:"Vas a iniciar las compresiones. El colega lleva un saco grueso. ¿Qué haces?",ops:[
+    {txt:"Descubro el pecho si la ropa impide realizar compresiones de calidad o la colocación posterior del DEA",cor:true,next:5,pts:10},
+    {txt:"Hago las compresiones sobre la ropa gruesa para no perder tiempo",fb:"Si la ropa impide una correcta posición de las manos o dificulta el uso del DEA, descúbrela rápidamente y continúa la RCP.",pts:-10},
     {txt:"Espero que alguien más lo haga",fb:"No esperes. Actúa. Abrir la camisa toma segundos y mejora la RCP.",pts:-10},
     {txt:"Corto la camisa con las tijeras del salón",fb:"No es necesario cortarla. Ábrela con los botones. Es más rápido.",pts:-10}
   ]},
@@ -1413,17 +1958,17 @@ E2:{pasos:{
     {txt:"Con un puño cerrado",fb:"No uses el puño. Usa el talón de la palma con dedos entrelazados.",pts:-10},
     {txt:"Con las palmas abiertas y los dedos extendidos",fb:"Los dedos extendidos pueden lastimar las costillas. Entrelaza los dedos y usa el talón.",pts:-10}
   ]},
-  6:{fase:2,txt:"Llevas 1 minuto de compresiones. Hay otro compañero cerca que también tomó el curso de RCP. ¿Qué haces?",ops:[
+  6:{fase:2,txt:"Llevas 1 minuto de compresiones. Hay otra persona cerca que también tomó el curso de RCP. ¿Qué haces?",ops:[
     {txt:"Le pido que me releve cada 2 minutos para no perder calidad",cor:true,next:7,pts:10},
     {txt:"Sigo solo para no confundir a la víctima",fb:"El trabajo en equipo mejora la RCP. El relevo mantiene la calidad de las compresiones.",pts:-10},
-    {txt:"Le pido que haga ventilaciones mientras yo comprimo",fb:"El protocolo lego es RCP solo manos. No hay ventilaciones. El relevo en compresiones sí aplica.",pts:-10},
+    {txt:"Le pido que haga ventilaciones mientras yo comprimo",fb:"Para reanimadores legos entrenados se recomienda RCP solo con manos. Si ambos tienen entrenamiento en ventilaciones y contexto permite, es una opción. El relevo en compresiones sigue siendo prioritario.",pts:-10},
     {txt:"Le pido que sostenga la cabeza de la víctima",fb:"Eso no es necesario. El relevo en compresiones es más valioso.",pts:-10}
   ]},
-  7:{fase:3,txt:"Llega un docente con el DEA de la enfermería. El DEA dice 'Choque recomendado'. ¿Qué haces?",ops:[
+  7:{fase:3,txt:"Llega un colega con el DEA de la enfermería. El DEA dice 'Choque recomendado'. ¿Qué haces?",ops:[
     {txt:"Me aseguro de que nadie toca a la víctima y digo 'Aléjense'",cor:true,next:8,pts:10},
     {txt:"Sigo con las compresiones mientras aplican el choque",fb:"¡PELIGROSO! Nadie debe tocar a la víctima durante el choque. Aléjate.",pts:-10,crit:true},
     {txt:"Espero que el DEA lo active automáticamente",fb:"Alguien debe presionar el botón. Asegúrate de que nadie toque a la víctima primero.",pts:-10},
-    {txt:"Le pido al docente que se aleje y yo aplico el choque sin verificar el área",fb:"Antes de aplicar el choque, verifica que NADIE toca a la víctima.",pts:-10,crit:true}
+    {txt:"Le pido al colega que se aleje y yo aplico el choque sin verificar el área",fb:"Antes de aplicar el choque, verifica que NADIE toca a la víctima.",pts:-10,crit:true}
   ]},
   8:{fase:3,txt:"Se aplicó el choque. ¿Cuál es el siguiente paso inmediato?",ops:[
     {txt:"Reinicio las compresiones de inmediato sin esperar",cor:true,next:null,pts:10},
@@ -1433,16 +1978,16 @@ E2:{pasos:{
   ]}
 }},
 E3:{pasos:{
-  1:{fase:0,txt:"En la cafetería llena, un estudiante cae de su silla. Todos miran pero nadie actúa. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"En la cafetería llena, una persona cae de su silla. Todos miran pero nadie actúa. ¿Qué haces?",ops:[
     {txt:"Señalo a alguien específico: '¡Tú, llama al 123!' y me acerco a verificar respuesta",cor:true,next:2,pts:10},
     {txt:"Grito '¡Alguien llame al 123!' y espero",fb:"El efecto espectador hace que nadie actúe si el llamado es general. Señala a UNA persona.",pts:-10},
     {txt:"Pregunto si alguien sabe primeros auxilios",fb:"No hay tiempo para buscar expertos. Tú puedes actuar ahora. Hazlo.",pts:-10},
     {txt:"Me acerco pero espero que alguien más tome la iniciativa",fb:"Si esperas, nadie actúa. El efecto espectador paraliza a las multitudes. Sé el primero.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"Te acercas a la víctima. ¿Cómo verificas si responde?",ops:[
+  2:{fase:0,txt:"Te acercas a la víctima. ¿Cómo verificas si responde y si respira normalmente?",ops:[
     {txt:"Le sacudo los hombros firmemente y digo '¿Me escuchas?'",cor:true,next:3,pts:10},
     {txt:"Le grito al oído sin tocarlo",fb:"El contacto físico es necesario. Sacude los hombros con firmeza.",pts:-10},
-    {txt:"Le observo el pecho para ver si respira",fb:"La respiración no es suficiente señal. Verifica respuesta táctil y verbal primero.",pts:-10},
+    {txt:"Respira de forma agónica, así que espero a ver si mejora.",fb:"La respiración agónica no es una respiración normal. Debe reconocerse como un signo de paro cardíaco e iniciar inmediatamente la RCP.",pts:-10},
     {txt:"Le tomo el pulso en la muñeca",fb:"Los reanimadores legos no verifican pulso. Sacude los hombros y llama verbalmente.",pts:-10}
   ]},
   3:{fase:1,txt:"No responde. Ya hay alguien llamando al 123. ¿Qué haces con la multitud?",ops:[
@@ -1483,27 +2028,27 @@ E3:{pasos:{
   ]}
 }},
 E4:{pasos:{
-  1:{fase:0,txt:"Ves a la bibliotecaria caer detrás del mostrador. Estás solo. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"Ves a un funcionario de la biblioteca caer detrás del mostrador. Estás solo. ¿Qué haces?",ops:[
     {txt:"Rodeo el mostrador, me acerco y verifico su respuesta",cor:true,next:2,pts:10},
     {txt:"Llamo al 123 desde donde estoy sin acercarme",fb:"Primero verifica que realmente no responde. Acércate y evalúa.",pts:-10},
     {txt:"Salgo a buscar a alguien más",fb:"No abandones la escena. Acércate y evalúa primero.",pts:-10},
     {txt:"Espero en la entrada a ver si se levanta sola",fb:"No esperes. Acércate y verifica su respuesta de inmediato.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"Detrás del mostrador el espacio es reducido. La bibliotecaria no responde. ¿Qué haces?",ops:[
+  2:{fase:0,txt:"Detrás del mostrador el espacio es reducido. El funcionario no responde. ¿Qué haces?",ops:[
     {txt:"Llamo al 123 con mi celular mientras evalúo el espacio para RCP",cor:true,next:3,pts:10},
     {txt:"La cargo y la llevo a un espacio abierto",fb:"No muevas a una víctima de paro a menos que el espacio impida la RCP. Evalúa primero.",pts:-10},
     {txt:"Espero a que llegue alguien por la biblioteca",fb:"¡No hay tiempo de esperar! Actúa: llama al 123 y prepárate para RCP.",pts:-10,crit:true},
     {txt:"Grito desde donde estoy para que alguien entre",fb:"Puedes gritar para pedir ayuda, pero también debes llamar al 123 y evaluar a la víctima.",pts:-10}
   ]},
-  3:{fase:1,txt:"El operador del 123 te pide que inicies RCP. La señora tiene 60 años. ¿Cambia el protocolo?",ops:[
+  3:{fase:1,txt:"El operador del 123 te pide que inicies RCP. La persona tiene 60 años. ¿Cambia el protocolo?",ops:[
     {txt:"No cambia. El protocolo BLS es igual para adultos sin importar la edad",cor:true,next:4,pts:10},
     {txt:"Sí, con adultos mayores hago compresiones más suaves",fb:"El protocolo es el mismo. La fuerza necesaria para 5–6 cm no cambia con la edad.",pts:-10},
     {txt:"Espero porque puede ser una caída, no un paro",fb:"Sin respuesta, el protocolo BLS aplica. No asumas la causa.",pts:-10},
     {txt:"Sí, primero busco el pulso para confirmar que es un paro",fb:"Los reanimadores legos no buscan pulso. Si no responde y no respira, inicia RCP.",pts:-10}
   ]},
-  4:{fase:2,txt:"Empiezas RCP. La señora tiene lentes. ¿Qué haces con ellos?",ops:[
-    {txt:"Los retiro con cuidado para que no interfieran",cor:true,next:5,pts:10},
-    {txt:"Los dejo puestos para no perder tiempo",fb:"Los lentes pueden lastimar y dificultar. Retíralos rápido.",pts:-10},
+  4:{fase:2,txt:"Mientras realizas la RCP, la víctima presenta jadeos ocasionales. ¿Qué haces?",ops:[
+    {txt:"Continúo la RCP porque la respiración agónica no es respiración normal",cor:true,next:5,pts:10},
+    {txt:"Paro porque la víctima está respirando",fb:"Esos jadeos se llaman respiración agónica. No es una respiración normal. Continúa la RCP.",pts:-10,crit:true,pts:-10},
     {txt:"Los empujo hacia la frente",fb:"Retíralos completamente para evitar lesiones durante la RCP.",pts:-10},
     {txt:"Los cubro con una mano mientras comprimo con la otra",fb:"Necesitas ambas manos para comprimir. Retira los lentes.",pts:-10}
   ]},
@@ -1528,46 +2073,46 @@ E4:{pasos:{
   8:{fase:3,txt:"El paramédico te releva. ¿Qué debes hacer ahora?",ops:[
     {txt:"Alejarme, dejar trabajar al equipo y recuperarme",cor:true,next:null,pts:10},
     {txt:"Seguir comprimiendo junto con el paramédico",fb:"Cuando llega el profesional, cede el espacio. Tu trabajo fue heroico.",pts:-10},
-    {txt:"Verificar el pulso de la señora yo mismo",fb:"Deja al equipo profesional trabajar. Tu rol ahora es apoyar y recuperarte.",pts:-10},
+    {txt:"Verificar el pulso de la persona yo mismo",fb:"Deja al equipo profesional trabajar. Tu rol ahora es apoyar y recuperarte.",pts:-10},
     {txt:"Quedarse muy cerca para supervisar la técnica del paramédico",fb:"Confía en el profesional. Aléjate y recupérate.",pts:-10}
   ]}
 }},
 E5:{pasos:{
-  1:{fase:0,txt:"En el parque, un señor mayor cae frente a ti. Estás con dos amigos. ¿Cuál es el primer paso?",ops:[
+  1:{fase:0,txt:"En las zonas verdes del campus, una persona cae frente a ti. Estás con dos colegas. ¿Cuál es el primer paso?",ops:[
     {txt:"Me acerco, verifico si responde sacudiéndolo y llamándolo",cor:true,next:2,pts:10},
-    {txt:"Mis amigos y yo lo levantamos del suelo",fb:"¡No lo muevas! Primero verifica si responde. Moverlo puede ser peligroso.",pts:-10},
-    {txt:"Uno de mis amigos llama al 123 mientras yo observo",fb:"Aún no sabes si es un paro. Primero verifica la respuesta de la víctima.",pts:-10},
+    {txt:"Mis colegas y yo lo levantamos del suelo",fb:"¡No lo muevas! Primero verifica si responde. Moverlo puede ser peligroso.",pts:-10},
+    {txt:"Uno de mis colegas llama al 123 mientras yo observo",fb:"Aún no sabes si es un paro. Primero verifica la respuesta de la víctima.",pts:-10},
     {txt:"Buscamos a alguien mayor que sepa qué hacer",fb:"¡Tú ya sabes! Activa el protocolo ahora. No dependas de que llegue otro adulto.",pts:-10}
   ]},
-  2:{fase:0,txt:"El señor no responde. ¿Cómo organizas a tus dos amigos?",ops:[
+  2:{fase:0,txt:"La persona no responde. ¿Cómo organizas a tus dos colegas?",ops:[
     {txt:"Señalo al primero: '¡Llama al 123!' y al segundo: '¡Busca un DEA!'",cor:true,next:3,pts:10},
-    {txt:"Les digo que me ayuden a hacer RCP los tres",fb:"Primero activa el sistema de emergencias. Un amigo llama, otro busca DEA.",pts:-10},
-    {txt:"Les digo que busquen a un adulto que sepa qué hacer",fb:"¡Tú ya sabes! Activa el protocolo ahora. Asigna roles a tus amigos.",pts:-10},
+    {txt:"Les digo que me ayuden a hacer RCP los tres",fb:"Primero activa el sistema de emergencias. Un colega llama, otro busca DEA.",pts:-10},
+    {txt:"Les digo que busquen a un adulto que sepa qué hacer",fb:"¡Tú ya sabes! Activa el protocolo ahora. Asigna roles a tus colegas.",pts:-10},
     {txt:"Les pido que alejen a los curiosos y espero que el 123 llegue solo",fb:"No esperes. Asigna roles específicos: uno llama al 123, otro busca DEA.",pts:-10}
   ]},
-  3:{fase:1,txt:"El señor tiene cadena y collar de metal en el cuello. ¿Qué haces?",ops:[
+  3:{fase:1,txt:"La persona tiene una cadena de metal en el cuello. ¿Qué haces?",ops:[
     {txt:"Lo retiro con cuidado para no interferir con las compresiones",cor:true,next:4,pts:10},
     {txt:"Lo dejo, no importa para la RCP",fb:"Los objetos en el pecho pueden interferir. Retíralos si puedes hacerlo rápido.",pts:-10},
     {txt:"Lo corto con cualquier objeto que encuentre",fb:"No lo cortes. Retíralo con cuidado, solo si puedes hacerlo rápido.",pts:-10},
     {txt:"Hago las compresiones alrededor del collar",fb:"El collar puede interferir con la posición correcta de las manos. Retíralo.",pts:-10}
   ]},
-  4:{fase:2,txt:"Empiezas las compresiones. El suelo del parque es de tierra blanda. ¿Qué pasa?",ops:[
+  4:{fase:2,txt:"Empiezas las compresiones. El suelo es de césped blando. ¿Qué pasa?",ops:[
     {txt:"La superficie blanda absorbe parte del esfuerzo. Comprimo más firme para compensar",cor:true,next:5,pts:10},
     {txt:"El suelo blando es ideal, las compresiones serán más suaves",fb:"En suelo blando pierdes fuerza. Debes comprimir más firme para lograr 5–6 cm.",pts:-10},
     {txt:"Busco una superficie dura antes de empezar",fb:"Actúa de inmediato. En suelo blando, solo ajusta la fuerza. No pierdas tiempo buscando superficie.",pts:-10},
     {txt:"La superficie no afecta, la técnica es igual siempre",fb:"En suelo blando se pierde fuerza. Debes compensar comprimiendo más firme.",pts:-10}
   ]},
-  5:{fase:2,txt:"Llevas RCP. Una señora del parque dice '¿Le pusiste la boca?'. ¿Qué respondes?",ops:[
+  5:{fase:2,txt:"Llevas RCP. Alguien pregunta '¿Le pusiste la boca?'. ¿Qué respondes?",ops:[
     {txt:"'No, la RCP solo con manos es igual de efectiva para reanimadores legos'",cor:true,next:6,pts:10},
     {txt:"Paro y le pido que ella haga la parte de la boca",fb:"No pares la RCP. La RCP solo con manos es el protocolo correcto para legos.",pts:-10,crit:true},
     {txt:"Me distraigo y pierdo el ritmo de compresiones",fb:"Mantén el ritmo. La boca a boca no es necesaria en el protocolo lego.",pts:-10},
     {txt:"Paro las compresiones para hacerle ventilaciones y no quedar mal",fb:"La RCP solo manos es igual de efectiva. No pares las compresiones.",pts:-10,crit:true}
   ]},
-  6:{fase:2,txt:"Tu amigo regresa sin encontrar DEA en el parque. ¿Qué haces?",ops:[
+  6:{fase:2,txt:"Tu colega regresa sin encontrar DEA cerca. ¿Qué haces?",ops:[
     {txt:"Continúo RCP y le pido que pregunte a negocios o locales cercanos",cor:true,next:7,pts:10},
-    {txt:"Paro la RCP para ir a buscar el DEA yo mismo",fb:"No pares. Envía a tu amigo a buscar más lejos. Tú continúas comprimiendo.",pts:-10,crit:true},
+    {txt:"Paro la RCP para ir a buscar el DEA yo mismo",fb:"No pares. Envía a tu colega a buscar más lejos. Tú continúas comprimiendo.",pts:-10,crit:true},
     {txt:"Acepto que no hay DEA disponible y termino la RCP",fb:"Continúa la RCP. El DEA puede aparecer. Envía a alguien a buscarlo más lejos.",pts:-10,crit:true},
-    {txt:"Le pido al segundo amigo que también vaya a buscar el DEA",fb:"Necesitas al menos a alguien haciendo RCP contigo. Envía solo a uno.",pts:-10}
+    {txt:"Le pido al segundo colega que también vaya a buscar el DEA",fb:"Necesitas al menos a alguien haciendo RCP contigo. Envía solo a uno.",pts:-10}
   ]},
   7:{fase:3,txt:"Llegan los paramédicos en 8 minutos. ¿Cómo te sientes y qué haces?",ops:[
     {txt:"Estoy agotado pero continúo hasta que me releven",cor:true,next:8,pts:10},
@@ -1583,34 +2128,34 @@ E5:{pasos:{
   ]}
 }},
 M1:{pasos:{
-  1:{fase:0,txt:"300 estudiantes en el auditorio. Tu compañero colapsa en el escenario durante el acto. ¿Qué haces primero?",ops:[
+  1:{fase:0,txt:"300 asistentes en el auditorio. Un ponente se desploma y no responde ni respira normalmente. ¿Qué haces primero?",ops:[
     {txt:"Subo al escenario, verifico respuesta y tomo el liderazgo visible",cor:true,next:2,pts:10},
-    {txt:"Espero a que un docente actúe",fb:"No esperes. Actuar de inmediato salva vidas. El liderazgo visible en emergencias es clave.",pts:-10},
+    {txt:"Espero a que un colega actúe",fb:"No esperes. Actuar de inmediato salva vidas. El liderazgo visible en emergencias es clave.",pts:-10},
     {txt:"Llamo al 123 desde mi asiento",fb:"Primero verifica la respuesta. Alguien más puede llamar mientras tú evalúas.",pts:-10},
     {txt:"Grito '¿hay alguien que sepa RCP?' desde el público",fb:"No esperes a otro. Tú sabes qué hacer. Sube y actúa.",pts:-10}
   ]},
-  2:{fase:0,txt:"Tu compañero no responde. 300 personas te observan. ¿Cómo manejas esto?",ops:[
+  2:{fase:0,txt:"El ponente no responde. 300 personas te observan. ¿Cómo manejas esto?",ops:[
     {txt:"Señalo a dos personas específicas con nombre o descripción: una llama al 123, otra busca DEA",cor:true,next:3,pts:10},
     {txt:"Grito '¡Todos ayuden!' para no sonar autoritario",fb:"Con multitudes, asigna tareas específicas a personas específicas. El llamado general falla.",pts:-10},
     {txt:"Pido silencio antes de actuar",fb:"El silencio no es prioritario. Actúa y asigna roles en voz alta.",pts:-10},
     {txt:"Espero a que se forme un voluntario espontáneamente",fb:"No esperes. Con multitudes el efecto espectador paraliza. Señala personas específicas.",pts:-10}
   ]},
-  3:{fase:1,txt:"Un docente sube al escenario y pregunta qué debe hacer. ¿Le asignas qué tarea?",ops:[
+  3:{fase:1,txt:"Un colega sube a la tarima y pregunta qué debe hacer. ¿Qué tarea le asignas?",ops:[
     {txt:"'Coordine al público, desplace a los curiosos y guíe al DEA hacia aquí'",cor:true,next:4,pts:10},
-    {txt:"'Haga usted la RCP, yo coordino'",fb:"Tú ya iniciaste el protocolo. El docente puede coordinar el entorno mejor desde afuera.",pts:-10},
-    {txt:"'Espere, lo tengo controlado'",fb:"Usa todos los recursos disponibles. Asigna roles al docente.",pts:-10},
-    {txt:"'Llame usted al 123 de nuevo para confirmar'",fb:"El 123 ya fue llamado. El docente es más útil coordinando el entorno y buscando el DEA.",pts:-10}
+    {txt:"'Haga usted la RCP, yo coordino'",fb:"Tú ya iniciaste el protocolo. El colega puede coordinar el entorno mejor desde afuera.",pts:-10},
+    {txt:"'Espere, lo tengo controlado'",fb:"Usa todos los recursos disponibles. Asigna roles al colega.",pts:-10},
+    {txt:"'Llame usted al 123 de nuevo para confirmar'",fb:"El 123 ya fue llamado. El colega es más útil coordinando el entorno y buscando el DEA.",pts:-10}
   ]},
-  4:{fase:2,txt:"Inicias las compresiones en el escenario. El micrófono abierto amplifica el sonido. ¿Qué haces?",ops:[
+  4:{fase:2,txt:"Inicias las compresiones en la tarima. El micrófono abierto amplifica el sonido. ¿Qué haces?",ops:[
     {txt:"Continúo concentrado. El sonido no es prioridad ahora.",cor:true,next:5,pts:10},
     {txt:"Pido que apaguen el sonido antes de continuar",fb:"No pierdas tiempo en detalles. Continúa la RCP.",pts:-10},
     {txt:"Bajo del escenario para hacer la RCP sin miradas",fb:"No muevas a la víctima innecesariamente. La RCP se hace donde cayó.",pts:-10},
     {txt:"Hablo al micrófono para tranquilizar al público antes de comprimir",fb:"No hay tiempo para discursos. La víctima necesita compresiones ahora.",pts:-10,crit:true}
   ]},
-  5:{fase:2,txt:"Un estudiante del público grita '¡Para, lo estás matando!'. ¿Qué haces?",ops:[
+  5:{fase:2,txt:"Alguien del público grita '¡Para, lo estás matando!'. ¿Qué haces?",ops:[
     {txt:"Continúo comprimiendo y digo 'Está en paro cardíaco, necesita esto ahora'",cor:true,next:6,pts:10},
     {txt:"Paro para explicar el procedimiento",fb:"No pares la RCP. Una respuesta corta y segura mientras sigues comprimiendo.",pts:-10,crit:true},
-    {txt:"Le pido al docente que saque al estudiante",fb:"Puedes responder brevemente, pero no pares la RCP.",pts:-10},
+    {txt:"Le pido al colega que saque al persona",fb:"Puedes responder brevemente, pero no pares la RCP.",pts:-10},
     {txt:"Paro y cedo el lugar para evitar conflictos",fb:"No cedas. Tu acción es correcta y necesaria. Continúa con firmeza.",pts:-10,crit:true}
   ]},
   6:{fase:2,txt:"Llevas 3 minutos de RCP. ¿Cuándo debes pedir relevo?",ops:[
@@ -1633,9 +2178,9 @@ M1:{pasos:{
   ]}
 }},
 M2:{pasos:{
-  1:{fase:0,txt:"En educación física, un compañero colapsa en la cancha. Hay 6 estudiantes disponibles. ¿Qué haces primero?",ops:[
+  1:{fase:0,txt:"En la cancha de tenis, un colega se desploma jugando. Hay 5 personas disponibles. ¿Qué haces primero?",ops:[
     {txt:"Verifico respuesta mientras asigno roles al grupo",cor:true,next:2,pts:10},
-    {txt:"Espero al docente de educación física",fb:"El docente puede estar lejos. Actúa de inmediato y asigna roles.",pts:-10},
+    {txt:"Espero al colega de educación física",fb:"El colega puede estar lejos. Actúa de inmediato y asigna roles.",pts:-10},
     {txt:"Llamamos todos al 123 para que lleguen rápido",fb:"Solo uno debe llamar. Los demás tienen otras tareas urgentes.",pts:-10},
     {txt:"Primero averiguo qué le pasó antes de actuar",fb:"Sin respuesta, el protocolo BLS aplica sin importar la causa. Actúa de inmediato.",pts:-10}
   ]},
@@ -1645,25 +2190,25 @@ M2:{pasos:{
     {txt:"Primero terminamos la RCP y luego buscamos el DEA",fb:"El DEA debe buscarse en paralelo con la RCP, no después.",pts:-10},
     {txt:"Los 6 hacemos RCP en turnos sin buscar el DEA",fb:"El DEA puede ser determinante. Envía a alguien por él mientras los demás hacen RCP.",pts:-10}
   ]},
-  3:{fase:1,txt:"El estudiante que fue por el DEA regresa sin él porque estaba cerrado. ¿Qué haces?",ops:[
+  3:{fase:1,txt:"El persona que fue por el DEA regresa sin él porque estaba cerrado. ¿Qué haces?",ops:[
     {txt:"Le digo que busque al rector o coordinador para abrir la enfermería",cor:true,next:4,pts:10},
     {txt:"Acepto que no hay DEA y sigo con RCP",fb:"Correcto continuar, pero aún puedes solucionar el DEA. Envíalo a buscar llave.",pts:-10},
     {txt:"Paro la RCP para pensar en el DEA",fb:"¡Nunca pares la RCP! El DEA puede resolverse mientras sigues comprimiendo.",pts:-10,crit:true},
     {txt:"Digo que el DEA no importa y continúo",fb:"El DEA sí importa. Continúa la RCP pero también busca solucionar el acceso al DEA.",pts:-10}
   ]},
-  4:{fase:2,txt:"Llevas RCP. Un compañero pregunta '¿Cuánto tiempo más vas a hacer eso?'. ¿Respuesta correcta?",ops:[
+  4:{fase:2,txt:"Llevas RCP. Un colega pregunta '¿Cuánto tiempo más vas a hacer eso?'. ¿Respuesta correcta?",ops:[
     {txt:"'Hasta que lleguen los paramédicos o tengamos el DEA. No paramos.'",cor:true,next:5,pts:10},
     {txt:"Paro para responderle con calma",fb:"Responde brevemente sin parar. La RCP no puede interrumpirse por preguntas.",pts:-10,crit:true},
     {txt:"Le pido que tome el relevo para descansar yo",fb:"El relevo está bien si sabe RCP. Pero la razón no es para responder preguntas.",pts:-10},
     {txt:"Le digo que se calle y te deja trabajar",fb:"Una respuesta calmada es mejor. Di brevemente el plan mientras sigues comprimiendo.",pts:-10}
   ]},
-  5:{fase:2,txt:"El docente llega y quiere tomar el control. Él no sabe RCP. ¿Qué haces?",ops:[
+  5:{fase:2,txt:"Un directivo llega y quiere tomar el control. No sabe RCP. ¿Qué haces?",ops:[
     {txt:"Le pido que coordine al grupo y al 123 mientras yo continúo la RCP",cor:true,next:6,pts:10},
-    {txt:"Le cedo el control porque es la autoridad",fb:"Si el docente no sabe RCP, es más valioso que él coordine el entorno. Tú continúas.",pts:-10,crit:true},
-    {txt:"Los dos intentamos hacer RCP al mismo tiempo",fb:"Un reanimador a la vez, correctamente. El docente puede apoyar de otras formas.",pts:-10},
+    {txt:"Le cedo el control porque es la autoridad",fb:"Si el colega no sabe RCP, es más valioso que él coordine el entorno. Tú continúas.",pts:-10,crit:true},
+    {txt:"Los dos intentamos hacer RCP al mismo tiempo",fb:"Un reanimador a la vez, correctamente. El colega puede apoyar de otras formas.",pts:-10},
     {txt:"Le explico cómo hacer RCP en este momento",fb:"No hay tiempo para enseñar RCP ahora. Que coordine el entorno mientras tú continúas.",pts:-10}
   ]},
-  6:{fase:2,txt:"Han pasado 4 minutos. El compañero que te releva pregunta '¿Dónde pongo las manos?'. ¿Qué le indicas?",ops:[
+  6:{fase:2,txt:"Han pasado 4 minutos. El colega que te releva pregunta '¿Dónde pongo las manos?'. ¿Qué le indicas?",ops:[
     {txt:"'Centro del pecho, sobre el esternón. Talón de la mano, comprime 5-6 cm a 100-120 por minuto'",cor:true,next:7,pts:10},
     {txt:"'Donde creas que va el corazón'",fb:"Sé específico. Las instrucciones claras salvan vidas. Centro del pecho, sobre el esternón.",pts:-10},
     {txt:"'Mira cómo lo hago y repite'",fb:"Es más rápido dar la instrucción verbal directa. Cada segundo es valioso.",pts:-10},
@@ -1710,7 +2255,7 @@ M3:{pasos:{
   5:{fase:2,txt:"Tus rodillas duelen por el suelo duro del baño. ¿Qué haces?",ops:[
     {txt:"Sigo, la incomodidad no es razón para parar. Cambio de rodilla de apoyo.",cor:true,next:6,pts:10},
     {txt:"Paro para acomodarme mejor",fb:"No pares la RCP. Ajusta tu postura mientras sigues comprimiendo.",pts:-10,crit:true},
-    {txt:"Siento al compañero del pasillo para que entre a hacer RCP",fb:"Si el espacio lo permite y sabe RCP, el relevo es válido. Pero no pares mientras tanto.",pts:-10},
+    {txt:"Siento al colega del pasillo para que entre a hacer RCP",fb:"Si el espacio lo permite y sabe RCP, el relevo es válido. Pero no pares mientras tanto.",pts:-10},
     {txt:"Reduzco la intensidad para proteger mis rodillas",fb:"No reduzcas la intensidad. Ajusta la posición de rodillas mientras mantienes la técnica.",pts:-10}
   ]},
   6:{fase:2,txt:"La víctima hace un sonido extraño durante la RCP. ¿Qué significa?",ops:[
@@ -1733,34 +2278,34 @@ M3:{pasos:{
   ]}
 }},
 M4:{pasos:{
-  1:{fase:0,txt:"En el bus escolar en movimiento, el estudiante de adelante colapsa. ¿Cuál es tu primera acción?",ops:[
+  1:{fase:0,txt:"En el bus de la ruta del campus, el pasajero de adelante se desploma. ¿Cuál es tu primera acción?",ops:[
     {txt:"Grito al conductor que detenga el bus y me acerco a verificar respuesta",cor:true,next:2,pts:10},
     {txt:"Llamo al 123 de inmediato sin moverme",fb:"El bus debe detenerse primero. Grita al conductor mientras te acercas.",pts:-10},
     {txt:"Espero que el bus se detenga solo en la próxima parada",fb:"No esperes. El conductor debe detenerse ahora. Actúa.",pts:-10},
     {txt:"Le sacudo desde mi asiento para ver si responde",fb:"Acércate. Necesitas verificar correctamente sacudiendo los hombros de la víctima.",pts:-10}
   ]},
-  2:{fase:0,txt:"El conductor frena. La víctima no responde. ¿Cómo manejas el espacio estrecho del bus?",ops:[
-    {txt:"Evalúo si puedo hacer RCP en el pasillo. Si no, pido sacarla del bus.",cor:true,next:3,pts:10},
-    {txt:"Hago RCP en el asiento",fb:"En el asiento la superficie no es firme. Mueve a la víctima al pasillo o fuera del bus.",pts:-10},
+  2:{fase:0,txt:"El conductor detiene el bus. La víctima no responde. ¿Cómo manejas el espacio estrecho del bus?",ops:[
+    {txt:"Evalúo si puedo hacer RCP en el pasillo del bus. Si no, la bajo a superficie firme.",cor:true,next:3,pts:10},
+    {txt:"Hago RCP en el asiento",fb:"En el asiento la superficie no es firme. Baja a la víctima al pasillo o fuera del bus.",pts:-10},
     {txt:"Espero a que llegue ayuda antes de moverla",fb:"Si necesitas moverla para hacer RCP efectiva, hazlo. No esperes si el espacio no permite RCP.",pts:-10},
     {txt:"Le pido al conductor que haga RCP mientras yo conduzco",fb:"Tú eres el reanimador. Haz la RCP y pide al conductor que coordine la emergencia.",pts:-10}
   ]},
-  3:{fase:1,txt:"El conductor llama al 123. ¿Qué debe hacer mientras espera instrucciones?",ops:[
+  3:{fase:1,txt:"Un colega llama al 123. ¿Qué debe hacer mientras espera instrucciones?",ops:[
     {txt:"Indicar ubicación exacta y quedarse en línea con el operador",cor:true,next:4,pts:10},
     {txt:"Manejar hasta el hospital más cercano",fb:"No manejes con la víctima en RCP. Espera a los paramédicos en el lugar.",pts:-10},
-    {txt:"Buscar el DEA del bus",fb:"Si hay DEA en el bus, buscarlo es útil. Pero el conductor también debe mantenerse en línea con el 123.",pts:-10},
-    {txt:"Abrir la puerta del bus y esperar en silencio",fb:"El conductor debe permanecer en línea con el 123 y dar ubicación exacta.",pts:-10}
+    {txt:"Buscar el DEA de la ruta",fb:"Buscar un DEA cercano es útil, pero alguien debe mantenerse en línea con el 123.",pts:-10},
+    {txt:"Solo esperar en silencio a que lleguen",fb:"Quien llamó debe permanecer en línea con el 123 y dar la ubicación exacta.",pts:-10}
   ]},
-  4:{fase:2,txt:"La víctima está en el pasillo estrecho del bus. ¿Cómo te arrodillas para hacer RCP?",ops:[
+  4:{fase:2,txt:"Bajas a la víctima del bus a una superficie firme. ¿Cómo te arrodillas para hacer RCP?",ops:[
     {txt:"Me posiciono a su lado con rodillas firmes en el pasillo y comprimo en el centro del pecho",cor:true,next:5,pts:10},
     {txt:"Me paro sobre ella para hacer compresiones desde arriba",fb:"Arrodíllate a su lado. Pararse encima puede ser inestable e ineficaz.",pts:-10},
     {txt:"Le pido al conductor que haga RCP",fb:"Tú ya estás en posición. No pierdas tiempo reubicando roles.",pts:-10},
     {txt:"Hago compresiones arrodillado detrás de su cabeza",fb:"Posición incorrecta. Debes estar a su lado para comprimir el centro del pecho.",pts:-10}
   ]},
-  5:{fase:2,txt:"Otros estudiantes del bus están asustados y quieren salir. ¿Qué haces?",ops:[
-    {txt:"Pido al conductor que los guíe afuera del bus para tener espacio y calma",cor:true,next:6,pts:10},
-    {txt:"Los ignoro y me concentro en la RCP",fb:"Manejar el entorno ayuda. Pide al conductor que saque a los otros estudiantes.",pts:-10},
-    {txt:"Paro para tranquilizarlos",fb:"No pares la RCP. El conductor puede manejar a los otros estudiantes.",pts:-10,crit:true},
+  5:{fase:2,txt:"Otras personas alrededor están asustadas y estorban. ¿Qué haces?",ops:[
+    {txt:"Pido a un colega que aleje a los curiosos para tener espacio y calma",cor:true,next:6,pts:10},
+    {txt:"Los ignoro y me concentro en la RCP",fb:"Manejar el entorno ayuda. Pide al conductor que aleje a las demás personas.",pts:-10},
+    {txt:"Paro para tranquilizarlos",fb:"No pares la RCP. El conductor puede orientar a las demás personas.",pts:-10,crit:true},
     {txt:"Les digo que se sienten y no se muevan",fb:"El conductor puede guiarlos afuera. Tener menos personas en el espacio ayuda.",pts:-10}
   ]},
   6:{fase:2,txt:"Ha pasado 1 minuto de RCP. ¿Cada cuánto debes rotar con otro reanimador?",ops:[
@@ -1769,7 +2314,7 @@ M4:{pasos:{
     {txt:"No debes rotar, la continuidad es clave",fb:"Rotar cada 2 minutos mejora la calidad. El cambio toma menos de 10 segundos.",pts:-10},
     {txt:"Cada 5 minutos para no interrumpir el ritmo",fb:"5 minutos es demasiado. La calidad cae notablemente. El estándar es cada 2 minutos.",pts:-10}
   ]},
-  7:{fase:3,txt:"El conductor del bus encuentra un DEA en el compartimento de emergencias. ¿Qué haces?",ops:[
+  7:{fase:3,txt:"El conductor encuentra un DEA en el bus. ¿Qué haces?",ops:[
     {txt:"¡Excelente! Le pido que lo traiga inmediatamente y preparo a la víctima",cor:true,next:8,pts:10},
     {txt:"No lo uso porque no sé si funciona",fb:"El DEA se autocalibre. Enciéndelo y sigue sus instrucciones de voz.",pts:-10},
     {txt:"Primero termino un ciclo de RCP completo antes de usar el DEA",fb:"El DEA puede usarse en cuanto esté disponible. No lo retrases.",pts:-10},
@@ -1783,11 +2328,11 @@ M4:{pasos:{
   ]}
 }},
 M5:{pasos:{
-  1:{fase:0,txt:"Un padre de familia colapsa en la entrada del colegio. El vigilante te mira asustado. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"Un visitante se desploma en la portería del campus. El vigilante te mira asustado. ¿Qué haces?",ops:[
     {txt:"Me acerco, verifico la respuesta de la víctima y tomo el liderazgo",cor:true,next:2,pts:10},
     {txt:"Le indico al vigilante que actúe porque es el adulto responsable",fb:"Si el vigilante no sabe qué hacer, tú debes liderar. La edad no importa.",pts:-10},
     {txt:"Llamo al rector para que decida",fb:"No hay tiempo para jerarquías. Actúa de inmediato.",pts:-10},
-    {txt:"Espero a que llegue un docente para que tome el mando",fb:"Tú sabes qué hacer. No esperes a nadie. Actúa.",pts:-10,crit:true}
+    {txt:"Espero a que llegue un colega para que tome el mando",fb:"Tú sabes qué hacer. No esperes a nadie. Actúa.",pts:-10,crit:true}
   ]},
   2:{fase:0,txt:"La víctima no responde. El vigilante está paralizado. ¿Cómo lo activas?",ops:[
     {txt:"Le doy una instrucción específica: '¡Llame al 123 ahora, marque este número!'",cor:true,next:3,pts:10},
@@ -1796,24 +2341,24 @@ M5:{pasos:{
     {txt:"Le grito que reaccione sin darle una tarea específica",fb:"El grito sin instrucción no activa a alguien en shock. Dale una orden concreta.",pts:-10}
   ]},
   3:{fase:1,txt:"El vigilante llama al 123. ¿Le das instrucciones adicionales?",ops:[
-    {txt:"'Busque el DEA del colegio y tráigalo aquí rápido'",cor:true,next:4,pts:10},
+    {txt:"'Busque el DEA del campus y tráigalo aquí rápido'",cor:true,next:4,pts:10},
     {txt:"'Abra la puerta para que entren los paramédicos'",fb:"Eso es útil luego. La prioridad ahora es el DEA. Múndalo a buscarlo.",pts:-10},
-    {txt:"'Avise a los docentes'",fb:"No es la prioridad ahora. El DEA es urgente. El vigilante debe buscarlo.",pts:-10},
+    {txt:"'Avise a las personas'",fb:"No es la prioridad ahora. El DEA es urgente. El vigilante debe buscarlo.",pts:-10},
     {txt:"'Quédese aquí a mi lado'",fb:"El vigilante es más útil buscando el DEA. No lo dejes parado.",pts:-10}
   ]},
-  4:{fase:2,txt:"Inicias RCP al padre de familia. Llegan otros padres y se asustan. ¿Qué les dices?",ops:[
+  4:{fase:2,txt:"Inicias RCP al visitante. Llega más gente y se asusta. ¿Qué les dices?",ops:[
     {txt:"'Por favor, aléjense y denme espacio. Estoy haciendo RCP. ¡Llamen al 123 si no lo han hecho!'",cor:true,next:5,pts:10},
     {txt:"Ignoro a los padres y me concentro solo en la RCP",fb:"Manejar el entorno ayuda. Una instrucción rápida mientras sigues comprimiendo.",pts:-10},
     {txt:"Paro para explicarles lo que está pasando",fb:"No pares la RCP. Habla mientras sigues comprimiendo.",pts:-10,crit:true},
     {txt:"Les pido que hagan ellos la RCP para que yo coordine",fb:"Continúa tú la RCP. Los otros padres pueden apoyar en otras tareas.",pts:-10}
   ]},
-  5:{fase:2,txt:"Un padre adulto dice que sabe primeros auxilios y quiere ayudar. ¿Qué haces?",ops:[
+  5:{fase:2,txt:"Alguien dice que sabe primeros auxilios y quiere ayudar. ¿Qué haces?",ops:[
     {txt:"Le pido que se prepare para relevarme en 2 minutos",cor:true,next:6,pts:10},
     {txt:"Le cedo el control de inmediato",fb:"Verifica primero si realmente sabe hacer RCP correctamente. Pídele que se prepare para el relevo.",pts:-10},
     {txt:"Le digo que no es necesario",fb:"Un reanimador adicional es valioso para el relevo. Acéptalo.",pts:-10},
     {txt:"Le pido que llame al 123 aunque ya lo hayan llamado",fb:"El 123 ya fue llamado. El padre puede relevar en las compresiones. Úsalo bien.",pts:-10}
   ]},
-  6:{fase:2,txt:"El padre adulto empieza a relevar pero hace compresiones muy rápidas y superficiales. ¿Qué haces?",ops:[
+  6:{fase:2,txt:"Esa persona empieza a relevar pero hace compresiones muy rápidas y superficiales. ¿Qué haces?",ops:[
     {txt:"Le corrijo inmediatamente: 'Más profundo, 5-6 cm, ritmo más lento: 100-120 por minuto'",cor:true,next:7,pts:10},
     {txt:"Lo dejo continuar para no interrumpir",fb:"La RCP incorrecta es peor que ninguna. Corrígelo de inmediato.",pts:-10},
     {txt:"Le quito el relevo y lo hago yo de nuevo",fb:"Corrígelo. Si puede mejorar, es más valioso tenerlo como relevo.",pts:-10},
@@ -1833,37 +2378,37 @@ M5:{pasos:{
   ]}
 }},
 H1:{pasos:{
-  1:{fase:0,txt:"Tu docente de 58 años colapsa mientras explica. 28 estudiantes entran en pánico. ¿Qué haces primero?",ops:[
-    {txt:"Grito '¡Silencio! ¡Necesito ayuda!' y me acerco al docente a verificar respuesta",cor:true,next:2,pts:10},
-    {txt:"Espero a que otro docente entre al salón",fb:"No hay tiempo. Actúa ahora. El pánico se controla con acción decisiva.",pts:-10},
+  1:{fase:0,txt:"Tu jefe de 58 años se desploma durante una presentación. El equipo entra en pánico. ¿Qué haces primero?",ops:[
+    {txt:"Grito '¡Silencio! ¡Necesito ayuda!' y me acerco al colega a verificar respuesta",cor:true,next:2,pts:10},
+    {txt:"Espero a que otro colega entre al salón",fb:"No hay tiempo. Actúa ahora. El pánico se controla con acción decisiva.",pts:-10},
     {txt:"Salgo a buscar al coordinador",fb:"No abandones la escena. Actúa y envía a otro a buscar ayuda.",pts:-10},
-    {txt:"Pido a todos que se sienten y guarden calma antes de actuar",fb:"El orden no es la prioridad. La vida del docente sí. Actúa de inmediato.",pts:-10,crit:true}
+    {txt:"Pido a todos que se sienten y guarden calma antes de actuar",fb:"El orden no es la prioridad. La vida del colega sí. Actúa de inmediato.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"El docente no responde. 28 estudiantes gritan. ¿Cómo controlas el caos?",ops:[
-    {txt:"Señalo a 2 estudiantes específicos: uno llama al 123, otro busca DEA. Pido a los demás que salgan al pasillo.",cor:true,next:3,pts:10},
+  2:{fase:0,txt:"El jefe no responde. El equipo grita. ¿Cómo controlas el caos?",ops:[
+    {txt:"Señalo a 2 personas específicos: uno llama al 123, otro busca DEA. Pido a los demás que salgan al pasillo.",cor:true,next:3,pts:10},
     {txt:"Grito para que todos se callen antes de actuar",fb:"No pierdas tiempo en el orden. Actúa y asigna roles simultáneamente.",pts:-10},
     {txt:"Dejo que el pánico se resuelva solo mientras hago RCP",fb:"El caos interrumpe la emergencia. Controla el entorno mientras actúas.",pts:-10},
     {txt:"Saco a todos del salón antes de iniciar RCP",fb:"No evacúes el salón antes de iniciar. Asigna roles y actúa en paralelo.",pts:-10}
   ]},
-  3:{fase:1,txt:"Un estudiante dice '¡No puedes hacer eso al profe, es irrespetuoso!'. ¿Qué respondes?",ops:[
+  3:{fase:1,txt:"Un colega dice '¡No puedes hacer eso al jefe!'. ¿Qué respondes?",ops:[
     {txt:"Continúo comprimiendo y digo 'Esto le está salvando la vida'",cor:true,next:4,pts:10},
     {txt:"Paro para tener la discusión",fb:"No pares la RCP por ninguna razón. Responde brevemente y continúa.",pts:-10,crit:true},
-    {txt:"Le pido al estudiante que haga él la RCP",fb:"No cedas el control en medio de la discusión. Continúa y responde con firmeza.",pts:-10},
-    {txt:"Paro y espero que otro estudiante defienda tu acción",fb:"No pares. Responde con firmeza: 'Esta acción le salva la vida.'",pts:-10,crit:true}
+    {txt:"Le pido al persona que haga él la RCP",fb:"No cedas el control en medio de la discusión. Continúa y responde con firmeza.",pts:-10},
+    {txt:"Paro y espero que otro persona defienda tu acción",fb:"No pares. Responde con firmeza: 'Esta acción le salva la vida.'",pts:-10,crit:true}
   ]},
-  4:{fase:2,txt:"El docente tiene corbata. ¿Qué haces con la ropa antes de las compresiones?",ops:[
+  4:{fase:2,txt:"El jefe tiene corbata y camisa formal. ¿Qué haces con la ropa antes de las compresiones?",ops:[
     {txt:"Aflojar la corbata y abrir los botones superiores para acceder al pecho",cor:true,next:5,pts:10},
     {txt:"Comprimir directamente sobre la camisa y la corbata",fb:"La corbata puede interferir. Aflójala y abre la camisa para mejor acceso.",pts:-10},
     {txt:"Cortar la camisa con tijeras",fb:"No es necesario cortarla. Ábrela rápidamente con los botones.",pts:-10},
     {txt:"Tirar de la corbata para retirarla jalando fuerte",fb:"Hazlo con cuidado. Afloja el nudo y retírala suavemente.",pts:-10}
   ]},
   5:{fase:2,txt:"Has comprimido 2 minutos. Tu ritmo baja por el cansancio. ¿Qué haces?",ops:[
-    {txt:"Pido relevo a otro estudiante que tomó el curso de RCP",cor:true,next:6,pts:10},
+    {txt:"Pido relevo a otro persona que tomó el curso de RCP",cor:true,next:6,pts:10},
     {txt:"Continúo aunque el ritmo sea más lento",fb:"Un ritmo lento es ineficaz. Pide relevo para mantener la calidad.",pts:-10},
     {txt:"Paro a descansar 30 segundos",fb:"No pares. Pide relevo inmediato para continuar sin interrupción.",pts:-10,crit:true},
-    {txt:"Le pido al estudiante más alto que comprima porque tiene más fuerza",fb:"Lo que importa es el entrenamiento, no la estatura. Pide relevo al que también tomó el curso.",pts:-10}
+    {txt:"Le pido al persona más alto que comprima porque tiene más fuerza",fb:"Lo que importa es el entrenamiento, no la estatura. Pide relevo al que también tomó el curso.",pts:-10}
   ]},
-  6:{fase:2,txt:"El relevo también se cansa rápido. Solo tienen 3 estudiantes disponibles. ¿Cómo organizas los turnos?",ops:[
+  6:{fase:2,txt:"El relevo también se cansa rápido. Solo hay 3 personas disponibles. ¿Cómo organizas los turnos?",ops:[
     {txt:"Rotamos cada 2 minutos entre los 3, sin parar más de 10 segundos",cor:true,next:7,pts:10},
     {txt:"Solo yo hago RCP, los otros descansen para después",fb:"Rotar entre todos mantiene la calidad. Úsalos a todos.",pts:-10},
     {txt:"Los 3 hacemos RCP al mismo tiempo para mayor fuerza",fb:"Solo un reanimador a la vez. Los tres se turnan cada 2 minutos.",pts:-10},
@@ -1883,13 +2428,13 @@ H1:{pasos:{
   ]}
 }},
 H2:{pasos:{
-  1:{fase:0,txt:"Estás solo en casa. Tu abuelo de 72 años colapsa en la sala. ¿Cuál es tu primera acción?",ops:[
+  1:{fase:0,txt:"Estás solo en casa. Un familiar de 72 años se desploma en la sala. ¿Cuál es tu primera acción?",ops:[
     {txt:"Me acerco, verifico si responde llamándolo y sacudiéndolo",cor:true,next:2,pts:10},
     {txt:"Llamo al 123 de inmediato",fb:"Primero verifica la respuesta. Luego llamas al 123.",pts:-10},
-    {txt:"Busco a los vecinos para que ayuden",fb:"No abandones al abuelo. Primero evalúa y llama al 123.",pts:-10},
+    {txt:"Busco a los vecinos para que ayuden",fb:"No abandones a tu familiar. Primero evalúa y llama al 123.",pts:-10},
     {txt:"Le doy palmadas en la cara para despertarlo",fb:"Las palmadas en la cara no son el método correcto. Sacude los hombros suavemente.",pts:-10}
   ]},
-  2:{fase:0,txt:"Tu abuelo no responde. Estás solo. ¿Cómo llamas al 123 mientras inicias RCP?",ops:[
+  2:{fase:0,txt:"Tu familiar no responde. Estás solo. ¿Cómo llamas al 123 mientras inicias RCP?",ops:[
     {txt:"Llamo en altavoz, dejo el teléfono cerca y inicio RCP siguiendo las instrucciones del operador",cor:true,next:3,pts:10},
     {txt:"Llamo primero y cuelgo rápido para hacer RCP",fb:"No cuelgues. El operador del 123 puede guiarte en tiempo real durante la RCP.",pts:-10},
     {txt:"Primero hago RCP y luego llamo",fb:"Llama al 123 de inmediato. El operador guía mientras haces RCP en altavoz.",pts:-10},
@@ -1901,13 +2446,13 @@ H2:{pasos:{
     {txt:"Le pido al operador que lo traiga él",fb:"El operador te guía, no lleva equipos. Continúa con la RCP.",pts:-10},
     {txt:"Paro la RCP y voy al vecino a preguntar si tiene uno",fb:"No interrumpas. El vecino puede entrar a ayudar, pero tú no pares la RCP.",pts:-10,crit:true}
   ]},
-  4:{fase:2,txt:"Empiezas compresiones. El abuelo tiene 72 años. ¿Haces compresiones más suaves por su edad?",ops:[
+  4:{fase:2,txt:"Empiezas compresiones. Tu familiar tiene 72 años. ¿Haces compresiones más suaves por su edad?",ops:[
     {txt:"No. La técnica es la misma: 5-6 cm, 100-120/min. Las costillas pueden aguantar.",cor:true,next:5,pts:10},
     {txt:"Sí, con adultos mayores compresiones suaves para no romper costillas",fb:"El protocolo es el mismo. Las costillas pueden romperse pero la RCP salva la vida.",pts:-10},
     {txt:"Solo comprimo 2-3 cm para ser cuidadoso",fb:"2-3 cm es insuficiente. El estándar es 5-6 cm independientemente de la edad.",pts:-10},
     {txt:"Comprimo solo 10 veces y verifico si hay mejora",fb:"No reduzcas el número ni la profundidad. Compresiones continuas a 100-120/min.",pts:-10}
   ]},
-  5:{fase:2,txt:"La emoción te afecta. Sientes que vas a llorar mientras haces RCP a tu abuelo. ¿Qué haces?",ops:[
+  5:{fase:2,txt:"La emoción te afecta. Sientes que vas a llorar mientras haces RCP a tu familiar. ¿Qué haces?",ops:[
     {txt:"Respiro profundo y me enfoco en el ritmo. La emoción es normal, la técnica no puede fallar.",cor:true,next:6,pts:10},
     {txt:"Paro un momento para recuperarme emocionalmente",fb:"No pares. La emoción es válida pero las compresiones no pueden parar.",pts:-10,crit:true},
     {txt:"Llamo a mis padres antes de continuar",fb:"No pares la RCP. Llama solo si alguien más puede continuar las compresiones.",pts:-10,crit:true},
@@ -1925,7 +2470,7 @@ H2:{pasos:{
     {txt:"Me voy a sentar porque ya estoy agotado sin decirles nada",fb:"Dales la información clave: tiempo de paro, RCP iniciada, estado del paciente.",pts:-10},
     {txt:"Les pregunto si lo que hice estuvo bien antes de ceder",fb:"Primero cede el control e informa el historial. Las preguntas pueden esperar.",pts:-10}
   ]},
-  8:{fase:3,txt:"Los paramédicos logran estabilizar a tu abuelo. ¿Qué aprendiste de esta misión?",ops:[
+  8:{fase:3,txt:"Los paramédicos logran estabilizar a tu familiar. ¿Qué aprendiste de esta misión?",ops:[
     {txt:"La RCP oportuna en casa salva vidas. La emoción es válida pero la técnica no puede parar.",cor:true,next:null,pts:10},
     {txt:"Solo los profesionales deben hacer RCP",fb:"Los reanimadores legos que actúan antes de los paramédicos duplican las posibilidades de supervivencia.",pts:-10},
     {txt:"Es mejor esperar a los paramédicos que hacer RCP incorrectamente",fb:"Cualquier RCP es mejor que ninguna. Actuar salva vidas.",pts:-10},
@@ -1933,40 +2478,40 @@ H2:{pasos:{
   ]}
 }},
 H3:{pasos:{
-  1:{fase:0,txt:"La señora de la tienda escolar colapsa. Estás con dos amigos. El espacio es reducido. ¿Primer paso?",ops:[
-    {txt:"Verifico respuesta mientras pido a un amigo que llame al 123 y al otro que despeje el espacio",cor:true,next:2,pts:10},
-    {txt:"Los tres levantamos a la señora para ponerla cómoda",fb:"¡No la muevas! Verifica respuesta primero. Moverla puede ser peligroso.",pts:-10},
-    {txt:"Salimos a buscar a un adulto en el colegio",fb:"No abandonen la escena. Asignen roles y actúen ahora.",pts:-10},
-    {txt:"Espero a que uno de mis amigos tome la iniciativa",fb:"Tú sabes el protocolo. No esperes. Actúa y asigna roles.",pts:-10,crit:true}
+  1:{fase:0,txt:"La persona del cafetín del campus se desploma. Estás con dos colegas. El espacio es reducido. ¿Primer paso?",ops:[
+    {txt:"Verifico respuesta mientras pido a un colega que llame al 123 y al otro que despeje el espacio",cor:true,next:2,pts:10},
+    {txt:"Los tres levantamos a la persona para ponerla cómoda",fb:"¡No la muevas! Verifica respuesta primero. Moverla puede ser peligroso.",pts:-10},
+    {txt:"Salimos a buscar a un adulto en el campus",fb:"No abandonen la escena. Asignen roles y actúen ahora.",pts:-10},
+    {txt:"Espero a que uno de mis colegas tome la iniciativa",fb:"Tú sabes el protocolo. No esperes. Actúa y asigna roles.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"La señora tiene 50 años y está inconsciente. ¿Cómo la posicionas para la RCP?",ops:[
+  2:{fase:0,txt:"La persona tiene 50 años y está inconsciente. ¿Cómo la posicionas para la RCP?",ops:[
     {txt:"Boca arriba en el suelo, en espacio despejado del local",cor:true,next:3,pts:10},
     {txt:"De lado para que no se ahogue",fb:"La posición de RCP es boca arriba en superficie plana. No de lado.",pts:-10},
     {txt:"Sentada en su silla para facilitar el acceso al pecho",fb:"La RCP requiere superficie plana y firme. Boca arriba en el suelo.",pts:-10},
     {txt:"Boca abajo para facilitar la respiración",fb:"Incorrecto. La RCP siempre se hace boca arriba en superficie plana y firme.",pts:-10}
   ]},
-  3:{fase:1,txt:"Un amigo busca DEA en el colegio. El otro está en el 123. Tú inicias RCP. ¿Cuántas manos usas?",ops:[
+  3:{fase:1,txt:"Un colega busca el DEA del campus. El otro está en el 123. Tú inicias RCP. ¿Cuántas manos usas?",ops:[
     {txt:"Dos manos: talón de la dominante, la otra encima, dedos entrelazados",cor:true,next:4,pts:10},
-    {txt:"Una sola mano para no lastimar a una señora",fb:"Para adultos siempre se usan dos manos. Una mano es insuficiente.",pts:-10},
+    {txt:"Una sola mano para no lastimar a una persona",fb:"Para adultos siempre se usan dos manos. Una mano es insuficiente.",pts:-10},
     {txt:"Los puños cerrados para mayor fuerza",fb:"Los puños son incorrectos. Usa el talón de la palma con dedos entrelazados.",pts:-10},
     {txt:"Tres dedos de cada mano para precisión",fb:"Usa el talón de la palma con dedos entrelazados, no los dedos.",pts:-10}
   ]},
-  4:{fase:2,txt:"La señora tiene marcapasos (cicatriz pequeña en el pecho izquierdo). ¿Cambia algo?",ops:[
+  4:{fase:2,txt:"La persona tiene marcapasos (cicatriz pequeña en el pecho izquierdo). ¿Cambia algo?",ops:[
     {txt:"No cambio la técnica de compresiones. El marcapasos no impide la RCP.",cor:true,next:5,pts:10},
     {txt:"No hago RCP porque el marcapasos puede explotar",fb:"El marcapasos no explota. La RCP se realiza normalmente.",pts:-10},
     {txt:"Solo pongo el DEA lejos del marcapasos y suspendo compresiones",fb:"Las compresiones continúan normalmente. El DEA sí debe colocarse al menos 8 cm del marcapasos.",pts:-10},
     {txt:"Hago compresiones más suaves en el lado derecho del pecho",fb:"Las compresiones van en el CENTRO del esternón. La técnica no cambia por el marcapasos.",pts:-10}
   ]},
-  5:{fase:2,txt:"Tu amigo regresa con el DEA. ¿Dónde colocas los electrodos si hay marcapasos en el lado izquierdo?",ops:[
+  5:{fase:2,txt:"Tu colega regresa con el DEA. ¿Dónde colocas los electrodos si hay marcapasos en el lado izquierdo?",ops:[
     {txt:"El electrodo izquierdo al menos 8 cm alejado del marcapasos. El otro en hombro derecho.",cor:true,next:6,pts:10},
     {txt:"Pongo los electrodos normalmente sin tener en cuenta el marcapasos",fb:"Con marcapasos o desfibrilador implantable, coloca los electrodos a al menos 8 cm del dispositivo.",pts:-10},
     {txt:"No uso el DEA si hay marcapasos",fb:"El DEA SÍ puede usarse con marcapasos. Solo aleja el electrodo al menos 8 cm.",pts:-10},
     {txt:"Pongo ambos electrodos en el lado derecho para evitar el marcapasos",fb:"Un electrodo va bajo la clavícula derecha y el otro en el costado izquierdo, alejado del marcapasos.",pts:-10}
   ]},
-  6:{fase:2,txt:"El DEA indica 'Choque recomendado'. Uno de tus amigos tiene la mano apoyada en el suelo cerca. ¿Qué haces?",ops:[
+  6:{fase:2,txt:"El DEA indica 'Choque recomendado'. Un colega tiene la mano apoyada cerca de la víctima. ¿Qué haces?",ops:[
     {txt:"Grito '¡Aléjense! ¡Nadie toca!' y verifico que todos estén lejos antes del choque",cor:true,next:7,pts:10},
     {txt:"Aplico el choque de inmediato, el suelo no conduce",fb:"¡PELIGRO! El suelo mojado o metálico puede conducir. Asegúrate primero.",pts:-10,crit:true},
-    {txt:"Le digo al amigo que se mueva pero no reviso al otro",fb:"Verifica a TODOS antes del choque. Un contacto es suficiente para el accidente.",pts:-10},
+    {txt:"Le digo al colega que se mueva pero no reviso al otro",fb:"Verifica a TODOS antes del choque. Un contacto es suficiente para el accidente.",pts:-10},
     {txt:"Solo me alejo yo porque soy quien aplica el choque",fb:"TODOS deben alejarse, no solo quien aplica. Verifica el área completa.",pts:-10,crit:true}
   ]},
   7:{fase:3,txt:"Después del choque, el DEA dice 'No se detecta ritmo. Continúe RCP'. ¿Qué significa?",ops:[
@@ -1975,25 +2520,25 @@ H3:{pasos:{
     {txt:"Espero a que el DEA detecte el ritmo antes de actuar",fb:"No esperes. El DEA ya dio la orden: continúa RCP de inmediato.",pts:-10},
     {txt:"Retiro los electrodos porque el DEA no sirvió",fb:"Deja los electrodos. El DEA puede analizar de nuevo. Reinicia RCP.",pts:-10}
   ]},
-  8:{fase:3,txt:"Llegan los paramédicos. La señora tiene signos de vida. ¿Cuál fue la clave de este rescate?",ops:[
+  8:{fase:3,txt:"Llegan los paramédicos. La persona tiene signos de vida. ¿Cuál fue la clave de este rescate?",ops:[
     {txt:"Trabajo en equipo, roles asignados y mantener el protocolo correctamente",cor:true,next:null,pts:10},
     {txt:"Haber esperado al DEA antes de actuar",fb:"El éxito fue actuar de inmediato con RCP y luego añadir el DEA, no esperar.",pts:-10},
     {txt:"El marcapasos ayudó a la víctima",fb:"El marcapasos no inicia solos. La RCP y el DEA fueron determinantes.",pts:-10},
-    {txt:"Haber esperado a los paramédicos antes de comprimir",fb:"La RCP inmediata fue la clave. Sin ella, los paramédicos habrían llegado demasiado tarde.",pts:-10}
+    {txt:"Haber esperado a los paramédicos antes de comprimir",fb:"La supervivencia mejora cuando se reconoce el paro rápidamente, se inicia RCP de alta calidad, se utiliza el DEA de forma oportuna y se mantiene la coordinación del equipo hasta la llegada de los profesionales.",pts:-10}
   ]}
 }},
 H4:{pasos:{
-  1:{fase:0,txt:"Una señora de 55 años colapsa en la escalera eléctrica del centro comercial. Los guardias no actúan. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"Una persona de 55 años se desploma junto a las escaleras del parqueadero cubierto. Los guardias no actúan. ¿Qué haces?",ops:[
     {txt:"Detengo la escalera, verifico seguridad, evalúo respuesta de la víctima",cor:true,next:2,pts:10},
     {txt:"Hago RCP en la escalera eléctrica",fb:"Primero detén la escalera por seguridad. La RCP en escaleras móviles es peligrosa.",pts:-10},
     {txt:"Le pido a un guardia que actúe porque es su responsabilidad",fb:"Si los guardias no saben actuar, tú debes liderar. El conocimiento manda.",pts:-10},
-    {txt:"Espero a que llegue el personal del centro comercial",fb:"No esperes. Actúa tú. El conocimiento te da la autoridad en esta situación.",pts:-10,crit:true}
+    {txt:"Espero a que llegue el personal de seguridad",fb:"No esperes. Actúa tú. El conocimiento te da la autoridad en esta situación.",pts:-10,crit:true}
   ]},
-  2:{fase:0,txt:"La escalera está detenida. La señora no responde. ¿La mueves al piso del centro comercial?",ops:[
+  2:{fase:0,txt:"La víctima quedó en un escalón. No responde. ¿La mueves a una superficie plana y firme?",ops:[
     {txt:"Sí, la escalera no es superficie adecuada para RCP. La muevo rápido con ayuda.",cor:true,next:3,pts:10},
     {txt:"No, no debo mover a una víctima",fb:"Cuando el espacio impide la RCP, sí debes mover a la víctima. La escalera no sirve.",pts:-10},
     {txt:"Hago las compresiones en los escalones como pueda",fb:"Los escalones no son superficie plana ni firme. Mueve a la víctima.",pts:-10},
-    {txt:"Siento a la señora en el escalón para hacer las compresiones",fb:"La RCP siempre en el suelo, boca arriba, superficie plana. Nunca sentada.",pts:-10}
+    {txt:"Siento a la persona en el escalón para hacer las compresiones",fb:"La RCP siempre en el suelo, boca arriba, superficie plana. Nunca sentada.",pts:-10}
   ]},
   3:{fase:1,txt:"Un guardia de seguridad llega y pregunta '¿Qué hago?'. ¿Qué le asignas?",ops:[
     {txt:"'Busque el DEA del mall ahora. Hay uno en cada planta. Vaya.'",cor:true,next:4,pts:10},
@@ -2001,7 +2546,7 @@ H4:{pasos:{
     {txt:"'Quédese aquí observando'",fb:"Usa al guardia productivamente. El DEA es la prioridad urgente.",pts:-10},
     {txt:"'Llame al 123'",fb:"Si el 123 no ha sido llamado, sí. Pero si ya fue llamado, prioriza el DEA.",pts:-10}
   ]},
-  4:{fase:2,txt:"Inicias RCP en el centro comercial. Hay mucha gente viendo. ¿Cómo manejas las miradas?",ops:[
+  4:{fase:2,txt:"Inicias RCP en el parqueadero. Hay mucha gente viendo. ¿Cómo manejas las miradas?",ops:[
     {txt:"Me enfoco en el ritmo y compresiones. Las miradas no me importan.",cor:true,next:5,pts:10},
     {txt:"Pido que todos se vayan antes de continuar",fb:"No pierdas tiempo con el público. Actúa y deja que otros manejen a los curiosos.",pts:-10},
     {txt:"Reduzco la intensidad de las compresiones para que no se vea tan agresivo",fb:"Nunca reduzcas la fuerza por estética. Las compresiones deben ser de 5-6 cm.",pts:-10},
@@ -2025,15 +2570,15 @@ H4:{pasos:{
     {txt:"Me retiro del área completamente",fb:"Quédate para ayudar a despejar el área y apoyar al médico.",pts:-10},
     {txt:"Sostengo los cables del DEA para que no se muevan",fb:"No toques los cables cerca de la víctima durante el análisis. Aleja al público.",pts:-10}
   ]},
-  8:{fase:3,txt:"Se aplica el choque. La señora tiene actividad cardíaca. Llegan paramédicos. ¿Qué aprendiste?",ops:[
+  8:{fase:3,txt:"Se aplica el choque. La persona tiene actividad cardíaca. Llegan paramédicos. ¿Qué aprendiste?",ops:[
     {txt:"El conocimiento salva vidas sin importar la edad. Liderar en emergencias es un deber.",cor:true,next:null,pts:10},
     {txt:"Siempre debo esperar a que un adulto experto tome el control",fb:"Si nadie actúa, tú debes hacerlo. Tu acción fue decisiva.",pts:-10},
-    {txt:"El DEA es lo que realmente salvó a la señora, no la RCP",fb:"La RCP mantuvo la circulación hasta que el DEA pudo actuar. Ambos fueron esenciales.",pts:-10},
+    {txt:"El DEA es lo que realmente salvó a la persona, no la RCP",fb:"La RCP mantuvo la circulación hasta que el DEA pudo actuar. Ambos fueron esenciales.",pts:-10},
     {txt:"Intervenir en emergencias ajenas puede causarme problemas legales",fb:"En Colombia y la mayoría de países, el reanimador lego que actúa de buena fe está protegido por ley.",pts:-10}
   ]}
 }},
 H5:{pasos:{
-  1:{fase:0,txt:"36°C en el patio. Tu compañero colapsa jugando. Hay otros estudiantes cerca. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"36°C en las canchas. Un colega se desploma en plena actividad. Hay otras personas cerca. ¿Qué haces?",ops:[
     {txt:"Verifico respuesta mientras pido a alguien que llame al 123",cor:true,next:2,pts:10},
     {txt:"Lo llevo a la sombra antes de evaluar",fb:"Primero verifica respuesta. Si está en paro, el protocolo no cambia por el calor.",pts:-10},
     {txt:"Le echo agua fría pensando que es un desmayo",fb:"Sin evaluar respuesta, no puedes saber si es desmayo o paro. Evalúa primero.",pts:-10},
@@ -2057,17 +2602,17 @@ H5:{pasos:{
     {txt:"Me detengo a tomar agua",fb:"No pares la RCP. Pide relevo a otro y que te traigan agua mientras.",pts:-10,crit:true},
     {txt:"Reduzco el ritmo a 60/min para no sobrecalentarme",fb:"60/min es insuficiente. Pide relevo para mantener el ritmo correcto de 100-120/min.",pts:-10}
   ]},
-  5:{fase:2,txt:"El compañero que te releva pregunta si puede verter agua en el pecho de la víctima para enfriarla. ¿Qué le dices?",ops:[
+  5:{fase:2,txt:"El colega que te releva pregunta si puede verter agua en el pecho de la víctima para enfriarla. ¿Qué le dices?",ops:[
     {txt:"No si hay DEA cerca: el agua es peligrosa con electrodos. Sí se puede enfriar con paños en frente.",cor:true,next:6,pts:10},
     {txt:"Sí, el agua fría puede reanimar a la víctima",fb:"El agua puede ser peligrosa con el DEA. No mojes el pecho si hay electrodos o DEA disponible.",pts:-10},
     {txt:"No, el agua interrumpe la RCP",fb:"El agua sí puede ser problemática con el DEA. Pero no porque interrumpa la RCP.",pts:-10},
     {txt:"Sí, cualquier líquido frío en el pecho ayuda a desfibrilar",fb:"El agua no desfibrilila. Y puede interferir con los electrodos del DEA.",pts:-10}
   ]},
-  6:{fase:2,txt:"Llegan otros docentes. Uno quiere rociar agua en el rostro de la víctima para 'despertarlo'. ¿Qué haces?",ops:[
+  6:{fase:2,txt:"Llegan otras personas. Una quiere rociar agua en el rostro de la víctima para 'despertarlo'. ¿Qué haces?",ops:[
     {txt:"Explico que esto es un paro cardíaco, no un desmayo. Continúo RCP.",cor:true,next:7,pts:10},
     {txt:"Le permito intentarlo mientras yo continúo",fb:"El agua en el rostro durante RCP puede generar aspiración. Explica la diferencia.",pts:-10},
-    {txt:"Paro la RCP para que el docente actúe",fb:"No pares. Explica rápidamente y continúa comprimiendo.",pts:-10,crit:true},
-    {txt:"Cedo el lugar al docente porque tiene más autoridad",fb:"En emergencias, el conocimiento manda. Continúa y explica brevemente.",pts:-10,crit:true}
+    {txt:"Paro la RCP para que el colega actúe",fb:"No pares. Explica rápidamente y continúa comprimiendo.",pts:-10,crit:true},
+    {txt:"Cedo el lugar al colega porque tiene más autoridad",fb:"En emergencias, el conocimiento manda. Continúa y explica brevemente.",pts:-10,crit:true}
   ]},
   7:{fase:3,txt:"Llega el DEA. El pecho de la víctima está sudado. ¿Qué haces antes de colocar los electrodos?",ops:[
     {txt:"Seco el pecho con lo que tenga disponible antes de colocar los electrodos",cor:true,next:8,pts:10},
@@ -2078,12 +2623,12 @@ H5:{pasos:{
   8:{fase:3,txt:"El DEA da choque. La víctima responde. ¿Cuál fue el factor más importante?",ops:[
     {txt:"Actuar de inmediato con RCP correcta sin importar las condiciones externas",cor:true,next:null,pts:10},
     {txt:"Esperar al DEA fue la clave",fb:"La RCP inmediata fue esencial. El DEA complementó, pero sin RCP el tiempo habría sido fatal.",pts:-10},
-    {txt:"Enfriar a la víctima fue determinante",fb:"Enfriarlo ayuda al tratamiento, pero la RCP fue la acción que mantuvo vivo al compañero.",pts:-10},
+    {txt:"Enfriar a la víctima fue determinante",fb:"Enfriarlo ayuda al tratamiento, pero la RCP fue la acción que mantuvo vivo al colega.",pts:-10},
     {txt:"El calor extremo fue la razón del éxito porque activó la desfibrilación",fb:"El calor fue el riesgo, no la solución. La RCP y el DEA fueron determinantes.",pts:-10}
   ]}
 }},
 X1:{pasos:{
-  1:{fase:0,txt:"Partido de fútbol barrial. Un jugador de 40 años colapsa en la cancha. 100 personas enloquecen. ¿Qué haces?",ops:[
+  1:{fase:0,txt:"Torneo interuniversitario. Un jugador de 40 años se desploma en la cancha. 100 personas enloquecen. ¿Qué haces?",ops:[
     {txt:"Entro a la cancha, verifico respuesta y grito instrucciones específicas al grupo",cor:true,next:2,pts:10},
     {txt:"Espero a que la locura se calme",fb:"No hay tiempo para esperar. Actúa con decisión. La multitud sigue al líder.",pts:-10},
     {txt:"Llamo al 123 desde las gradas",fb:"Primero evalúa. Alguien más puede llamar al 123 mientras tú verificas.",pts:-10},
@@ -2146,7 +2691,7 @@ X2:{pasos:{
     {txt:"Gritas pidiendo ayuda y esperas que alguien responda antes de actuar",fb:"Grita pidiendo ayuda pero actúa de inmediato. No esperes respuesta para comenzar.",pts:-10}
   ]},
   3:{fase:1,txt:"El 123 pide ubicación. El parqueadero no tiene nombre visible. ¿Cómo orientas a los paramédicos?",ops:[
-    {txt:"Doy referencias: dirección del centro comercial, entrada del parqueadero, piso y zona aproximada",cor:true,next:4,pts:10},
+    {txt:"Doy referencias: dirección de la universidad, entrada del parqueadero, piso y zona aproximada",cor:true,next:4,pts:10},
     {txt:"Digo 'Es en un parqueadero' y espero que lleguen solos",fb:"Sé específico. Los paramédicos necesitan ubicación exacta. Da todas las referencias posibles.",pts:-10},
     {txt:"Envío mi ubicación GPS al 123",fb:"Buena idea complementaria. Pero también da referencias verbales claras.",pts:-10},
     {txt:"Le digo que no sé dónde estoy exactamente",fb:"Busca referencias: nombre del mall, calle, nivel del parqueadero. Da cualquier dato útil.",pts:-10}
@@ -2183,7 +2728,7 @@ X2:{pasos:{
   ]}
 }},
 X3:{pasos:{
-  1:{fase:0,txt:"Accidente frente al colegio. Dos adultos inconscientes. Estás con 4 compañeros. ¿Qué haces primero?",ops:[
+  1:{fase:0,txt:"Accidente en la vía frente a la universidad. Dos adultos inconscientes. Estás con 4 colegas. ¿Qué haces primero?",ops:[
     {txt:"Evalúo rápidamente a los dos. Verifico cuál de los dos responde y priorizo al que está en paro.",cor:true,next:2,pts:10},
     {txt:"Empezamos RCP a los dos al mismo tiempo",fb:"No hay suficientes reanimadores calificados. Prioriza al que está en paro más crítico.",pts:-10},
     {txt:"Esperamos al 123 para que decidan",fb:"No esperes. Evalúa y prioriza mientras alguien llama al 123.",pts:-10},
@@ -2202,22 +2747,22 @@ X3:{pasos:{
     {txt:"Los 4 esperamos al 123 para que organicen el equipo",fb:"No esperes. Tú organizas el equipo ahora. El 123 llega después.",pts:-10,crit:true}
   ]},
   4:{fase:2,txt:"Inicias RCP a víctima A. Víctima B empieza a perder consciencia. ¿Qué haces?",ops:[
-    {txt:"Pido al compañero que monitorea a B que esté listo para iniciar RCP si B también entra en paro",cor:true,next:5,pts:10},
-    {txt:"Abandono a A para atender a B",fb:"No abandones a A. Tu compañero puede verificar a B y estar listo si entra en paro.",pts:-10,crit:true},
-    {txt:"Ignoro lo que pasa con B porque tengo que concentrarme en A",fb:"La coordinación del equipo es esencial. Tu compañero debe alertarte si B empeora.",pts:-10},
-    {txt:"Paro todo y evalúo a los dos antes de continuar",fb:"No pares la RCP de A. Tu compañero evalúa a B mientras tú continúas.",pts:-10,crit:true}
+    {txt:"Pido al colega que monitorea a B que esté listo para iniciar RCP si B también entra en paro",cor:true,next:5,pts:10},
+    {txt:"Abandono a A para atender a B",fb:"No abandones a A. Tu colega puede verificar a B y estar listo si entra en paro.",pts:-10,crit:true},
+    {txt:"Ignoro lo que pasa con B porque tengo que concentrarme en A",fb:"La coordinación del equipo es esencial. Tu colega debe alertarte si B empeora.",pts:-10},
+    {txt:"Paro todo y evalúo a los dos antes de continuar",fb:"No pares la RCP de A. Tu colega evalúa a B mientras tú continúas.",pts:-10,crit:true}
   ]},
-  5:{fase:2,txt:"Llevas 3 minutos de RCP. Tu compañero debe relevarte. ¿Cómo haces el cambio?",ops:[
+  5:{fase:2,txt:"Llevas 3 minutos de RCP. Tu colega debe relevarte. ¿Cómo haces el cambio?",ops:[
     {txt:"En menos de 10 segundos, con una señal clara: '¡Cambio!' y paso las manos de inmediato",cor:true,next:6,pts:10},
     {txt:"Paro, descansamos 30 segundos y reanudamos",fb:"No hay descanso. El cambio es instantáneo. Menos de 10 segundos.",pts:-10,crit:true},
     {txt:"Espero que él me indique cuándo",fb:"El reanimador activo decide cuándo cambiar. Coordínalo tú.",pts:-10},
     {txt:"Esperamos a que el DEA llegue antes de rotar",fb:"No esperes el DEA para rotar. El relevo es ahora, cada 2 minutos.",pts:-10}
   ]},
-  6:{fase:2,txt:"Víctima B también entra en paro. Ahora tienes 2 víctimas en paro y 4 estudiantes. ¿Qué haces?",ops:[
-    {txt:"2 estudiantes a cada víctima, alternándose. Alguien sigue en el 123 para coordinar llegada de más ayuda.",cor:true,next:7,pts:10},
+  6:{fase:2,txt:"Víctima B también entra en paro. Ahora tienes 2 víctimas en paro y 4 colegas. ¿Qué haces?",ops:[
+    {txt:"2 personas a cada víctima, alternándose. Alguien sigue en el 123 para coordinar llegada de más ayuda.",cor:true,next:7,pts:10},
     {txt:"Todos nos concentramos en la víctima original porque es la que llegamos primero",fb:"Las dos vidas importan. Con 4 personas, se puede atender a las dos.",pts:-10},
     {txt:"Esperamos a los paramédicos porque ya somos pocos",fb:"4 personas pueden atender 2 víctimas. Distribuye los roles y actúa.",pts:-10},
-    {txt:"Abandonamos a B porque no hay suficientes recursos",fb:"Con 4 estudiantes hay recursos. 2 por víctima es viable. No abandones.",pts:-10,crit:true}
+    {txt:"Abandonamos a B porque no hay suficientes recursos",fb:"Con 4 personas hay recursos. 2 por víctima es viable. No abandones.",pts:-10,crit:true}
   ]},
   7:{fase:3,txt:"Llega un DEA. ¿A cuál víctima lo usas primero?",ops:[
     {txt:"A la víctima A, que lleva más tiempo en paro. Luego a B si es posible.",cor:true,next:8,pts:10},
@@ -2233,7 +2778,7 @@ X3:{pasos:{
   ]}
 }},
 X4:{pasos:{
-  1:{fase:0,txt:"Llueve fuerte. Un adulto de 50 años colapsa en la calle. ¿Cuál es tu primer paso?",ops:[
+  1:{fase:0,txt:"Llueve fuerte. Un adulto de 50 años se desploma en una vía del campus. ¿Cuál es tu primer paso?",ops:[
     {txt:"Evalúo la seguridad (no hay corriente eléctrica en el suelo) y verifico respuesta",cor:true,next:2,pts:10},
     {txt:"Lo muevo bajo un techo antes de evaluar",fb:"Primero evalúa seguridad y respuesta. Moverlo puede retrasar la RCP.",pts:-10},
     {txt:"Espero que pare de llover para actuar",fb:"La lluvia no impide la RCP. Evalúa seguridad y actúa de inmediato.",pts:-10,crit:true},
@@ -2283,27 +2828,27 @@ X4:{pasos:{
   ]}
 }},
 X5:{pasos:{
-  1:{fase:0,txt:"Excursión en la montaña. Sin señal. Sin DEA. A 2km del bus. Tu docente colapsa. ¿Qué haces primero?",ops:[
-    {txt:"Verifico respuesta mientras pido a un compañero que corra al bus a buscar señal y DEA",cor:true,next:2,pts:10},
-    {txt:"Corremos todos al bus a buscar ayuda",fb:"No abandones a la víctima. Envía a uno, tú te quedas con el docente.",pts:-10,crit:true},
-    {txt:"Espero a recuperar señal para llamar al 123",fb:"No hay tiempo de esperar. Verifica respuesta y actúa de inmediato.",pts:-10,crit:true},
-    {txt:"Intentas reanimar con hierbas o agua fría de la montaña",fb:"No hay alternativas naturales. La RCP es la única herramienta disponible ahora.",pts:-10}
+  1:{fase:0,txt:"Sacan del agua a una persona en la piscina del campus. No responde y no hay DEA cerca. ¿Qué haces primero?",ops:[
+    {txt:"Verifico respuesta mientras pido a un colega que active el 123 y corra por el DEA",cor:true,next:2,pts:10},
+    {txt:"Corremos todos a buscar ayuda y dejamos sola a la víctima",fb:"No abandones a la víctima. Envía a uno, tú te quedas con el colega.",pts:-10,crit:true},
+    {txt:"Espero un momento por si reacciona antes de actuar",fb:"No hay tiempo de esperar. Verifica respuesta y actúa de inmediato.",pts:-10,crit:true},
+    {txt:"Intento reanimar sacudiéndolo y echándole más agua encima",fb:"No hay alternativas naturales. La RCP es la única herramienta disponible ahora.",pts:-10}
   ]},
-  2:{fase:0,txt:"El docente no responde. No hay señal, no hay DEA, están solos. ¿Qué haces?",ops:[
+  2:{fase:0,txt:"La persona no responde y no respira. No hay DEA a la mano. ¿Qué haces?",ops:[
     {txt:"Inicio RCP de inmediato. Soy la única esperanza de la víctima ahora.",cor:true,next:3,pts:10},
-    {txt:"Espero a que llegue el compañero con el DEA antes de actuar",fb:"No esperes. El compañero puede tardar 10+ minutos. Inicia RCP ahora.",pts:-10,crit:true},
-    {txt:"Busco hierbas o remedios naturales que puedan ayudar",fb:"No hay alternativas. La RCP es la única herramienta que tienes. Úsala.",pts:-10},
+    {txt:"Espero a que llegue el colega con el DEA antes de actuar",fb:"No esperes. El colega puede tardar varios minutos. Inicia RCP ahora.",pts:-10,crit:true},
+    {txt:"Busco algún remedio casero que pueda ayudar",fb:"No hay alternativas. La RCP es la única herramienta que tienes. Úsala.",pts:-10},
     {txt:"Gritas pidiendo ayuda y esperas respuesta antes de comprimir",fb:"Grita pidiendo ayuda pero inicia RCP de inmediato. No esperes respuesta.",pts:-10,crit:true}
   ]},
-  3:{fase:1,txt:"Tu docente pesa más que tú. Las compresiones son difíciles. ¿Qué ajustes haces?",ops:[
+  3:{fase:1,txt:"La víctima es corpulenta y el piso está mojado. Las compresiones cuestan. ¿Qué ajustes haces?",ops:[
     {txt:"Uso el peso de mi cuerpo inclinándome sobre el talón de la mano para aumentar la fuerza",cor:true,next:4,pts:10},
     {txt:"Solo comprimo con la fuerza de los brazos",fb:"Usar el peso del cuerpo es más efectivo y eficiente. Inclínate sobre las manos.",pts:-10},
     {txt:"Reduzco la profundidad porque es muy pesado",fb:"La profundidad correcta es 5-6 cm. Usa el peso corporal para lograrlo.",pts:-10},
-    {txt:"Le pido al compañero que queda que aplique fuerza desde arriba",fb:"Solo un reanimador a la vez en posición correcta. Usa tu propio peso corporal.",pts:-10}
+    {txt:"Le pido a un colega que aplique fuerza desde arriba",fb:"Solo un reanimador a la vez en posición correcta. Usa tu propio peso corporal.",pts:-10}
   ]},
-  4:{fase:2,txt:"Llevas 3 minutos de RCP solo. El suelo es irregular y estás en una pendiente. ¿Qué haces?",ops:[
+  4:{fase:2,txt:"Llevas 3 minutos de RCP solo. El borde de la piscina es duro y resbaloso. ¿Qué haces?",ops:[
     {txt:"Busco la posición más estable posible y continúo. La situación no permite más.",cor:true,next:5,pts:10},
-    {txt:"Arrastro al docente a terreno plano aunque tome 2 minutos",fb:"2 minutos sin RCP pueden ser fatales. Actúa donde estás.",pts:-10,crit:true},
+    {txt:"Arrastro a la víctima a una zona seca aunque tome 2 minutos",fb:"2 minutos sin RCP pueden ser fatales. Actúa donde estás.",pts:-10,crit:true},
     {txt:"Paro a buscar terreno plano cerca",fb:"Si hay terreno plano a pocos metros, moverse rápido puede valer. Sino, actúa donde estás.",pts:-10},
     {txt:"Hago las compresiones de pie porque el suelo es inestable",fb:"Arrodíllate lo más estable posible. Comprimir de pie no permite la fuerza ni la posición correcta.",pts:-10}
   ]},
@@ -2313,14 +2858,14 @@ X5:{pasos:{
     {txt:"Paro si no hay mejora visible en la víctima",fb:"Los reanimadores legos no determinan si hay mejora. Continúan hasta el relevo.",pts:-10},
     {txt:"Paro para recuperar energía y reanudar en 2 minutos",fb:"No pares. Continúa aunque sea con menor ritmo. La interrupción es peor.",pts:-10,crit:true}
   ]},
-  6:{fase:2,txt:"El compañero que fue al bus regresa. ¡Encontró un DEA en el kit de emergencias! ¿Cómo procedes?",ops:[
+  6:{fase:2,txt:"Un colega regresa con el DEA del campus. ¡Lo encontró! ¿Cómo procedes?",ops:[
     {txt:"Le pido que lo encienda y siga las instrucciones de voz mientras yo continúo RCP",cor:true,next:7,pts:10},
     {txt:"Paro la RCP para usar el DEA yo mismo",fb:"Coordina: tú continúas RCP mientras otro prepara el DEA. Luego para el análisis.",pts:-10},
     {txt:"Termino un ciclo completo de RCP antes de usar el DEA",fb:"Usa el DEA en cuanto esté listo. No lo retrases.",pts:-10},
-    {txt:"Le digo que espere porque no sé si el DEA funcionará en la montaña",fb:"El DEA funciona en cualquier lugar. Úsalo de inmediato.",pts:-10}
+    {txt:"Le digo que espere porque la víctima está mojada",fb:"Seca rápido el pecho y aléjalo de charcos; luego usa el DEA de inmediato.",pts:-10}
   ]},
-  7:{fase:3,txt:"El DEA está listo. ¿Qué le dices al compañero antes del análisis?",ops:[
-    {txt:"'Nadie toca al docente. Yo tampoco. Que analice.'",cor:true,next:8,pts:10},
+  7:{fase:3,txt:"El DEA está listo. ¿Qué le dices al colega antes del análisis?",ops:[
+    {txt:"'Nadie toca a la víctima. Yo tampoco. Que analice.'",cor:true,next:8,pts:10},
     {txt:"'Sigo comprimiendo mientras el DEA analiza'",fb:"¡PARA! Durante el análisis del DEA nadie debe tocar a la víctima.",pts:-10,crit:true},
     {txt:"'Presiónale el pecho para que el DEA detecte mejor el ritmo'",fb:"¡INCORRECTO! Nadie toca durante el análisis. Aléjense todos.",pts:-10,crit:true},
     {txt:"'Sostenle la cabeza para que esté en buena posición'",fb:"¡PARA! Nadie debe tocar a la víctima durante el análisis del DEA.",pts:-10,crit:true}
@@ -2598,7 +3143,7 @@ function procesarDecision(op, container){
 function actualizarPuntos(pts){
   document.getElementById('simpts').textContent = pts;
   let rango = 'Novato';
-  if(pts >= 70) rango = 'Héroe Escolar';
+  if(pts >= 70) rango = 'Héroe Icesi';
   else if(pts >= 40) rango = 'Rescatista';
   else if(pts >= 20) rango = 'Aprendiz';
   const prev = document.getElementById('simrank').textContent;
@@ -2668,7 +3213,7 @@ function finalizarMision(){
 }
 
 function actualizarRangoGlobal(){
-  if(S.totalPts >= 200) S.rank = 'Héroe Escolar';
+  if(S.totalPts >= 200) S.rank = 'Héroe Icesi';
   else if(S.totalPts >= 80) S.rank = 'Rescatista';
   else S.rank = 'Novato';
 }
@@ -2788,8 +3333,8 @@ function endMission(){
 }
 function showResults(pts){
   actualizarRangoGlobal();
-  const rc=S.rank==='Héroe Escolar'?'heroe':S.rank==='Rescatista'?'rescatista':S.rank==='Aprendiz'?'rescatista':'novato';
-  const tr=S.rank==='Héroe Escolar'?'🏆':S.rank==='Rescatista'||S.rank==='Aprendiz'?'🥈':'🎖️';
+  const rc=S.rank==='Héroe Icesi'?'heroe':S.rank==='Rescatista'?'rescatista':S.rank==='Aprendiz'?'rescatista':'novato';
+  const tr=S.rank==='Héroe Icesi'?'🏆':S.rank==='Rescatista'||S.rank==='Aprendiz'?'🥈':'🎖️';
   if(!document.getElementById('rtrophy')) return;
   // Leer resumen de resultados
   const precR = S.decisions>0?Math.round(S.correctDec/S.decisions*100):0;
@@ -2857,6 +3402,7 @@ function printCert(){
 }
 // ══ EPIC MODE ══
 function startEpic(){
+  if(!(BS && BS.postUnlocked)){ abrirClaveO(); return; }
   S.epicDone=[];S.epicPts=0;
   renderEpic();showScreen('epic');
 }
@@ -2948,7 +3494,7 @@ function printEpicCert(){
     <div style="text-align:center;padding:8px 0;">
       <div style="font-size:10px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:8px;">CERTIFICA QUE EL HÉROE MÁXIMO</div>
       <div style="font-size:26px;font-weight:900;letter-spacing:2px;color:#000;margin-bottom:6px;">${S.name}</div>
-      <div style="font-size:13px;color:#444;line-height:1.5;">completó los 4 niveles del Modo Épico dominando el protocolo BLS Hands-Only CPR en todos los escenarios escolares</div>
+      <div style="font-size:13px;color:#444;line-height:1.5;">completó los 4 niveles del Modo Épico dominando el protocolo BLS Hands-Only CPR en todos los escenarios del campus</div>
       <div style="margin:14px 0;padding:10px;background:#F5F0FF;border-radius:8px;border:1px solid #CCAAFF;">
         <div style="font-size:9px;color:#888;letter-spacing:2px;margin-bottom:4px;">RANGO SUPREMO</div>
         <div style="font-size:22px;font-weight:900;letter-spacing:3px;color:#6600CC;">HÉROE MÁXIMO</div>
@@ -2980,21 +3526,15 @@ function showTQ(){
     <div><div class="qcat">${q.cat}</div><div class="qtext">${q.q}</div></div>
     <div class="qopts">${q.opts.map((o,i)=>`<button class="qopt" onclick="answerT(${i})" id="to${i}"><span class="qltr">${'ABCD'[i]}</span><span>${o}</span></button>`).join('')}</div>
     <div class="qexp" id="qexp"><div class="qexp-t">💡 ANÁLISIS TÉCNICO</div><div>${q.exp}</div></div>`;
-  startTTimer();
 }
-function startTTimer(){clearInterval(TTim);TSec=20;updTimer(20,20);TTim=setInterval(()=>{TSec--;updTimer(TSec,20);if(TSec<=0){clearInterval(TTim);if(!TAns)timeoutT();}},1000);}
-function updTimer(s,max){
-  document.getElementById('tctxt').textContent=s;
-  const c=2*Math.PI*18;
-  document.getElementById('tcfill').style.strokeDashoffset=c*(1-s/max);
-  document.getElementById('tcfill').style.stroke=s<=5?'var(--red)':s<=10?'var(--gold)':'var(--cyan)';
-}
+function startTTimer(){/* temporizador desactivado: el repaso es sin presión de tiempo */}
+function updTimer(){}
 function answerT(idx){
   if(TAns)return;TAns=true;clearInterval(TTim);
   const q=TQ[TI];const ok=idx===q.correct;
   document.querySelectorAll('.qopt').forEach((el,i)=>{el.onclick=null;if(i===q.correct)el.classList.add('correct');else if(i===idx&&!ok)el.classList.add('wrong');});
   if(ok){
-    const pts=10+Math.floor(TSec/2);TP+=pts;TStreak++;
+    const pts=15;TP+=pts;TStreak++;
     flashFX('cf');showScorePop('+'+pts);S.correctDec++;
     if(TStreak>=3){const cb=document.getElementById('combofx');cb.textContent='🔥 COMBO x'+TStreak+'!';cb.classList.add('show');setTimeout(()=>cb.classList.remove('show'),1500);}
   }else{flashFX('wf');TStreak=0;}
@@ -3004,11 +3544,11 @@ function answerT(idx){
 function timeoutT(){TAns=true;TStreak=0;const q=TQ[TI];document.querySelectorAll('.qopt').forEach((el,i)=>{el.onclick=null;if(i===q.correct)el.classList.add('correct');});document.getElementById('qexp').classList.add('show');flashFX('wf');setTimeout(()=>{TI++;showTQ();},2400);}
 function endTrivia(){
   clearInterval(TTim);S.totalPts+=TP;
-  if(S.totalPts>=51)S.rank='Héroe Escolar';else if(S.totalPts>=21)S.rank='Rescatista';
+  if(S.totalPts>=51)S.rank='Héroe Icesi';else if(S.totalPts>=21)S.rank='Rescatista';
   S.decisions+=TQ.length;
-  const rc=S.rank==='Héroe Escolar'?'heroe':S.rank==='Rescatista'?'rescatista':'novato';
+  const rc=S.rank==='Héroe Icesi'?'heroe':S.rank==='Rescatista'?'rescatista':'novato';
   document.getElementById('rtrophy').textContent=TP>=80?'🏆':TP>=50?'🥈':'🎖️';
-  document.getElementById('rrank').textContent='APRENDE EN ACCIÓN';
+  document.getElementById('rrank').textContent='RETO DE PREGUNTAS';
   document.getElementById('rrank').className='rrank rescatista';
   document.getElementById('rpts').textContent=TP;
   document.getElementById('rdec').textContent=TQ.length;
@@ -3019,7 +3559,7 @@ function endTrivia(){
   document.getElementById('cname').textContent=S.name;
   document.getElementById('crankl').textContent=S.rank.toUpperCase();
   document.getElementById('crankl').className='cert-rank-lbl '+rc;
-  document.getElementById('cpts').textContent='★ '+TP+' PTS · APRENDE EN ACCIÓN';
+  document.getElementById('cpts').textContent='★ '+TP+' PTS · RETO DE PREGUNTAS';
   showScreen('results');
 }
 
@@ -3474,26 +4014,26 @@ function _ttsCancel(){
 
 // ── Definición de insignias por misión ──
 const MISSION_BADGES = {
-  E1:{icon:'🚶',name:'Primer Respondedor',desc:'Pasillo Solitario'},
-  E2:{icon:'📚',name:'Guardián del Aula',desc:'Clase Silenciosa'},
+  E1:{icon:'🏢',name:'Guardián de la Oficina',desc:'La Oficina'},
+  E2:{icon:'📊',name:'Reflejo en Reunión',desc:'Sala de Reuniones'},
   E3:{icon:'🍽️',name:'Héroe de la Cafetería',desc:'Cafetería'},
   E4:{icon:'📖',name:'Custodio del Saber',desc:'Biblioteca'},
-  E5:{icon:'🌳',name:'Ángel del Parque',desc:'Parque'},
-  M1:{icon:'🎭',name:'Héroe del Escenario',desc:'Acto Cultural'},
-  M2:{icon:'🏃',name:'Campeón de Cancha',desc:'Ed. Física'},
+  E5:{icon:'🌳',name:'Ángel del Campus',desc:'Zonas Verdes'},
+  M1:{icon:'🎤',name:'Voz que Salva',desc:'Auditorio'},
+  M2:{icon:'🎾',name:'Match Point Vital',desc:'Cancha de Tenis'},
   M3:{icon:'🚻',name:'Rescate Silencioso',desc:'Emergencia Baño'},
-  M4:{icon:'🚌',name:'Guardián del Bus',desc:'Bus Escolar'},
-  M5:{icon:'🚪',name:'Héroe de la Entrada',desc:'Entrada Colegio'},
-  H1:{icon:'👩‍🏫',name:'Alumno que Salva',desc:'El Docente Cae'},
-  H2:{icon:'🏠',name:'Guardián del Hogar',desc:'El Abuelo'},
-  H3:{icon:'🏪',name:'Héroe de la Tienda',desc:'Tienda Escolar'},
-  H4:{icon:'🏬',name:'Líder en el Caos',desc:'Centro Comercial'},
+  M4:{icon:'🚐',name:'Guardián de la Ruta',desc:'Bus de la Ruta'},
+  M5:{icon:'🚪',name:'Guardián de la Portería',desc:'Portería'},
+  H1:{icon:'👔',name:'Salvó al Jefe',desc:'El Jefe Cae'},
+  H2:{icon:'🏠',name:'Guardián del Hogar',desc:'En Casa'},
+  H3:{icon:'🏪',name:'Héroe del Cafetín',desc:'Cafetín'},
+  H4:{icon:'🅿️',name:'Líder en el Caos',desc:'Parqueadero'},
   H5:{icon:'☀️',name:'Resistente al Calor',desc:'Golpe de Calor'},
-  X1:{icon:'🎪',name:'Héroe del Estadio',desc:'Evento Deportivo'},
-  X2:{icon:'🌙',name:'Guardián Nocturno',desc:'Salida Nocturna'},
+  X1:{icon:'🏟️',name:'Héroe del Estadio',desc:'Torneo Deportivo'},
+  X2:{icon:'🌙',name:'Guardián Nocturno',desc:'Parqueadero Nocturno'},
   X3:{icon:'👥',name:'Decisor Maestro',desc:'Dos Víctimas'},
   X4:{icon:'🌧️',name:'Imparable',desc:'Bajo la Lluvia'},
-  X5:{icon:'🏔️',name:'Héroe en la Cima',desc:'Excursión Remota'},
+  X5:{icon:'🏊',name:'Héroe de la Piscina',desc:'Rescate en la Piscina'},
 };
 
 // ── Diplomas por nivel ──
@@ -3529,13 +4069,13 @@ function badgeKey(nombre){
 function loadBadgeState(nombre){
   try{
     const raw = localStorage.getItem(badgeKey(nombre));
-    return raw ? JSON.parse(raw) : {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false};
-  }catch(e){ return {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false}; }
+    return raw ? JSON.parse(raw) : {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false, moduleDone:false, postUnlocked:false};
+  }catch(e){ return {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false, moduleDone:false, postUnlocked:false}; }
 }
 function saveBadgeState(bs){
   try{ localStorage.setItem(badgeKey(), JSON.stringify(bs)); }catch(e){}
 }
-let BS = {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false};
+let BS = {missionBadges:[], diplomasEarned:[], visitBadges:[], visitCount:0, cdwDone:[], _cdwUnlocked:false, moduleDone:false, postUnlocked:false};
 
 // ── Consultar visitas reales desde Google Sheets ──
 async function registerVisit(){
@@ -3672,8 +4212,8 @@ function showBriefing(m, isEpic=false){
   _briefingIsEpic = isEpic;
   // Reto personalizado
   const retos = {
-    E1:`¿Puedes salvar a tu compañero en el pasillo antes de que sea tarde?`,
-    E2:`¿Actúas sin crear pánico? Tu compañero necesita que seas el primero en moverse.`,
+    E1:`¿Puedes salvar a tu colega en el pasillo antes de que sea tarde?`,
+    E2:`¿Actúas sin crear pánico? Tu colega necesita que seas el primero en moverse.`,
     E3:`El efecto espectador paraliza a todos. ¿Serás tú quien rompa el silencio?`,
     E4:`Una adulta depende de ti. ¿Tienes el valor de actuar ante alguien mayor?`,
     E5:`Un desconocido cae frente a ti. ¿La distancia emocional te frena o actúas?`,
@@ -3683,7 +4223,7 @@ function showBriefing(m, isEpic=false){
     M4:`El bus se mueve. ¿Puedes mantener la calma y dirigir al conductor?`,
     M5:`El vigilante está en shock. ¿Puedes asumir el liderazgo frente a un adulto?`,
     H1:`Tu profesor cae. El salón enloquece. ¿Eres capaz de tomar el control?`,
-    H2:`Estás solo con tu abuelo. La carga emocional es máxima. ¿Mantienes el protocolo?`,
+    H2:`Estás solo con tu familiar. La carga emocional es máxima. ¿Mantienes el protocolo?`,
     H3:`Espacio estrecho, equipo pequeño. ¿Puedes coordinar con solo dos personas?`,
     H4:`Los guardias no saben qué hacer. ¿Tienes la confianza de liderar frente a adultos?`,
     H5:`36°C. El calor desconcentra. ¿El protocolo cambia? ¡Demuéstralo!`,
