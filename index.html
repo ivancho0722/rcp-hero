@@ -81,6 +81,10 @@
 /* Countdown extra missions tab */
 .dot-cdw{background:#FF6B00;box-shadow:0 0 6px rgba(255,107,0,.5);animation:dotPulse 1s ease-in-out infinite;}
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* ══ BOTÓN PANTALLA COMPLETA ══ */
+.fs-toggle-btn{position:fixed;right:16px;bottom:16px;z-index:900;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--panel);border:1px solid var(--border2);color:var(--text);font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.5);backdrop-filter:blur(6px);transition:all .2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.fs-toggle-btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(0,212,255,.35);transform:translateY(-2px);}
+@media(max-width:480px){.fs-toggle-btn{right:10px;bottom:10px;width:40px;height:40px;font-size:15px;}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(14px,1.6vw + 0.5vh,18px);min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
@@ -461,8 +465,8 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-
 .faseo-hint{display:none;margin:0 0 12px;padding:10px 14px;border-radius:10px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.35);color:var(--gold);font-size:13px;line-height:1.45;text-align:center;}
 body.fs-grande .faseo-hint{font-size:15px !important;} body.fs-extra .faseo-hint{font-size:17px !important;}
 /* ══ Recuadros de sección con color propio y brillo al seleccionar ══ */
-.hub-sec{border:1px solid rgba(var(--sc),.30);background:rgba(var(--sc),.045);border-radius:16px;padding:16px 16px 18px;margin-bottom:16px;transition:box-shadow .25s ease,border-color .25s ease,background .25s ease;cursor:default;}
-.hub-sec:hover,.hub-sec:focus-within,.hub-sec.lit{border-color:rgba(var(--sc),.85);background:rgba(var(--sc),.09);box-shadow:0 0 26px rgba(var(--sc),.30),inset 0 0 22px rgba(var(--sc),.05);}
+.hub-sec{border:1px solid rgba(var(--sc),.30);background:transparent;border-radius:16px;padding:16px 16px 18px;margin-bottom:16px;transition:box-shadow .25s ease,border-color .25s ease,background .25s ease;cursor:default;}
+.hub-sec:hover,.hub-sec:focus-within,.hub-sec.lit{border-color:rgba(var(--sc),.85);background:transparent;box-shadow:0 0 26px rgba(var(--sc),.30);}
 .hub-sec .sec-title{color:rgb(var(--sc));}
 .hub-sec .sec-title::before{background:rgb(var(--sc));}
 .hub-sec .sec-title::after{background:rgba(var(--sc),.28);}
@@ -767,9 +771,19 @@ body.fs-extra  .fs-btn-x .fs-a { font-size: 38px !important; }
   .mod-body-cols.has-media .mod-col-media{flex:1.15;min-width:0;}
   .mod-body-cols.has-media .mod-col-text{flex:1;margin:0;max-width:none;}
 }
-.mod-media{width:100%;border-radius:14px;overflow:hidden;background:#07070E;border:1px solid var(--border);}
+.mod-media{position:relative;width:100%;border-radius:14px;overflow:hidden;background:#07070E;border:1px solid var(--border);}
 .mod-img{width:100%;display:block;max-height:60vh;object-fit:contain;background:#07070E;}
 .mod-video{width:100%;aspect-ratio:16/9;display:block;background:#000;border:none;}
+.mod-fs-btn{position:absolute;bottom:12px;right:12px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:rgba(10,10,18,.72);border:1px solid var(--border2);color:var(--red2);border-radius:10px;font-size:21px;line-height:1;cursor:pointer;backdrop-filter:blur(4px);box-shadow:0 0 14px rgba(0,0,0,.45);transition:all .2s;z-index:2;}
+.mod-fs-btn:hover{border-color:var(--red);color:#fff;background:rgba(255,30,45,.4);box-shadow:0 0 18px var(--rglow);transform:translateY(-1px);}
+.mod-fs-btn:active{transform:translateY(0);}
+.mod-video-poster{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000;}
+.mod-video-poster-blank{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#111119,#1a1a2a);}
+/* El ícono ▶ ya viene dibujado en la imagen (10/11/12.webp): el botón es una capa
+   invisible sobre toda la diapositiva, para no duplicar el ícono por estética. */
+.mod-play-btn{position:absolute;inset:0;width:100%;height:100%;background:transparent;border:none;padding:0;margin:0;cursor:pointer;transition:background .2s;}
+.mod-play-btn:hover{background:rgba(0,0,0,.10);}
+.mod-play-btn:active{background:rgba(0,0,0,.18);}
 .mod-svgbox{width:100%;}
 .mod-svgbox svg{width:100%;height:auto;display:block;max-height:56vh;}
 .mod-ph{width:100%;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border2);border-radius:14px;color:var(--muted);text-align:center;padding:16px;box-sizing:border-box;font-size:40px;}
@@ -809,8 +823,11 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
 @media(max-width:520px){.mod-p-title{font-size:26px;}.mod-title{font-size:20px;}.mod-hdr-title{font-size:12px;}}
 
 .mod-stage.solo{padding:14px;flex:0 0 auto;justify-content:center;gap:0;}
-.mod-solo-img{display:flex;align-items:center;justify-content:center;width:100%;line-height:0;}
+.mod-solo-img{position:relative;display:flex;align-items:center;justify-content:center;width:100%;line-height:0;}
 .mod-solo-img img{max-width:100%;max-height:78vh;width:auto;height:auto;object-fit:contain;border-radius:12px;display:block;}
+.mod-solo-img video.mod-video{aspect-ratio:auto;max-width:100%;max-height:78vh;width:auto;height:auto;object-fit:contain;border-radius:12px;display:block;background:#000;}
+.mod-solo-img iframe.mod-video{width:100%;max-width:900px;aspect-ratio:16/9;height:auto;border-radius:12px;border:none;display:block;}
+.mod-solo-badge{position:absolute;top:14px;left:14px;max-width:calc(100% - 28px);background:rgba(10,10,18,.72);border:1px solid var(--border2);color:var(--text);font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;line-height:1.3;padding:8px 14px;border-radius:10px;backdrop-filter:blur(4px);box-shadow:0 0 14px rgba(0,0,0,.4);z-index:2;}
 @media(max-width:720px){ .mod-stage.solo{padding:8px;} }
 </style>
 </head>
@@ -1348,19 +1365,25 @@ const MODULO_SLIDES = [
   // DIAPOSITIVA 10: Video RCP
   {tipo:'video', titulo:'10 / 13 · 🎥 Reanimación Cardiopulmonar (RCP)',
    imagenUrl:'10.webp',
-   youtube:'', video:'',
+   youtube:'', video:'RCP.mp4',
    texto:'Aprende la secuencia completa de RCP en personas adultas siguiendo las recomendaciones vigentes de la American Heart Association (AHA).'},
+
+  // DIAPOSITIVA 10-1: Video RCP (parte 2)
+  {tipo:'video', titulo:'10-1 / 13 · 🎥 Reanimación Cardiopulmonar (RCP) · Parte 2',
+   imagenUrl:'10-1.webp',
+   youtube:'', video:'RCP1.mp4',
+   texto:'Continúa la secuencia de RCP en personas adultas: profundiza en los detalles técnicos de las compresiones según la American Heart Association (AHA).'},
 
   // DIAPOSITIVA 11: Video DEA
   {tipo:'video', titulo:'11 / 13 · 🎥 Uso del DEA',
    imagenUrl:'11.webp',
-   youtube:'', video:'',
+   youtube:'', video:'DEA.mp4',
    texto:'Observa cómo utilizar un desfibrilador externo automático (DEA) de forma segura durante un paro cardíaco.'},
 
   // DIAPOSITIVA 12: Video OVACE
   {tipo:'video', titulo:'12 / 13 · 🎥 Atención inicial de la OVACE',
    imagenUrl:'12.webp',
-   youtube:'', video:'',
+   youtube:'', video:'OVACE.mp4',
    texto:'Aprende a reconocer y atender una obstrucción de la vía aérea por cuerpo extraño en personas adultas.'},
 
   // CIERRE: Preparación completa
@@ -1408,8 +1431,20 @@ function _modYT(u){
 }
 function _modMedia(s){
   const yt = _modYT(s.youtube);
-  if(yt) return '<div class="mod-media"><iframe class="mod-video" src="https://www.youtube.com/embed/'+yt+'?rel=0&modestbranding=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
-  if(s.video)  return '<div class="mod-media"><video class="mod-video" controls playsinline preload="metadata" src="'+s.video+'"></video></div>';
+  const playBtn = '<button type="button" class="mod-play-btn" onclick="_modPlayVideo(this)" aria-label="Reproducir video"></button>';
+  // Video/YouTube: se muestra la MISMA diapositiva (imagen + botón ▶) y el video solo
+  // se carga/reproduce cuando el usuario hace click — no se reproduce automáticamente.
+  if(yt){
+    const poster = s.imagenUrl || ('https://img.youtube.com/vi/'+yt+'/hqdefault.jpg');
+    return '<div class="mod-media mod-media-cover" data-type="yt" data-src="'+yt+'">'
+         + '<img class="mod-video-poster" src="'+poster+'" alt="" loading="lazy">'
+         + playBtn + '</div>';
+  }
+  if(s.video){
+    const poster = s.imagenUrl ? '<img class="mod-video-poster" src="'+s.imagenUrl+'" alt="" loading="lazy">' : '<div class="mod-video-poster mod-video-poster-blank"></div>';
+    return '<div class="mod-media mod-media-cover" data-type="video" data-src="'+s.video+'">'
+         + poster + playBtn + '</div>';
+  }
   if(s.imagen) return '<div class="mod-media"><img class="mod-img" src="'+s.imagen+'" alt=""></div>';
   if(s.svgIdx!=null && typeof TRIVIA!=='undefined' && TRIVIA[s.svgIdx]) return '<div class="mod-media"><div class="mod-svgbox">'+TRIVIA[s.svgIdx].svg+'</div></div>';
   if(s.svg)    return '<div class="mod-media"><div class="mod-svgbox">'+s.svg+'</div></div>';
@@ -1417,29 +1452,63 @@ function _modMedia(s){
   if(s.ph==='img')   return '<div class="mod-ph">🖼️<span>Aquí irá tu imagen o infografía</span></div>';
   return '';
 }
+// Click en ▶: reemplaza la portada (imagen+botón) por el reproductor real y arranca el video.
+function _modPlayVideo(btn){
+  const wrap = btn.closest('.mod-media-cover');
+  if(!wrap) return;
+  const type = wrap.dataset.type, src = wrap.dataset.src;
+  const fsBtn = '<button type="button" class="mod-fs-btn" onclick="_modFS(this)" aria-label="Ver en pantalla completa" title="Ver en pantalla completa">⛶</button>';
+  if(type === 'yt'){
+    wrap.innerHTML = '<iframe class="mod-video" src="https://www.youtube.com/embed/'+src+'?rel=0&modestbranding=1&autoplay=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'+fsBtn;
+  } else if(type === 'video'){
+    wrap.innerHTML = '<video class="mod-video" controls autoplay playsinline preload="metadata" src="'+src+'"></video>'+fsBtn;
+  }
+}
+// Pone en pantalla completa el <video>/<iframe> asociado al botón ⛶
+function _modFS(btn){
+  const media = btn.previousElementSibling;
+  if(!media) return;
+  try{
+    if(media.requestFullscreen) media.requestFullscreen();
+    else if(media.webkitEnterFullscreen) media.webkitEnterFullscreen(); // iOS Safari <video>
+    else if(media.webkitRequestFullscreen) media.webkitRequestFullscreen();
+    else if(media.msRequestFullscreen) media.msRequestFullscreen();
+  }catch(e){}
+}
 function _modRender(){
   const s = MODULO_SLIDES[_modI], n = MODULO_SLIDES.length;
   const stage = document.getElementById('mod-stage');
-  const _solo = !!(s.imagenUrl && !s.youtube && !s.video && s.tipo !== 'portada');
+  const _solo = !!(s.imagenUrl && s.tipo !== 'portada');
   stage.classList.toggle('solo', _solo);
   let html = '';
+  const _slideYT = _modYT(s.youtube);
   if(s.tipo === 'portada'){
     html = '<div class="mod-portada"><div class="mod-p-badge">RCP HERO · ICESI</div>'
          + '<div class="mod-p-title">'+s.titulo+'</div>'
          + '<div class="mod-p-text">'+s.texto+'</div>'
          + '<div class="mod-p-hint">Desliza o usa ▶ para avanzar</div></div>';
-  } else if(s.imagenUrl && !s.youtube && !s.video){
-    // Diapositivas 1-12: SOLO la imagen dentro del recuadro
+  } else if(s.imagenUrl && !_slideYT && !s.video){
+    // Diapositivas de solo imagen: la imagen ya trae todo el diseño
     html = '<div class="mod-solo-img"><img src="'+s.imagenUrl+'" alt="Diapositiva '+(_modI)+'" loading="lazy"></div>';
+  } else if(s.imagenUrl && (_slideYT || s.video)){
+    // Diapositivas de video: MISMA imagen/tamaño que las de solo imagen, con botón ▶ encima.
+    // El video real solo se carga/reproduce al hacer click (no autoplay al entrar a la diapositiva).
+    const _type = _slideYT ? 'yt' : 'video';
+    const _src  = _slideYT || s.video;
+    html = '<div class="mod-solo-img mod-media-cover" data-type="'+_type+'" data-src="'+_src+'">'
+         + '<img src="'+s.imagenUrl+'" alt="Diapositiva '+(_modI)+'" loading="lazy">'
+         + '<div class="mod-solo-badge">'+s.titulo+'</div>'
+         + '<button type="button" class="mod-play-btn" onclick="_modPlayVideo(this)" aria-label="Reproducir video"></button>'
+         + '</div>';
   } else {
     const media = _modMedia(s);
     let textCol = '<div class="mod-title">'+s.titulo+'</div>';
-    // Si tiene imagen URL, usa esa; si no, usa media (video)
+    // Si hay video/youtube, ese manda (imagenUrl se usa como poster); si no, usa la imagen URL suelta
     let mediaHtml = '';
-    if(s.imagenUrl){
-      mediaHtml = '<img src="'+s.imagenUrl+'" style="width:100%;height:auto;border-radius:12px;object-fit:cover;" loading="lazy" alt="'+s.titulo+'">';
-    } else if(media){
+    if(media){
       mediaHtml = media;
+    } else if(s.imagenUrl){
+      mediaHtml = '<img src="'+s.imagenUrl+'" style="width:100%;height:auto;border-radius:12px;object-fit:cover;" loading="lazy" alt="'+s.titulo+'">';
     }
     // Si tiene HTML personalizado, renderiza eso
     if(s.html){
@@ -4371,3 +4440,24 @@ init();
     <div id="cdwList"></div>
   </div>
 </div>
+
+<!-- ── BOTÓN PANTALLA COMPLETA ── -->
+<button class="fs-toggle-btn" id="fsToggleBtn" onclick="toggleAppFullscreen()" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+<script>
+function toggleAppFullscreen(){
+  const el = document.documentElement;
+  if(!document.fullscreenElement && !document.webkitFullscreenElement){
+    (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || function(){}).call(el);
+  } else {
+    (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen || function(){}).call(document);
+  }
+}
+function _updateFsBtnIcon(){
+  const btn = document.getElementById('fsToggleBtn');
+  if(!btn) return;
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  btn.textContent = isFs ? '⤢' : '⛶';
+  btn.title = isFs ? 'Salir de pantalla completa' : 'Pantalla completa';
+}
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,_updateFsBtnIcon));
+</script>
