@@ -93,12 +93,12 @@
 .lc-reason-box{display:none;margin-top:16px;background:rgba(255,30,45,.08);border:1px solid var(--border2);border-left:3px solid var(--red);border-radius:10px;padding:14px 18px;max-width:300px;text-align:center;}
 .lc-reason-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:var(--red2);letter-spacing:1px;margin-bottom:6px;}
 .lc-reason-text{font-size:12px;color:var(--muted2);line-height:1.5;}
-.lic-user-badge{display:none;position:fixed;top:10px;left:10px;z-index:850;align-items:center;gap:8px;background:rgba(10,10,18,.72);border:1px solid var(--border2);color:var(--muted2);font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.5px;padding:7px 10px 7px 13px;border-radius:20px;backdrop-filter:blur(4px);box-shadow:0 0 10px rgba(0,0,0,.4);}
+.lic-user-badge{display:none;position:fixed;bottom:16px;left:16px;z-index:900;align-items:center;gap:8px;background:rgba(10,10,18,.72);border:1px solid var(--border2);color:var(--muted2);font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.5px;padding:7px 10px 7px 13px;border-radius:20px;backdrop-filter:blur(4px);box-shadow:0 4px 16px rgba(0,0,0,.5);max-width:min(58vw,220px);}
 .lic-user-badge.show{display:inline-flex;}
-.lic-user-badge b{color:var(--cyan);font-weight:700;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.lic-logout-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 4px;line-height:1;}
+.lic-user-badge b{color:var(--cyan);font-weight:700;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lic-logout-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 4px;line-height:1;flex-shrink:0;}
 .lic-logout-btn:hover{color:var(--red2);}
-@media(max-width:480px){.lic-user-badge{top:8px;left:8px;font-size:10px;}.lic-user-badge b{max-width:110px;}}
+@media(max-width:480px){.lic-user-badge{bottom:10px;left:10px;font-size:10px;padding:6px 9px 6px 11px;}.lic-user-badge b{max-width:80px;}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(14px,1.6vw + 0.5vh,18px);min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:scroll;overscroll-behavior-y:contain;padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
@@ -361,8 +361,9 @@ body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;font-
 /* SIMULATOR */
 #sc{padding:0;height:100vh;height:100dvh;overflow:hidden;}
 .simtop{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--border);backdrop-filter:blur(10px);}
-.backbtn{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:6px 11px;cursor:pointer;font-size:11px;font-family:'Exo 2',sans-serif;font-weight:600;letter-spacing:1px;transition:all .2s;}
+.backbtn{background:none;border:1px solid var(--border);border-radius:7px;color:var(--muted);padding:6px 11px;cursor:pointer;font-size:11px;font-family:'Exo 2',sans-serif;font-weight:600;letter-spacing:1px;transition:all .2s;flex-shrink:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .backbtn:hover{border-color:var(--border2);color:var(--text);}
+@media(max-width:580px){.backbtn{padding:9px 12px;min-height:38px;font-size:12px;}}
 .siminfo{flex:1;}
 .simname{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--red);letter-spacing:1px;}
 .simphase{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
@@ -1111,7 +1112,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
 <!-- EPIC MODE -->
 <div class="screen" id="se">
   <div class="epic-hdr">
-    <button class="backbtn" onclick="showScreen('missions')">← SALIR</button>
+    <button class="backbtn" onclick="showScreen('missions')" title="Volver al listado de misiones">← MISIONES</button>
     <div class="epic-prog-wrap">
       <div class="epic-prog-bar"><div class="epic-prog-fill" id="epicpf" style="width:0%"></div></div>
       <div class="epic-prog-lbl" id="epicpl">MODO ÉPICO · 0/8 COMPLETADAS</div>
@@ -1169,7 +1170,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
 <!-- TRIVIA -->
 <div class="screen" id="st">
   <div class="thdr">
-    <button class="backbtn" onclick="showScreen('missions')">← SALIR</button>
+    <button class="backbtn" onclick="showScreen('missions')" title="Volver al listado de misiones">← MISIONES</button>
     <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:1px;white-space:nowrap;">RETO DE PREGUNTAS</div>
     <div class="tprog"><div class="tprogf" id="tprogf" style="width:0%"></div></div>
     <div style="display:flex;align-items:center;gap:7px;">
@@ -1185,7 +1186,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
     <div class="cdw-time" id="cdwtime">5:00</div>
   </div>
   <div class="simtop">
-    <button class="backbtn" onclick="endMission()">← SALIR</button>
+    <button class="backbtn" onclick="endMission()" title="Volver al listado de misiones">← MISIONES</button>
     <div class="siminfo"><div class="simname" id="simname">MISIÓN</div><div class="simphase" id="simphase">FASE: EVALUACIÓN</div></div>
     <div class="simchips">
       <div class="schip"><div class="schipv gold" id="simpts">0</div><div class="schipl">Pts</div></div>
