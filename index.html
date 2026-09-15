@@ -1392,6 +1392,21 @@ function _licScheduleRevalidation(){
 
 // ── Punto de entrada: se llama desde init() en vez de showScreen('splash') directo ──
 async function _licBoot(){
+  // Si el enlace trae el código (botón "ENTRAR A RCP HERO" del correo de bienvenida),
+  // lo precargamos y validamos de una vez — el estudiante no tiene que escribirlo.
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const urlCode = params.get('code');
+    if(urlCode){
+      const inp = document.getElementById('lcode');
+      if(inp) inp.value = urlCode.trim().toUpperCase();
+      // Limpia el código de la URL (no lo deja visible ni lo re-usa al recargar)
+      try{ history.replaceState(null, '', window.location.pathname + window.location.hash); }catch(e){}
+      showScreen('acceso');
+      validarLicencia();
+      return;
+    }
+  }catch(e){}
   const saved = _licSaved();
   if(!saved || !saved.code){ showScreen('acceso'); return; }
   try{
