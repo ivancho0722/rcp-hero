@@ -897,6 +897,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
       <div class="lc-reason-text" id="lc-reason-text">Verifica que escribiste el código correctamente.</div>
     </div>
     <div style="margin-top:18px;font-size:11px;color:var(--muted);max-width:280px;">¿No tienes código de acceso? Contacta al administrador del curso.</div>
+    <div style="margin-top:20px;font-size:9.5px;color:var(--muted);letter-spacing:.5px;opacity:.6;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
 </div>
 <div class="screen" id="ss">
@@ -961,6 +962,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
       </div>
     </div>
     <button class="sbtn" id="sbtn-main" onclick="goMissions()">INICIAR MISIÓN ▶</button>
+    <div style="margin-top:16px;font-size:9.5px;color:var(--muted);letter-spacing:.5px;text-align:center;opacity:.65;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi · Todos los derechos reservados</div>
   </div>
 </div>
 <!-- MÓDULO DE ESTUDIO (CARRUSEL) -->
@@ -1107,6 +1109,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
         <div class="mbtn" id="cdw-mode-btn" onclick="showCdwMissions()" style="display:none;"><div class="mi">⏱</div><div class="mn">MODO CONTRARRELOJ</div><div class="md">Misiones extra · tiempo límite · desbloqueable</div></div>
       </div>
     </div>
+    <div style="text-align:center;padding:18px 16px 24px;font-size:9.5px;color:var(--muted);letter-spacing:.5px;opacity:.6;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
 </div>
 <!-- EPIC MODE -->
@@ -1155,6 +1158,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
     </div>
     <div class="cert-div" style="background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
     <div class="cert-ftr"><div class="cert-pts" id="vcpts" style="color:var(--purple);">★ 0 PTS</div><div class="cert-src">RCP HERO v1.0 · AHA 2025 · ERC · IFRC</div></div>
+    <div style="text-align:right;font-size:8px;color:var(--muted);letter-spacing:.5px;margin-top:4px;opacity:.75;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
   <div class="secret-box">
     <div class="sb-title">🔒 MISIÓN SECRETA DESBLOQUEADA</div>
@@ -1253,6 +1257,7 @@ body.fs-extra .mod-p-text{font-size:25px !important;}
     <div class="cert-rank-box"><div style="font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:3px;">RANGO OBTENIDO</div><div class="cert-rank-lbl" id="crankl">NOVATO</div></div>
     <div class="cert-div"></div>
     <div class="cert-ftr"><div class="cert-pts" id="cpts">★ 0 PUNTOS</div><div class="cert-src">AHA 2025 · ERC · IFRC · Solo educativo</div></div>
+    <div style="text-align:right;font-size:8px;color:var(--muted);letter-spacing:.5px;margin-top:4px;opacity:.75;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
   <div class="ract">
     <button class="btn2" onclick="printCert()">🖨️ IMPRIMIR</button>
@@ -1598,7 +1603,7 @@ const MODULO_SLIDES = [
 
   // CIERRE: Preparación completa
   {tipo:'cierre', titulo:'✓ ¡Preparación completa!',
-   texto:'<b>¡Felicidades!</b> Has completado el módulo de preparación. Terminaste la fase <b>H · Preparación</b>. Ahora entra a las misiones y pon a prueba lo aprendido antes del taller presencial. Después del curso, con el código de tu instructor, se abrirá la fase <b>O · Práctica Continua</b>.'}
+   texto:'<b>¡Felicidades!</b> Has completado el módulo de preparación. Terminaste la fase <b>H · Preparación</b>. Ahora entra a las misiones y pon a prueba lo aprendido antes del taller presencial. Después del curso, con el código de tu instructor, se abrirá la fase <b>O · Práctica Continua</b>.<div style="margin-top:22px;font-size:9.5px;color:var(--muted);letter-spacing:.5px;opacity:.65;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>'}
 ];
 
 let _modI = 0, _modBound = false, _modForced = false, _modOrigin = 'splash';
@@ -3686,6 +3691,7 @@ function printCert(){
     <div class="cert-rank-box"><div style="font-size:9px;color:#888;letter-spacing:2px;margin-bottom:4px;">RANGO OBTENIDO</div><div class="cert-rank-lbl">${S.rank.toUpperCase()}</div></div>
     <div class="cert-div"></div>
     <div class="cert-ftr"><div>★ ${document.getElementById('cpts').textContent}</div><div>AHA 2025 · ERC · IFRC · Solo educativo</div></div>
+    <div style="text-align:right;font-size:8px;color:#999;letter-spacing:.5px;margin-top:4px;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
 </body></html>`);
   w.document.close();
@@ -3795,6 +3801,7 @@ function printEpicCert(){
     <div style="display:flex;justify-content:space-between;font-size:10px;color:#888;">
       <div>★ ${S.epicPts} PUNTOS ÉPICOS</div><div>RCP HERO v1.0 · AHA 2025 · ERC · IFRC · Solo educativo</div>
     </div>
+    <div style="text-align:right;font-size:8px;color:#999;letter-spacing:.5px;margin-top:4px;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div></body></html>`);
   w.document.close();setTimeout(()=>{w.focus();w.print();},400);
 }
@@ -4640,6 +4647,7 @@ init();
     <div class="badges-grid" id="missionBadgesGrid"></div>
     <div class="badge-section-title">DIPLOMAS DE NIVEL</div>
     <div class="diplomas-grid" id="diplomasGrid"></div>
+    <div style="text-align:center;padding-top:10px;font-size:9px;color:var(--muted);letter-spacing:.5px;opacity:.6;">© 2026 Jairo Iván Valverde Chamorro · Universidad Icesi</div>
   </div>
 </div>
 
